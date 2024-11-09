@@ -22,6 +22,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // 選択されたリポジトリの詳細を取得して表示する
         let repository = mainViewController.repositories[mainViewController.selectedIndex]
 
         languageLabel.text = "Written in \(repository["language"] as? String ?? "")"
@@ -38,10 +39,12 @@ class DetailViewController: UIViewController {
 
         titleLabel.text = repository["full_name"] as? String
 
+        // リポジトリ所有者のアバター画像を取得する
         guard let owner = repository["owner"] as? [String: Any],
             let imageURL = owner["avatar_url"] as? String
         else { return }
 
+        // 非同期リクエストで画像をダウンロードして設定
         URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, response, error) in
             guard let data = data, let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
