@@ -21,7 +21,11 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        displayRepositoryDetails()
+        fetchImage()
+    }
 
+    private func displayRepositoryDetails() {
         // 選択されたリポジトリの詳細を取得して表示する
         languageLabel.text = "Written in \(repository.language)"
         starsLabel.text = "\(repository.stars) stars"
@@ -29,7 +33,6 @@ class DetailViewController: UIViewController {
         forksLabel.text = "\(repository.forks) forks"
         issuesLabel.text = "\(repository.openIssues) open issues"
         titleLabel.text = repository.name
-        fetchImage()
     }
 
     func fetchImage() {

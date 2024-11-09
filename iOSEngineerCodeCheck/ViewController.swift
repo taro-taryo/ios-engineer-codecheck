@@ -20,6 +20,10 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSearchBar()
+    }
+
+    private func setupSearchBar() {
         // 初期設定：検索バーのテキストとデリゲートの設定
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
@@ -37,14 +41,13 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchWord = searchBar.text, !searchWord.isEmpty else { return }
+        searchRepositories(for: searchWord)
+    }
 
-        searchWord = searchBar.text!
-
-        // 検索ワードが空でない場合のみ実行
-        guard searchWord.count != 0 else { return }
-
+    private func searchRepositories(for searchWord: String) {
         // GitHub APIの検索URLを生成
-        searchUrl = "https://api.github.com/search/repositories?q=\(searchWord!)"
+        searchUrl = "https://api.github.com/search/repositories?q=\(searchWord)"
 
         // 非同期でAPIリクエストを実行
         searchTask = URLSession.shared.dataTask(with: URL(string: searchUrl)!) {
