@@ -26,7 +26,6 @@ class DetailViewController: UIViewController {
     }
 
     private func displayRepositoryDetails() {
-        // 選択されたリポジトリの詳細を取得して表示する
         languageLabel.text = "Written in \(repository.language)"
         starsLabel.text = "\(repository.stars) stars"
         watchersLabel.text = "\(repository.watchers) watchers"
@@ -36,11 +35,8 @@ class DetailViewController: UIViewController {
     }
 
     func fetchImage() {
-        // リポジトリ所有者のアバター画像を取得する
         guard let imageURL = repository.ownerAvatarURL
         else { return }
-
-        // 非同期リクエストで画像をダウンロードして設定
         URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, response, error) in
             guard let data = data, let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
