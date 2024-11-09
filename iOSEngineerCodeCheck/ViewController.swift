@@ -32,15 +32,17 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         
         searchWord = searchBar.text!
         
-        if searchWord.count != 0 {
-            searchUrl = "https://api.github.com/search/repositories?q=\(searchWord!)"
-            searchTask = URLSession.shared.dataTask(with: URL(string: searchUrl)!) { (data, response, error) in
-                guard let data = data else { return }
-                self.parseData(data)
-            }
-            // これ呼ばなきゃリストが更新されません
-            searchTask?.resume()
+        guard searchWord.count != 0 else { return }
+        
+        searchUrl = "https://api.github.com/search/repositories?q=\(searchWord!)"
+        
+        searchTask = URLSession.shared.dataTask(with: URL(string: searchUrl)!) { (data, response, error) in
+            guard let data = data else { return }
+            self.parseData(data)
         }
+        
+        // これ呼ばなきゃリストが更新されません
+        searchTask?.resume()
     }
     
     private func parseData(_ data: Data) {
@@ -55,10 +57,10 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "Detail" {
-            let detailViewController = segue.destination as! DetailViewController
-            detailViewController.mainViewController = self
-        }
+        guard segue.identifier == "Detail",
+              let detailViewController = segue.destination as? DetailViewController else { return }
+        
+        detailViewController.mainViewController = self
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,5 +82,4 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         selectedIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
     }
-    
 }
