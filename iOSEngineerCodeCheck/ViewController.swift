@@ -20,18 +20,19 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // 初期設定：検索バーのテキストとデリゲートの設定
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
     }
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
+        // 編集開始時にテキストをクリアする
         searchBar.text = ""
         return true
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // 検索テキストが変更されたら、進行中の検索タスクをキャンセルする
         searchTask?.cancel()
     }
 
@@ -39,25 +40,30 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
         searchWord = searchBar.text!
 
+        // 検索ワードが空でない場合のみ実行
         guard searchWord.count != 0 else { return }
 
+        // GitHub APIの検索URLを生成
         searchUrl = "https://api.github.com/search/repositories?q=\(searchWord!)"
 
+        // 非同期でAPIリクエストを実行
         searchTask = URLSession.shared.dataTask(with: URL(string: searchUrl)!) {
             (data, response, error) in
             guard let data = data else { return }
             self.parseData(data)
         }
 
-        // これ呼ばなきゃリストが更新されません
+        // リストを更新するためにタスクを開始
         searchTask?.resume()
     }
 
     private func parseData(_ data: Data) {
+        // 取得したデータをJSONとして解析し、リポジトリ情報を保存
         if let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
             let items = jsonObject["items"] as? [[String: Any]]
         {
             self.repositories = items
+            // メインスレッドでテーブルビューを更新
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -65,7 +71,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        // 詳細画面に遷移する際にデータを渡す
         guard segue.identifier == "Detail",
             let detailViewController = segue.destination as? DetailViewController
         else { return }
@@ -74,6 +80,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // テーブルの行数をリポジトリの数に設定
         return repositories.count
     }
 
@@ -90,7 +97,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 画面遷移時に呼ばれる
+        // リストアイテムが選択されたときに画面遷移を実行
         selectedIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
     }
