@@ -38,17 +38,30 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchWord = searchBar.text, !searchWord.isEmpty else { return }
+        guard let searchWord = searchBar.text, !searchWord.isEmpty else {
+            print("検索ワードが空またはnilです。")
+            return
+        }
         searchRepositories(for: searchWord)
     }
 
     private func searchRepositories(for searchWord: String) {
         searchUrl = "https://api.github.com/search/repositories?q=\(searchWord)"
 
-        guard let url = URL(string: searchUrl ?? "") else { return }
+        guard let urlString = searchUrl, let url = URL(string: urlString) else {
+            print("URLの生成に失敗しました。")
+            return
+        }
 
         searchTask = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-            guard let data = data else { return }
+            if let error = error {
+                print("ネットワークエラーが発生しました: \(error.localizedDescription)")
+                return
+            }
+            guard let data = data else {
+                print("データがnilです。")
+                return
+            }
             self?.parseData(data)
         }
         searchTask?.resume()
@@ -63,6 +76,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
+            } else {
+                print("JSON解析に失敗しました。フォーマットが不正です。")
             }
         } catch {
             print("データ解析エラー: \(error.localizedDescription)")
@@ -72,8 +87,12 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "Detail",
             let detailViewController = segue.destination as? DetailViewController,
-            let selectedIndex = selectedIndex
-        else { return }
+            let selectedIndex = selectedIndex,
+            selectedIndex < repositories.count
+        else {
+            print("詳細画面への遷移に必要なデータが揃っていません。")
+            return
+        }
         detailViewController.repository = repositories[selectedIndex]
     }
 
