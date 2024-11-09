@@ -26,7 +26,10 @@ class DetailViewController: UIViewController {
     }
 
     private func displayRepositoryDetails() {
-        guard let repository = repository else { return }
+        guard let repository = repository else {
+            print("リポジトリデータがnilです。")
+            return
+        }
         languageLabel.text = "Written in \(repository.language)"
         starsLabel.text = "\(repository.stars) stars"
         watchersLabel.text = "\(repository.watchers) watchers"
@@ -38,10 +41,20 @@ class DetailViewController: UIViewController {
     func fetchImage() {
         guard let imageURLString = repository?.ownerAvatarURL,
             let imageURL = URL(string: imageURLString)
-        else { return }
+        else {
+            print("画像URLがnilまたは不正です。")
+            return
+        }
 
         URLSession.shared.dataTask(with: imageURL) { [weak self] (data, response, error) in
-            guard let data = data, let image = UIImage(data: data) else { return }
+            if let error = error {
+                print("画像のダウンロードエラー: \(error.localizedDescription)")
+                return
+            }
+            guard let data = data, let image = UIImage(data: data) else {
+                print("画像データがnilまたは変換に失敗しました。")
+                return
+            }
             DispatchQueue.main.async {
                 self?.imageView.image = image
             }
