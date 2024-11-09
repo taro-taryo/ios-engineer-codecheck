@@ -35,12 +35,14 @@ class DetailViewController: UIViewController {
     }
 
     func fetchImage() {
-        guard let imageURL = repository.ownerAvatarURL
+        guard let imageURLString = repository.ownerAvatarURL,
+            let imageURL = URL(string: imageURLString)
         else { return }
-        URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, response, error) in
+
+        URLSession.shared.dataTask(with: imageURL) { [weak self] (data, response, error) in
             guard let data = data, let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
-                self.imageView.image = image
+                self?.imageView.image = image
             }
         }.resume()
     }

@@ -44,9 +44,10 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     private func searchRepositories(for searchWord: String) {
         searchUrl = "https://api.github.com/search/repositories?q=\(searchWord)"
-        searchTask = URLSession.shared.dataTask(with: URL(string: searchUrl)!) {
-            [weak self]
-            (data, response, error) in
+
+        guard let url = URL(string: searchUrl) else { return }
+
+        searchTask = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
             guard let data = data else { return }
             self?.parseData(data)
         }
