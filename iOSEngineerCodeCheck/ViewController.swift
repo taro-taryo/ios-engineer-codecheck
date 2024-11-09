@@ -14,9 +14,9 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     var repositories: [Repository] = []
 
     var searchTask: URLSessionTask?
-    var searchWord: String!
-    var searchUrl: String!
-    var selectedIndex: Int!
+    var searchWord: String?
+    var searchUrl: String?
+    var selectedIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     private func searchRepositories(for searchWord: String) {
         searchUrl = "https://api.github.com/search/repositories?q=\(searchWord)"
 
-        guard let url = URL(string: searchUrl) else { return }
+        guard let url = URL(string: searchUrl ?? "") else { return }
 
         searchTask = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
             guard let data = data else { return }
@@ -71,7 +71,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "Detail",
-            let detailViewController = segue.destination as? DetailViewController
+            let detailViewController = segue.destination as? DetailViewController,
+            let selectedIndex = selectedIndex
         else { return }
         detailViewController.repository = repositories[selectedIndex]
     }
