@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var issuesLabel: UILabel!
 
-    var repository: Repository!
+    var repository: Repository?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,7 @@ class DetailViewController: UIViewController {
     }
 
     private func displayRepositoryDetails() {
+        guard let repository = repository else { return }
         languageLabel.text = "Written in \(repository.language)"
         starsLabel.text = "\(repository.stars) stars"
         watchersLabel.text = "\(repository.watchers) watchers"
@@ -35,7 +36,7 @@ class DetailViewController: UIViewController {
     }
 
     func fetchImage() {
-        guard let imageURLString = repository.ownerAvatarURL,
+        guard let imageURLString = repository?.ownerAvatarURL,
             let imageURL = URL(string: imageURLString)
         else { return }
 
