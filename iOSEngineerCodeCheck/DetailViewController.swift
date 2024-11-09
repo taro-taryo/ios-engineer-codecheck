@@ -16,14 +16,14 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var watchersLabel: UILabel!
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var issuesLabel: UILabel!
-    
+
     var mainViewController: ViewController!
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let repository = mainViewController.repositories[mainViewController.selectedIndex]
-        
+
         languageLabel.text = "Written in \(repository["language"] as? String ?? "")"
         starsLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
         watchersLabel.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
@@ -31,16 +31,17 @@ class DetailViewController: UIViewController {
         issuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         fetchImage()
     }
-    
+
     func fetchImage() {
-        
+
         let repository = mainViewController.repositories[mainViewController.selectedIndex]
-        
+
         titleLabel.text = repository["full_name"] as? String
-        
+
         guard let owner = repository["owner"] as? [String: Any],
-              let imageURL = owner["avatar_url"] as? String else { return }
-        
+            let imageURL = owner["avatar_url"] as? String
+        else { return }
+
         URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, response, error) in
             guard let data = data, let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
