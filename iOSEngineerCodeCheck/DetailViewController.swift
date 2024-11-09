@@ -17,31 +17,24 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var issuesLabel: UILabel!
 
-    var mainViewController: ViewController!
+    var repository: Repository!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // 選択されたリポジトリの詳細を取得して表示する
-        let repository = mainViewController.repositories[mainViewController.selectedIndex]
-
-        languageLabel.text = "Written in \(repository["language"] as? String ?? "")"
-        starsLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
-        watchersLabel.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
-        forksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
-        issuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
+        languageLabel.text = "Written in \(repository.language)"
+        starsLabel.text = "\(repository.stars) stars"
+        watchersLabel.text = "\(repository.watchers) watchers"
+        forksLabel.text = "\(repository.forks) forks"
+        issuesLabel.text = "\(repository.openIssues) open issues"
+        titleLabel.text = repository.name
         fetchImage()
     }
 
     func fetchImage() {
-
-        let repository = mainViewController.repositories[mainViewController.selectedIndex]
-
-        titleLabel.text = repository["full_name"] as? String
-
         // リポジトリ所有者のアバター画像を取得する
-        guard let owner = repository["owner"] as? [String: Any],
-            let imageURL = owner["avatar_url"] as? String
+        guard let imageURL = repository.ownerAvatarURL
         else { return }
 
         // 非同期リクエストで画像をダウンロードして設定

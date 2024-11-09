@@ -11,7 +11,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
 
-    var repositories: [[String: Any]] = []
+    var repositories: [Repository] = []
 
     var searchTask: URLSessionTask?
     var searchWord: String!
@@ -62,7 +62,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         if let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
             let items = jsonObject["items"] as? [[String: Any]]
         {
-            self.repositories = items
+            self.repositories = items.map { Repository(from: $0) }
             // メインスレッドでテーブルビューを更新
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -76,7 +76,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
             let detailViewController = segue.destination as? DetailViewController
         else { return }
 
-        detailViewController.mainViewController = self
+        detailViewController.repository = repositories[selectedIndex]
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,8 +90,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
         let cell = UITableViewCell()
         let repository = repositories[indexPath.row]
-        cell.textLabel?.text = repository["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = repository["language"] as? String ?? ""
+        cell.textLabel?.text = repository.name
+        cell.detailTextLabel?.text = repository.language
         cell.tag = indexPath.row
         return cell
     }
