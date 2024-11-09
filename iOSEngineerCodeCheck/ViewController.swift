@@ -62,14 +62,18 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     private func parseData(_ data: Data) {
         // 取得したデータをJSONとして解析し、リポジトリ情報を保存
-        if let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let items = jsonObject["items"] as? [[String: Any]]
-        {
-            self.repositories = items.map { Repository(from: $0) }
-            // メインスレッドでテーブルビューを更新
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        do {
+            if let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                let items = jsonObject["items"] as? [[String: Any]]
+            {
+                self.repositories = items.map { Repository(from: $0) }
+                // メインスレッドでテーブルビューを更新
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
+        } catch {
+            print("データ解析エラー: \(error.localizedDescription)")
         }
     }
 
