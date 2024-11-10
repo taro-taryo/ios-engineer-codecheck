@@ -13,7 +13,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
 
     var repositories: [Repository] = []
-    private let searchService = SearchService()
+    private let repositoryManager = RepositoryManager()
     var selectedIndex: Int?
 
     override func viewDidLoad() {
@@ -35,7 +35,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     private func fetchRepositories(for searchWord: String) {
-        searchService.searchRepositories(for: searchWord) { [weak self] result in
+        repositoryManager.fetchRepositories(for: searchWord) { [weak self] result in
             switch result {
             case .success(let repositories):
                 self?.updateRepositories(with: repositories)
