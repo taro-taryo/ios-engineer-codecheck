@@ -19,13 +19,13 @@
 //
 import Foundation
 
-// itemsキーを持つトップレベルのレスポンスデータモデル
 struct RepositoriesResponse: Codable {
     let items: [Repository]
 }
 
 // GitHubリポジトリ情報を管理するデータモデル
-struct Repository: Codable {
+struct Repository: Codable, Identifiable {
+    let id = UUID()
     let name: String
     let language: String
     let stars: Int

@@ -1,5 +1,5 @@
 //
-//  ImageService.swift
+//  ImageLoader.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -17,25 +17,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import UIKit
 
-protocol ImageFetchable {
-    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void)
-}
+import Foundation
+import SwiftUI
 
-class ImageService: ImageFetchable {
-    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(nil)
-            return
-        }
+class ImageLoader: ObservableObject {
+    @Published var image: UIImage?
+    private let imageService: ImageFetchable
 
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil, let image = UIImage(data: data) else {
-                completion(nil)
-                return
+    init(imageService: ImageFetchable = ImageService()) {
+        self.imageService = imageService
+    }
+
+    func loadImage(from urlString: String?) {
+        guard let urlString = urlString else { return }
+
+        imageService.fetchImage(from: urlString) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.image = image
             }
-            completion(image)
-        }.resume()
+        }
     }
 }

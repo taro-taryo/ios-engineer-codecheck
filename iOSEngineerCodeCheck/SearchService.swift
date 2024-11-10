@@ -20,12 +20,6 @@
 
 import Foundation
 
-protocol RepositoryFetchable {
-    func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
-    )
-}
-
 class SearchService: RepositoryFetchable {
     func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
