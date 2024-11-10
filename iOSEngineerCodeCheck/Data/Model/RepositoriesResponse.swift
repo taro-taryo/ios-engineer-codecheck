@@ -1,5 +1,5 @@
 //
-//  iOSEngineerCodeCheckApp.swift
+//  RepositoriesResponse.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -18,13 +18,8 @@
 // limitations under the License.
 //
 
-import SwiftUI
+import Foundation
 
-@main
-struct iOSEngineerCodeCheckApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
+struct RepositoriesResponse: Codable {
+    let items: [Repository]
 }
