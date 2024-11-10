@@ -32,25 +32,25 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     private func setupSearchBar() {
-        searchBar.text = "GitHubのリポジトリを検索できるよー"
+        searchBar.placeholder = "GitHubリポジトリを検索"
         searchBar.delegate = self
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchWord = searchBar.text, !searchWord.isEmpty else {
-            print("検索ワードが空またはnilです。")
+            showError(message: "検索ワードを入力してください。")
             return
         }
-        fetchRepositories(for: searchWord)
+        performRepositorySearch(for: searchWord)
     }
 
-    private func fetchRepositories(for searchWord: String) {
+    private func performRepositorySearch(for searchWord: String) {
         repositoryManager.fetchRepositories(for: searchWord) { [weak self] result in
             switch result {
             case .success(let repositories):
                 self?.updateRepositories(with: repositories)
-            case .failure(let error):
-                print("データ取得エラー: \(error.localizedDescription)")
+            case .failure:
+                self?.showError(message: "リポジトリの検索に失敗しました。再試行してください。")
             }
         }
     }
@@ -62,13 +62,19 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         }
     }
 
+    private func showError(message: String) {
+        let alert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "Detail",
             let detailViewController = segue.destination as? DetailViewController,
             let selectedIndex = selectedIndex,
             selectedIndex < repositories.count
         else {
-            print("詳細画面への遷移に必要なデータが揃っていません。")
+            showError(message: "詳細画面への遷移に失敗しました。データが不足しています。")
             return
         }
         detailViewController.repository = repositories[selectedIndex]

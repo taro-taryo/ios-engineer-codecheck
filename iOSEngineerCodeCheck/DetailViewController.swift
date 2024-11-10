@@ -34,12 +34,12 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         displayRepositoryDetails()
-        fetchImage()
+        fetchRepositoryImage()
     }
 
     private func displayRepositoryDetails() {
         guard let repository = repository else {
-            print("リポジトリデータがnilです。")
+            showError(message: "リポジトリの詳細情報を表示できません。")
             return
         }
         languageLabel.text = "Written in \(repository.language)"
@@ -50,9 +50,9 @@ class DetailViewController: UIViewController {
         titleLabel.text = repository.name
     }
 
-    private func fetchImage() {
+    private func fetchRepositoryImage() {
         guard let imageURLString = repository?.ownerAvatarURL else {
-            print("画像URLがnilまたは不正です。")
+            showError(message: "画像URLが無効です。")
             return
         }
 
@@ -61,5 +61,11 @@ class DetailViewController: UIViewController {
                 self?.imageView.image = image
             }
         }
+    }
+
+    private func showError(message: String) {
+        let alert = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
