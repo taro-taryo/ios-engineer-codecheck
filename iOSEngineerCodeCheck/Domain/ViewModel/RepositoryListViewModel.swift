@@ -28,7 +28,10 @@ class RepositoryListViewModel: ObservableObject {
 
     private let repositoryManager: RepositoryFetchable
 
-    init(repositoryManager: RepositoryFetchable = RepositoryManager()) {
+    init(
+        repositoryManager: RepositoryFetchable = DIContainer.shared.resolve(
+            RepositoryFetchable.self)
+    ) {
         self.repositoryManager = repositoryManager
     }
 

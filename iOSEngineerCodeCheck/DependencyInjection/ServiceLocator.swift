@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  ServiceLocator.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -19,22 +19,12 @@
 //
 
 import Foundation
-import SwiftUI
 
-class ImageLoader: ObservableObject {
-    @Published var image: UIImage?
-    private let imageService: ImageFetchable
-
-    init(imageService: ImageFetchable = DIContainer.shared.resolve(ImageFetchable.self)) {
-        self.imageService = imageService
-    }
-
-    func loadImage(from urlString: String?) {
-        guard let urlString = urlString else { return }
-        imageService.fetchImage(from: urlString) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.image = image
-            }
-        }
+class ServiceLocator {
+    static func configure() {
+        let container = DIContainer.shared
+        container.register(
+            RepositoryManager() as RepositoryFetchable, for: RepositoryFetchable.self)
+        container.register(ImageService() as ImageFetchable, for: ImageFetchable.self)
     }
 }

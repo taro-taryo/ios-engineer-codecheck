@@ -22,6 +22,10 @@ import SwiftUI
 
 @main
 struct iOSEngineerCodeCheckApp: App {
+    init() {
+        ServiceLocator.configure()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

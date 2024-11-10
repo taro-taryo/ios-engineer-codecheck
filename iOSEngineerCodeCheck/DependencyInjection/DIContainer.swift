@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  DIContainer.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -19,22 +19,22 @@
 //
 
 import Foundation
-import SwiftUI
 
-class ImageLoader: ObservableObject {
-    @Published var image: UIImage?
-    private let imageService: ImageFetchable
+class DIContainer {
+    static let shared = DIContainer()
 
-    init(imageService: ImageFetchable = DIContainer.shared.resolve(ImageFetchable.self)) {
-        self.imageService = imageService
+    private var services: [String: Any] = [:]
+
+    func register<Service>(_ service: Service, for type: Service.Type) {
+        let key = String(describing: type)
+        services[key] = service
     }
 
-    func loadImage(from urlString: String?) {
-        guard let urlString = urlString else { return }
-        imageService.fetchImage(from: urlString) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.image = image
-            }
+    func resolve<Service>(_ type: Service.Type) -> Service {
+        let key = String(describing: type)
+        guard let service = services[key] as? Service else {
+            fatalError("No registered service for \(type)")
         }
+        return service
     }
 }
