@@ -60,6 +60,13 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         detailViewController.repository = repositories[selectedIndex]
     }
 
+    private func configureCell(_ cell: UITableViewCell, for indexPath: IndexPath) {
+        let repository = repositories[indexPath.row]
+        cell.textLabel?.text = repository.name
+        cell.detailTextLabel?.text = repository.language
+        cell.tag = indexPath.row
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repositories.count
     }
@@ -68,10 +75,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         -> UITableViewCell
     {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "RepositoryCell")
-        let repository = repositories[indexPath.row]
-        cell.textLabel?.text = repository.name
-        cell.detailTextLabel?.text = repository.language
-        cell.tag = indexPath.row
+        configureCell(cell, for: indexPath)
         return cell
     }
 
