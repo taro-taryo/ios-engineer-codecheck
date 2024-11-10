@@ -69,15 +69,10 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     private func parseData(_ data: Data) {
         do {
-            if let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-                let items = jsonObject["items"] as? [[String: Any]]
-            {
-                self.repositories = items.map { Repository(from: $0) }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            } else {
-                print("JSON解析に失敗しました。フォーマットが不正です。")
+            let decodedResponse = try JSONDecoder().decode(RepositoriesResponse.self, from: data)
+            self.repositories = decodedResponse.items
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         } catch {
             print("データ解析エラー: \(error.localizedDescription)")
