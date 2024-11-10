@@ -5,6 +5,7 @@
 //  Created by 史 翔新 on 2020/04/20.
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
+
 import UIKit
 
 class ViewController: UITableViewController, UISearchBarDelegate {
@@ -12,10 +13,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
 
     var repositories: [Repository] = []
-
-    var searchTask: URLSessionTask?
-    var searchWord: String?
-    var searchUrl: String?
+    private let searchService = SearchService()
     var selectedIndex: Int?
 
     override func viewDidLoad() {
@@ -28,15 +26,6 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         searchBar.delegate = self
     }
 
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.text = ""
-        return true
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchTask?.cancel()
-    }
-
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchWord = searchBar.text, !searchWord.isEmpty else {
             print("検索ワードが空またはnilです。")
@@ -46,36 +35,16 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     private func searchRepositories(for searchWord: String) {
-        searchUrl = "https://api.github.com/search/repositories?q=\(searchWord)"
-
-        guard let urlString = searchUrl, let url = URL(string: urlString) else {
-            print("URLの生成に失敗しました。")
-            return
-        }
-
-        searchTask = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-            if let error = error {
-                print("ネットワークエラーが発生しました: \(error.localizedDescription)")
-                return
+        searchService.searchRepositories(for: searchWord) { [weak self] result in
+            switch result {
+            case .success(let repositories):
+                self?.repositories = repositories
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            case .failure(let error):
+                print("データ取得エラー: \(error.localizedDescription)")
             }
-            guard let data = data else {
-                print("データがnilです。")
-                return
-            }
-            self?.parseData(data)
-        }
-        searchTask?.resume()
-    }
-
-    private func parseData(_ data: Data) {
-        do {
-            let decodedResponse = try JSONDecoder().decode(RepositoriesResponse.self, from: data)
-            self.repositories = decodedResponse.items
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        } catch {
-            print("データ解析エラー: \(error.localizedDescription)")
         }
     }
 
@@ -98,7 +67,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
         -> UITableViewCell
     {
-        let cell = UITableViewCell()
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "RepositoryCell")
         let repository = repositories[indexPath.row]
         cell.textLabel?.text = repository.name
         cell.detailTextLabel?.text = repository.language
