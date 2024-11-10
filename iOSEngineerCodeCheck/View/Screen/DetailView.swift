@@ -37,9 +37,11 @@ struct DetailView: View {
                     .frame(width: 200, height: 200)
                     .padding(.top, 16)
             }
+
             Text(repository.name)
                 .font(.title)
                 .padding(.top, 8)
+
             VStack(alignment: .leading, spacing: 8) {
                 Text("Language: \(repository.language)")
                 Text("Stars: \(repository.stars)")
