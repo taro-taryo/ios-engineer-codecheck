@@ -11,6 +11,7 @@
 		BFD945F6244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945F5244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift */; };
 		BFD94601244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */; };
 		C65049742CE0A6C700507163 /* RepositoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049732CE0A6C500507163 /* RepositoriesResponse.swift */; };
+		C650497A2CE0AFFC00507163 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049792CE0AFFC00507163 /* RepositoryError.swift */; };
 		C6835D1D2CE03EE000CCF57C /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D1C2CE03EE000CCF57C /* SearchService.swift */; };
 		C6835D212CE03FF200CCF57C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D202CE03FF200CCF57C /* ImageService.swift */; };
 		C6835D272CE0508900CCF57C /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D262CE0508900CCF57C /* RepositoryManager.swift */; };
@@ -53,6 +54,7 @@
 		BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSEngineerCodeCheckUITests.swift; sourceTree = "<group>"; };
 		BFD94602244DC5EC0012785A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C65049732CE0A6C500507163 /* RepositoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesResponse.swift; sourceTree = "<group>"; };
+		C65049792CE0AFFC00507163 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
 		C6835D1C2CE03EE000CCF57C /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		C6835D202CE03FF200CCF57C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		C6835D262CE0508900CCF57C /* RepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryManager.swift; sourceTree = "<group>"; };
@@ -115,16 +117,15 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				C65049762CE0AFA200507163 /* Domain */,
 				C65049702CE0A65F00507163 /* Data */,
 				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
 				C6835D282CE0650400CCF57C /* ContentView.swift */,
 				C6835D3A2CE070D000CCF57C /* KeyboardAvoider.swift */,
 				C6835D2C2CE065E200CCF57C /* DetailView.swift */,
-				C6835D302CE0662800CCF57C /* ImageLoader.swift */,
 				C6835D202CE03FF200CCF57C /* ImageService.swift */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
 				C6835D342CE068AF00CCF57C /* iOSEngineerCodeCheckApp.swift */,
-				C6835D2E2CE0660500CCF57C /* RepositoryListViewModel.swift */,
 				C6835D2A2CE0659E00CCF57C /* RepositoryRow.swift */,
 			);
 			path = iOSEngineerCodeCheck;
@@ -160,6 +161,8 @@
 		C65049712CE0A66700507163 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C6E53FC32CDF5E49001E078A /* Repository.swift */,
+				C65049732CE0A6C500507163 /* RepositoriesResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,13 +170,37 @@
 		C65049722CE0A66D00507163 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				C6E53FC32CDF5E49001E078A /* Repository.swift */,
-				C65049732CE0A6C500507163 /* RepositoriesResponse.swift */,
 				C6835D262CE0508900CCF57C /* RepositoryManager.swift */,
 				C6835D1C2CE03EE000CCF57C /* SearchService.swift */,
 				C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		C65049762CE0AFA200507163 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				C65049782CE0AFC400507163 /* Model */,
+				C65049772CE0AFBC00507163 /* ViewModel */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		C65049772CE0AFBC00507163 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C6835D2E2CE0660500CCF57C /* RepositoryListViewModel.swift */,
+				C6835D302CE0662800CCF57C /* ImageLoader.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C65049782CE0AFC400507163 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C65049792CE0AFFC00507163 /* RepositoryError.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,6 +345,7 @@
 				C6835D272CE0508900CCF57C /* RepositoryManager.swift in Sources */,
 				C65049742CE0A6C700507163 /* RepositoriesResponse.swift in Sources */,
 				C6835D212CE03FF200CCF57C /* ImageService.swift in Sources */,
+				C650497A2CE0AFFC00507163 /* RepositoryError.swift in Sources */,
 				C6835D312CE0662800CCF57C /* ImageLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
