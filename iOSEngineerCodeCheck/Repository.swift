@@ -19,13 +19,13 @@
 //
 import Foundation
 
-// itemsキーを持つトップレベルのレスポンスデータモデル
 struct RepositoriesResponse: Codable {
     let items: [Repository]
 }
 
 // GitHubリポジトリ情報を管理するデータモデル
-struct Repository: Codable {
+struct Repository: Codable, Identifiable {
+    let id = UUID()
     let name: String
     let language: String
     let stars: Int
@@ -44,7 +44,6 @@ struct Repository: Codable {
         self.forks = try container.decodeIfPresent(Int.self, forKey: .forks) ?? 0
         self.openIssues = try container.decodeIfPresent(Int.self, forKey: .openIssues) ?? 0
 
-        // ownerプロパティのネストされたコンテナからavatarURLをデコード
         if let ownerContainer = try? container.nestedContainer(
             keyedBy: OwnerKeys.self, forKey: .owner)
         {
@@ -65,14 +64,12 @@ struct Repository: Codable {
         try container.encode(forks, forKey: .forks)
         try container.encode(openIssues, forKey: .openIssues)
 
-        // ネストされたオーナーコンテナのエンコード
         if let ownerAvatarURL = ownerAvatarURL {
             var ownerContainer = container.nestedContainer(keyedBy: OwnerKeys.self, forKey: .owner)
             try ownerContainer.encode(ownerAvatarURL, forKey: .avatarURL)
         }
     }
 
-    // JSONのキーに対応する列挙型
     enum CodingKeys: String, CodingKey {
         case name = "full_name"
         case language
@@ -83,7 +80,6 @@ struct Repository: Codable {
         case owner
     }
 
-    // ownerのネストされたキーに対応する列挙型
     enum OwnerKeys: String, CodingKey {
         case avatarURL = "avatar_url"
     }
