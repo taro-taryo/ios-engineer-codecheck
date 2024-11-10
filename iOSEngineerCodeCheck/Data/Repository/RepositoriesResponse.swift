@@ -1,5 +1,5 @@
 //
-//  RepositoryFetchable.swift
+//  RepositoriesResponse.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -20,8 +20,6 @@
 
 import Foundation
 
-protocol RepositoryFetchable {
-    func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
-    )
+struct RepositoriesResponse: Codable {
+    let items: [Repository]
 }
