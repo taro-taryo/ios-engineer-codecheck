@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  RepositoryError.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -19,23 +19,8 @@
 //
 
 import Foundation
-import SwiftUI
 
-class ImageLoader: ObservableObject {
-    @Published var image: UIImage?
-    private let imageService: ImageFetchable
-
-    init(imageService: ImageFetchable = ImageService()) {
-        self.imageService = imageService
-    }
-
-    func loadImage(from urlString: String?) {
-        guard let urlString = urlString else { return }
-
-        imageService.fetchImage(from: urlString) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.image = image
-            }
-        }
-    }
+struct RepositoryError: Identifiable {
+    var id: String { message }
+    let message: String
 }

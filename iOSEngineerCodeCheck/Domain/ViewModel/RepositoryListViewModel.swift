@@ -18,6 +18,7 @@
 // limitations under the License.
 //
 
+import Combine
 import Foundation
 
 class RepositoryListViewModel: ObservableObject {
@@ -49,9 +50,4 @@ class RepositoryListViewModel: ObservableObject {
             }
         }
     }
-}
-
-struct RepositoryError: Identifiable {
-    var id: String { message }
-    let message: String
 }
