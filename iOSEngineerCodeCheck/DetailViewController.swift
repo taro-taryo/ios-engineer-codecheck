@@ -19,7 +19,17 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var issuesLabel: UILabel!
 
     var repository: Repository?
-    private let imageService = ImageService()
+    private let imageService: ImageFetchable
+
+    init(imageService: ImageFetchable = ImageService()) {
+        self.imageService = imageService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.imageService = ImageService()
+        super.init(coder: coder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

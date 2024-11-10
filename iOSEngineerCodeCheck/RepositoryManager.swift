@@ -20,12 +20,12 @@
 
 import Foundation
 
-class RepositoryManager {
+class RepositoryManager: RepositoryFetchable {
     private let searchService = SearchService()
 
     func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
-        searchService.searchRepositories(for: searchWord, completion: completion)
+        searchService.fetchRepositories(for: searchWord, completion: completion)
     }
 }

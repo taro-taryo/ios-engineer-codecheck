@@ -20,7 +20,11 @@
 
 import UIKit
 
-class ImageService {
+protocol ImageFetchable {
+    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void)
+}
+
+class ImageService: ImageFetchable {
     func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(nil)
