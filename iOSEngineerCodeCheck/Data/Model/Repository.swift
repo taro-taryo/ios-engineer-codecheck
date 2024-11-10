@@ -17,13 +17,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+
 import Foundation
 
-struct RepositoriesResponse: Codable {
-    let items: [Repository]
-}
-
-// GitHubリポジトリ情報を管理するデータモデル
 struct Repository: Codable, Identifiable {
     let id = UUID()
     let name: String
@@ -34,7 +30,6 @@ struct Repository: Codable, Identifiable {
     let openIssues: Int
     let ownerAvatarURL: String?
 
-    // カスタムデコーダーのイニシャライザ
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
@@ -43,7 +38,6 @@ struct Repository: Codable, Identifiable {
         self.watchers = try container.decodeIfPresent(Int.self, forKey: .watchers) ?? 0
         self.forks = try container.decodeIfPresent(Int.self, forKey: .forks) ?? 0
         self.openIssues = try container.decodeIfPresent(Int.self, forKey: .openIssues) ?? 0
-
         if let ownerContainer = try? container.nestedContainer(
             keyedBy: OwnerKeys.self, forKey: .owner)
         {
@@ -56,14 +50,12 @@ struct Repository: Codable, Identifiable {
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-
         try container.encode(name, forKey: .name)
         try container.encode(language, forKey: .language)
         try container.encode(stars, forKey: .stars)
         try container.encode(watchers, forKey: .watchers)
         try container.encode(forks, forKey: .forks)
         try container.encode(openIssues, forKey: .openIssues)
-
         if let ownerAvatarURL = ownerAvatarURL {
             var ownerContainer = container.nestedContainer(keyedBy: OwnerKeys.self, forKey: .owner)
             try ownerContainer.encode(ownerAvatarURL, forKey: .avatarURL)

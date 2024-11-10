@@ -18,16 +18,20 @@
 // limitations under the License.
 //
 
+import Combine
 import Foundation
 
 class RepositoryListViewModel: ObservableObject {
     @Published var repositories: [Repository] = []
     @Published var searchText: String = ""
-    @Published var error: RepositoryError?
+    @Published var error: AppError?
 
     private let repositoryManager: RepositoryFetchable
 
-    init(repositoryManager: RepositoryFetchable = RepositoryManager()) {
+    init(
+        repositoryManager: RepositoryFetchable = DIContainer.shared.resolve(
+            RepositoryFetchable.self)
+    ) {
         self.repositoryManager = repositoryManager
     }
 
@@ -44,14 +48,13 @@ class RepositoryListViewModel: ObservableObject {
                 case .success(let repositories):
                     self?.repositories = repositories
                 case .failure(let error):
-                    self?.error = RepositoryError(message: error.localizedDescription)
+                    if let appError = error as? AppError {
+                        self?.error = appError
+                    } else {
+                        self?.error = AppError.unknown(error.localizedDescription)
+                    }
                 }
             }
         }
     }
-}
-
-struct RepositoryError: Identifiable {
-    var id: String { message }
-    let message: String
 }

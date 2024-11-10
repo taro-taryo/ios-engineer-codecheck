@@ -1,5 +1,5 @@
 //
-//  RepositoryFetchable.swift
+//  ImageLoader.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -19,9 +19,22 @@
 //
 
 import Foundation
+import SwiftUI
 
-protocol RepositoryFetchable {
-    func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
-    )
+class ImageLoader: ObservableObject {
+    @Published var image: UIImage?
+    private let imageService: ImageFetchable
+
+    init(imageService: ImageFetchable = DIContainer.shared.resolve(ImageFetchable.self)) {
+        self.imageService = imageService
+    }
+
+    func loadImage(from urlString: String?) {
+        guard let urlString = urlString else { return }
+        imageService.fetchImage(from: urlString) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.image = image
+            }
+        }
+    }
 }

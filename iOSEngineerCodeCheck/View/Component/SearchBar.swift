@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  SearchBar.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -19,34 +19,6 @@
 //
 
 import SwiftUI
-
-struct ContentView: View {
-    @StateObject private var viewModel = RepositoryListViewModel()
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                SearchBar(
-                    text: $viewModel.searchText,
-                    onSearchButtonClicked: {
-                        viewModel.searchRepositories()
-                    })
-                List(viewModel.repositories) { repository in
-                    NavigationLink(destination: DetailView(repository: repository)) {
-                        RepositoryRow(repository: repository)
-                    }
-                }
-            }
-            .navigationTitle("Repositories")
-            .alert(item: $viewModel.error) { error in
-                Alert(
-                    title: Text("Error"), message: Text(error.message),
-                    dismissButton: .default(Text("OK")))
-            }
-            .modifier(KeyboardAvoider())
-        }
-    }
-}
 
 struct SearchBar: UIViewRepresentable {
     @Binding var text: String
@@ -80,8 +52,4 @@ struct SearchBar: UIViewRepresentable {
             searchBar.resignFirstResponder()
         }
     }
-}
-
-#Preview {
-    ContentView()
 }
