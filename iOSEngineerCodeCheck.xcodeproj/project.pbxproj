@@ -196,7 +196,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1520;
-				ORGANIZATIONNAME = "YUMEMI Inc.";
+				ORGANIZATIONNAME = "taro-taryo";
 				TargetAttributes = {
 					BFD945DA244DC5E80012785A = {
 						CreatedOnToolsVersion = 11.4.1;
