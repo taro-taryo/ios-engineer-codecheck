@@ -20,8 +20,14 @@
 
 import Foundation
 
-class SearchService {
-    func searchRepositories(
+protocol RepositoryFetchable {
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+    )
+}
+
+class SearchService: RepositoryFetchable {
+    func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
         let urlString = "https://api.github.com/search/repositories?q=\(searchWord)"

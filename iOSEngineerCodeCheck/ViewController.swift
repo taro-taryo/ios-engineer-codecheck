@@ -13,8 +13,18 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
 
     var repositories: [Repository] = []
-    private let repositoryManager = RepositoryManager()
+    private let repositoryManager: RepositoryFetchable
     var selectedIndex: Int?
+
+    init(repositoryManager: RepositoryFetchable = RepositoryManager()) {
+        self.repositoryManager = repositoryManager
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.repositoryManager = RepositoryManager()
+        super.init(coder: coder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
