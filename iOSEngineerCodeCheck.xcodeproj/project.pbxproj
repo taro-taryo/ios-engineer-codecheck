@@ -129,12 +129,11 @@
 			children = (
 				C650498B2CE0B84200507163 /* App */,
 				C65049852CE0B71B00507163 /* View */,
-				C65049802CE0B50F00507163 /* Error */,
-				C650497B2CE0B28E00507163 /* DependencyInjection */,
 				C65049762CE0AFA200507163 /* Domain */,
 				C65049702CE0A65F00507163 /* Data */,
+				C650497B2CE0B28E00507163 /* DependencyInjection */,
+				C65049802CE0B50F00507163 /* Error */,
 				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
-				C6835D202CE03FF200CCF57C /* ImageService.swift */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheck;
@@ -161,8 +160,9 @@
 		C65049702CE0A65F00507163 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				C65049722CE0A66D00507163 /* Repository */,
 				C65049712CE0A66700507163 /* Model */,
+				C650498E2CE0BD3100507163 /* Service */,
+				C65049722CE0A66D00507163 /* Repository */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -181,7 +181,6 @@
 			children = (
 				C6835D262CE0508900CCF57C /* RepositoryManager.swift */,
 				C6835D1C2CE03EE000CCF57C /* SearchService.swift */,
-				C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -189,8 +188,9 @@
 		C65049762CE0AFA200507163 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				C65049782CE0AFC400507163 /* Model */,
+				C650498F2CE0BD4900507163 /* Repository */,
 				C65049772CE0AFBC00507163 /* ViewModel */,
+				C65049782CE0AFC400507163 /* Model */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -233,8 +233,8 @@
 		C65049852CE0B71B00507163 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C650498D2CE0B86900507163 /* Component */,
 				C650498C2CE0B85300507163 /* Screen */,
+				C650498D2CE0B86900507163 /* Component */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -272,6 +272,22 @@
 				C65049882CE0B75000507163 /* Modifiers */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		C650498E2CE0BD3100507163 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				C6835D202CE03FF200CCF57C /* ImageService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		C650498F2CE0BD4900507163 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
