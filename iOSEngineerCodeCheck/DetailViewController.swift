@@ -34,7 +34,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         displayRepositoryDetails()
-        fetchImage()
+        fetchRepositoryImage()
     }
 
     private func displayRepositoryDetails() {
@@ -50,7 +50,7 @@ class DetailViewController: UIViewController {
         titleLabel.text = repository.name
     }
 
-    private func fetchImage() {
+    private func fetchRepositoryImage() {
         guard let imageURLString = repository?.ownerAvatarURL else {
             print("画像URLがnilまたは不正です。")
             return

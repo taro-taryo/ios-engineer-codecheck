@@ -41,10 +41,10 @@ class ViewController: UITableViewController, UISearchBarDelegate {
             print("検索ワードが空またはnilです。")
             return
         }
-        fetchRepositories(for: searchWord)
+        performRepositorySearch(for: searchWord)
     }
 
-    private func fetchRepositories(for searchWord: String) {
+    private func performRepositorySearch(for searchWord: String) {
         repositoryManager.fetchRepositories(for: searchWord) { [weak self] result in
             switch result {
             case .success(let repositories):
