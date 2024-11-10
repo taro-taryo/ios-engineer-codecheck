@@ -26,18 +26,18 @@ class SearchService: RepositoryFetchable {
     ) {
         let urlString = "https://api.github.com/search/repositories?q=\(searchWord)"
         guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "InvalidURL", code: -1, userInfo: nil)))
+            completion(.failure(AppError.network(.invalidURL)))
             return
         }
 
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
-                completion(.failure(error))
+                completion(.failure(AppError.network(.requestFailed(error))))
                 return
             }
 
             guard let data = data else {
-                completion(.failure(NSError(domain: "NoData", code: -1, userInfo: nil)))
+                completion(.failure(AppError.network(.noData)))
                 return
             }
 
@@ -46,7 +46,7 @@ class SearchService: RepositoryFetchable {
                     RepositoriesResponse.self, from: data)
                 completion(.success(decodedResponse.items))
             } catch {
-                completion(.failure(error))
+                completion(.failure(AppError.unknown(error.localizedDescription)))
             }
         }.resume()
     }

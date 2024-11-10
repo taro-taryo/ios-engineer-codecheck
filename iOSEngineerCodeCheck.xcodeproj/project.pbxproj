@@ -14,6 +14,8 @@
 		C650497A2CE0AFFC00507163 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049792CE0AFFC00507163 /* RepositoryError.swift */; };
 		C650497D2CE0B29C00507163 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C650497C2CE0B29C00507163 /* DIContainer.swift */; };
 		C650497F2CE0B2AD00507163 /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C650497E2CE0B2AD00507163 /* ServiceLocator.swift */; };
+		C65049822CE0B51A00507163 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049812CE0B51A00507163 /* AppError.swift */; };
+		C65049842CE0B52000507163 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049832CE0B52000507163 /* NetworkError.swift */; };
 		C6835D1D2CE03EE000CCF57C /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D1C2CE03EE000CCF57C /* SearchService.swift */; };
 		C6835D212CE03FF200CCF57C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D202CE03FF200CCF57C /* ImageService.swift */; };
 		C6835D272CE0508900CCF57C /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D262CE0508900CCF57C /* RepositoryManager.swift */; };
@@ -59,6 +61,8 @@
 		C65049792CE0AFFC00507163 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
 		C650497C2CE0B29C00507163 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		C650497E2CE0B2AD00507163 /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
+		C65049812CE0B51A00507163 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		C65049832CE0B52000507163 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		C6835D1C2CE03EE000CCF57C /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		C6835D202CE03FF200CCF57C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		C6835D262CE0508900CCF57C /* RepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryManager.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				C65049802CE0B50F00507163 /* Error */,
 				C650497B2CE0B28E00507163 /* DependencyInjection */,
 				C65049762CE0AFA200507163 /* Domain */,
 				C65049702CE0A65F00507163 /* Data */,
@@ -215,6 +220,15 @@
 				C650497E2CE0B2AD00507163 /* ServiceLocator.swift */,
 			);
 			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
+		C65049802CE0B50F00507163 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				C65049812CE0B51A00507163 /* AppError.swift */,
+				C65049832CE0B52000507163 /* NetworkError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,6 +365,7 @@
 				C6835D372CE06A7900CCF57C /* RepositoryFetchable.swift in Sources */,
 				C6835D352CE068AF00CCF57C /* iOSEngineerCodeCheckApp.swift in Sources */,
 				C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */,
+				C65049822CE0B51A00507163 /* AppError.swift in Sources */,
 				C650497F2CE0B2AD00507163 /* ServiceLocator.swift in Sources */,
 				C6835D1D2CE03EE000CCF57C /* SearchService.swift in Sources */,
 				C6835D2D2CE065E200CCF57C /* DetailView.swift in Sources */,
@@ -361,6 +376,7 @@
 				C6835D272CE0508900CCF57C /* RepositoryManager.swift in Sources */,
 				C65049742CE0A6C700507163 /* RepositoriesResponse.swift in Sources */,
 				C6835D212CE03FF200CCF57C /* ImageService.swift in Sources */,
+				C65049842CE0B52000507163 /* NetworkError.swift in Sources */,
 				C650497A2CE0AFFC00507163 /* RepositoryError.swift in Sources */,
 				C6835D312CE0662800CCF57C /* ImageLoader.swift in Sources */,
 			);
