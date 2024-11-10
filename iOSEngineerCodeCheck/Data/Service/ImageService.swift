@@ -17,6 +17,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+
 import UIKit
 
 protocol ImageFetchable {
@@ -29,7 +30,6 @@ class ImageService: ImageFetchable {
             completion(nil)
             return
         }
-
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil, let image = UIImage(data: data) else {
                 completion(nil)
