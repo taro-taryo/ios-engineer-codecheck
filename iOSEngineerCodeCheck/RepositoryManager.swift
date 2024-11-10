@@ -1,7 +1,7 @@
 //
 //  RepositoryManager.swift
 //  iOSEngineerCodeCheck
-//  
+//
 //  Created by taro-taryo on 2024/11/10.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
