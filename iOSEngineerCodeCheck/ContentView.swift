@@ -38,11 +38,13 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Repositories")
-            .alert(item: $viewModel.error) { error in
-                Alert(
-                    title: Text("Error"), message: Text(error.message),
-                    dismissButton: .default(Text("OK")))
-            }
+
+            // TODO: UI層の修正
+            //            .alert(item: $viewModel.error) { error in
+            //                Alert(
+            //                    title: Text("Error"), message: Text(error.message),
+            //                    dismissButton: .default(Text("OK")))
+            //            }
             .modifier(KeyboardAvoider())
         }
     }
