@@ -31,20 +31,24 @@ class ViewController: UITableViewController, UISearchBarDelegate {
             print("検索ワードが空またはnilです。")
             return
         }
-        searchRepositories(for: searchWord)
+        fetchRepositories(for: searchWord)
     }
 
-    private func searchRepositories(for searchWord: String) {
+    private func fetchRepositories(for searchWord: String) {
         searchService.searchRepositories(for: searchWord) { [weak self] result in
             switch result {
             case .success(let repositories):
-                self?.repositories = repositories
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
+                self?.updateRepositories(with: repositories)
             case .failure(let error):
                 print("データ取得エラー: \(error.localizedDescription)")
             }
+        }
+    }
+
+    private func updateRepositories(with repositories: [Repository]) {
+        self.repositories = repositories
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
 
