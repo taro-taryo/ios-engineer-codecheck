@@ -5,6 +5,7 @@
 //  Created by 史 翔新 on 2020/04/21.
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
+
 import UIKit
 
 class DetailViewController: UIViewController {
@@ -18,6 +19,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var issuesLabel: UILabel!
 
     var repository: Repository?
+    private let imageService = ImageService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,26 +40,16 @@ class DetailViewController: UIViewController {
         titleLabel.text = repository.name
     }
 
-    func fetchImage() {
-        guard let imageURLString = repository?.ownerAvatarURL,
-            let imageURL = URL(string: imageURLString)
-        else {
+    private func fetchImage() {
+        guard let imageURLString = repository?.ownerAvatarURL else {
             print("画像URLがnilまたは不正です。")
             return
         }
 
-        URLSession.shared.dataTask(with: imageURL) { [weak self] (data, response, error) in
-            if let error = error {
-                print("画像のダウンロードエラー: \(error.localizedDescription)")
-                return
-            }
-            guard let data = data, let image = UIImage(data: data) else {
-                print("画像データがnilまたは変換に失敗しました。")
-                return
-            }
+        imageService.fetchImage(from: imageURLString) { [weak self] image in
             DispatchQueue.main.async {
                 self?.imageView.image = image
             }
-        }.resume()
+        }
     }
 }
