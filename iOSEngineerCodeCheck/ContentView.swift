@@ -22,14 +22,10 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = RepositoryListViewModel()
-    @State private var keyboardVisible: Bool = false
 
     var body: some View {
         NavigationView {
             VStack {
-                if keyboardVisible {
-                    Spacer()
-                }
                 SearchBar(
                     text: $viewModel.searchText,
                     onSearchButtonClicked: {
@@ -40,7 +36,6 @@ struct ContentView: View {
                         RepositoryRow(repository: repository)
                     }
                 }
-                .frame(maxHeight: keyboardVisible ? .infinity : .none)
             }
             .navigationTitle("Repositories")
             .alert(item: $viewModel.error) { error in
@@ -48,29 +43,7 @@ struct ContentView: View {
                     title: Text("Error"), message: Text(error.message),
                     dismissButton: .default(Text("OK")))
             }
-            .onAppear {
-                // キーボード表示を監視
-                NotificationCenter.default.addObserver(
-                    forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main
-                ) { _ in
-                    withAnimation {
-                        self.keyboardVisible = true
-                    }
-                }
-                NotificationCenter.default.addObserver(
-                    forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main
-                ) { _ in
-                    withAnimation {
-                        self.keyboardVisible = false
-                    }
-                }
-            }
-            .onDisappear {
-                NotificationCenter.default.removeObserver(
-                    self, name: UIResponder.keyboardWillShowNotification, object: nil)
-                NotificationCenter.default.removeObserver(
-                    self, name: UIResponder.keyboardWillHideNotification, object: nil)
-            }
+            .modifier(KeyboardAvoider())
         }
     }
 }

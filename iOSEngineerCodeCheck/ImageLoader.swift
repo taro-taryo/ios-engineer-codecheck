@@ -23,16 +23,19 @@ import SwiftUI
 
 class ImageLoader: ObservableObject {
     @Published var image: UIImage?
+    private let imageService: ImageFetchable
+
+    init(imageService: ImageFetchable = ImageService()) {
+        self.imageService = imageService
+    }
 
     func loadImage(from urlString: String?) {
-        guard let urlString = urlString, let url = URL(string: urlString) else { return }
+        guard let urlString = urlString else { return }
 
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-            if let data = data, let uiImage = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self?.image = uiImage
-                }
+        imageService.fetchImage(from: urlString) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.image = image
             }
-        }.resume()
+        }
     }
 }

@@ -34,12 +34,11 @@ class KeyboardResponder: ObservableObject {
                 for: UIResponder.keyboardWillHideNotification)
         )
         .sink { notification in
-            if notification.name == UIResponder.keyboardWillShowNotification {
-                if let keyboardFrame = notification.userInfo?[
-                    UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-                {
-                    self.keyboardHeight = keyboardFrame.height
-                }
+            if notification.name == UIResponder.keyboardWillShowNotification,
+                let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+                    as? CGRect
+            {
+                self.keyboardHeight = keyboardFrame.height
             } else {
                 self.keyboardHeight = 0
             }

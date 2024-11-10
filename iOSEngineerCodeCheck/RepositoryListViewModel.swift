@@ -31,8 +31,14 @@ class RepositoryListViewModel: ObservableObject {
         self.repositoryManager = repositoryManager
     }
 
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+    ) {
+        repositoryManager.fetchRepositories(for: searchWord, completion: completion)
+    }
+
     func searchRepositories() {
-        repositoryManager.fetchRepositories(for: searchText) { [weak self] result in
+        fetchRepositories(for: searchText) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let repositories):
