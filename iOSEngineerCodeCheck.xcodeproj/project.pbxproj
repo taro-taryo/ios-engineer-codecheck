@@ -12,6 +12,8 @@
 		BFD94601244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */; };
 		C65049742CE0A6C700507163 /* RepositoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049732CE0A6C500507163 /* RepositoriesResponse.swift */; };
 		C650497A2CE0AFFC00507163 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049792CE0AFFC00507163 /* RepositoryError.swift */; };
+		C650497D2CE0B29C00507163 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C650497C2CE0B29C00507163 /* DIContainer.swift */; };
+		C650497F2CE0B2AD00507163 /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C650497E2CE0B2AD00507163 /* ServiceLocator.swift */; };
 		C6835D1D2CE03EE000CCF57C /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D1C2CE03EE000CCF57C /* SearchService.swift */; };
 		C6835D212CE03FF200CCF57C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D202CE03FF200CCF57C /* ImageService.swift */; };
 		C6835D272CE0508900CCF57C /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D262CE0508900CCF57C /* RepositoryManager.swift */; };
@@ -55,6 +57,8 @@
 		BFD94602244DC5EC0012785A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C65049732CE0A6C500507163 /* RepositoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesResponse.swift; sourceTree = "<group>"; };
 		C65049792CE0AFFC00507163 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
+		C650497C2CE0B29C00507163 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		C650497E2CE0B2AD00507163 /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
 		C6835D1C2CE03EE000CCF57C /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		C6835D202CE03FF200CCF57C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		C6835D262CE0508900CCF57C /* RepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryManager.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				C650497B2CE0B28E00507163 /* DependencyInjection */,
 				C65049762CE0AFA200507163 /* Domain */,
 				C65049702CE0A65F00507163 /* Data */,
 				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
@@ -201,6 +206,15 @@
 				C65049792CE0AFFC00507163 /* RepositoryError.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C650497B2CE0B28E00507163 /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				C650497C2CE0B29C00507163 /* DIContainer.swift */,
+				C650497E2CE0B2AD00507163 /* ServiceLocator.swift */,
+			);
+			path = DependencyInjection;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,9 +351,11 @@
 				C6835D372CE06A7900CCF57C /* RepositoryFetchable.swift in Sources */,
 				C6835D352CE068AF00CCF57C /* iOSEngineerCodeCheckApp.swift in Sources */,
 				C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */,
+				C650497F2CE0B2AD00507163 /* ServiceLocator.swift in Sources */,
 				C6835D1D2CE03EE000CCF57C /* SearchService.swift in Sources */,
 				C6835D2D2CE065E200CCF57C /* DetailView.swift in Sources */,
 				C6835D292CE0650400CCF57C /* ContentView.swift in Sources */,
+				C650497D2CE0B29C00507163 /* DIContainer.swift in Sources */,
 				C6835D3B2CE070D000CCF57C /* KeyboardAvoider.swift in Sources */,
 				C6835D2B2CE0659E00CCF57C /* RepositoryRow.swift in Sources */,
 				C6835D272CE0508900CCF57C /* RepositoryManager.swift in Sources */,
