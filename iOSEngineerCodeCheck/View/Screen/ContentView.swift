@@ -29,18 +29,25 @@ struct ContentView: View {
                 SearchBar(text: $viewModel.searchText) {
                     viewModel.searchRepositories()
                 }
+                .accessibilityIdentifier("searchBar")
+
                 List(viewModel.repositories) { repository in
-                    NavigationLink(destination: DetailView(repository: repository)) {
+                    NavigationLink(
+                        destination: DetailView(repository: repository)
+                    ) {
                         RepositoryRow(repository: repository)
                     }
+                    .accessibilityIdentifier("repositoryRow_\(repository.name)")
                 }
                 .navigationTitle("Repositories")
                 .alert(item: $viewModel.error) { error in
                     Alert(
                         title: Text("Error"),
                         message: Text(error.localizedDescription),
-                        dismissButton: .default(Text("OK")))
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
+                .accessibilityIdentifier("repositoryList")
                 .modifier(KeyboardAvoider())
             }
         }

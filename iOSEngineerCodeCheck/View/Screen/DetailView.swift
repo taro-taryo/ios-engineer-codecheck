@@ -37,22 +37,37 @@ struct DetailView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 200, height: 200)
                     .padding(.top, 16)
+                    .accessibilityIdentifier("avatarImage")
             } else {
                 ProgressView()
                     .frame(width: 200, height: 200)
                     .padding(.top, 16)
+                    .accessibilityIdentifier("loadingIndicator")
             }
+
             Text(repository.name)
                 .font(.title)
                 .padding(.top, 8)
+                .accessibilityIdentifier("repositoryName")
+
             VStack(alignment: .leading, spacing: 8) {
                 Text("Language: \(repository.language)")
+                    .accessibilityIdentifier("repositoryLanguage")
+
                 Text("Stars: \(repository.stars)")
+                    .accessibilityIdentifier("repositoryStars")
+
                 Text("Watchers: \(repository.watchers)")
+                    .accessibilityIdentifier("repositoryWatchers")
+
                 Text("Forks: \(repository.forks)")
+                    .accessibilityIdentifier("repositoryForks")
+
                 Text("Open Issues: \(repository.openIssues)")
+                    .accessibilityIdentifier("repositoryOpenIssues")
             }
             .padding()
+
             Spacer()
         }
         .navigationTitle("Repository Details")
