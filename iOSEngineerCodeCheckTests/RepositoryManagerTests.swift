@@ -25,23 +25,30 @@ import XCTest
 class RepositoryManagerTests: XCTestCase {
     var repositoryManager: RepositoryManager!
     var stubSearchService: StubSearchService!
+    var testContainer: DIContainer!
 
     override func setUp() {
         super.setUp()
+
+        // テスト用の DIContainer を用意し、依存関係をテストスタブで注入
+        testContainer = DIContainer()
         stubSearchService = StubSearchService()
-        repositoryManager = RepositoryManager(searchService: stubSearchService)
+        testContainer.register(
+            stubSearchService as RepositoryFetchable, for: RepositoryFetchable.self)
+        repositoryManager = RepositoryManager(
+            searchService: testContainer.resolve(RepositoryFetchable.self))
     }
 
     override func tearDown() {
         repositoryManager = nil
         stubSearchService = nil
+        testContainer = nil
         super.tearDown()
     }
 
     func testFetchRepositoriesSuccess() {
         let expectation = XCTestExpectation(description: "Repositories fetched successfully")
         stubSearchService.result = .success([Repository.stub()])
-
         repositoryManager.fetchRepositories(for: "swift") { result in
             if case .success(let repositories) = result {
                 XCTAssertEqual(repositories.count, 1)
@@ -49,7 +56,6 @@ class RepositoryManagerTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-
         wait(for: [expectation], timeout: 1.0)
     }
 
