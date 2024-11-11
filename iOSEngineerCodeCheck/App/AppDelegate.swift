@@ -1,8 +1,8 @@
 //
-//  iOSEngineerCodeCheckApp.swift
+//  AppDelegate.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/11.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,24 @@
 // limitations under the License.
 //
 
-import SwiftUI
+import UIKit
 
-@main
-struct iOSEngineerCodeCheckApp: App {
-    init() {
-        ServiceLocator.configure()
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        return true
     }
 
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+    // UISceneSession Lifecycle
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        return UISceneConfiguration(
+            name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 }

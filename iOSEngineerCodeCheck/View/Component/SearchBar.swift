@@ -28,6 +28,8 @@ struct SearchBar: UIViewRepresentable {
         let searchBar = UISearchBar()
         searchBar.placeholder = "GitHubリポジトリを検索"
         searchBar.delegate = context.coordinator
+        searchBar.accessibilityIdentifier = "searchBarField"
+        searchBar.accessibilityLabel = "searchBarField"
         return searchBar
     }
 
@@ -41,10 +43,7 @@ struct SearchBar: UIViewRepresentable {
 
     class Coordinator: NSObject, UISearchBarDelegate {
         var parent: SearchBar
-
-        init(_ parent: SearchBar) {
-            self.parent = parent
-        }
+        init(_ parent: SearchBar) { self.parent = parent }
 
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             parent.text = searchBar.text ?? ""

@@ -22,7 +22,12 @@ import SwiftUI
 
 struct DetailView: View {
     let repository: Repository
-    @StateObject private var imageLoader = ImageLoader()
+    @StateObject private var imageLoader: ImageLoader
+
+    init(repository: Repository) {
+        self.repository = repository
+        _imageLoader = StateObject(wrappedValue: ImageLoader(urlString: repository.ownerAvatarURL))
+    }
 
     var body: some View {
         VStack {
@@ -32,28 +37,38 @@ struct DetailView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 200, height: 200)
                     .padding(.top, 16)
+                    .accessibilityIdentifier("avatarImage")
             } else {
                 ProgressView()
                     .frame(width: 200, height: 200)
                     .padding(.top, 16)
+                    .accessibilityIdentifier("loadingIndicator")
             }
 
             Text(repository.name)
                 .font(.title)
                 .padding(.top, 8)
+                .accessibilityIdentifier("repositoryName")
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("Language: \(repository.language)")
+                    .accessibilityIdentifier("repositoryLanguage")
+
                 Text("Stars: \(repository.stars)")
+                    .accessibilityIdentifier("repositoryStars")
+
                 Text("Watchers: \(repository.watchers)")
+                    .accessibilityIdentifier("repositoryWatchers")
+
                 Text("Forks: \(repository.forks)")
+                    .accessibilityIdentifier("repositoryForks")
+
                 Text("Open Issues: \(repository.openIssues)")
+                    .accessibilityIdentifier("repositoryOpenIssues")
             }
             .padding()
+
             Spacer()
-        }
-        .onAppear {
-            imageLoader.loadImage(from: repository.ownerAvatarURL)
         }
         .navigationTitle("Repository Details")
         .navigationBarTitleDisplayMode(.inline)

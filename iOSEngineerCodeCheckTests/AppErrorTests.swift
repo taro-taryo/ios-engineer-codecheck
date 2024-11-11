@@ -1,8 +1,8 @@
 //
-//  DIContainer.swift
+//  AppErrorTests.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/11.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,22 +18,18 @@
 // limitations under the License.
 //
 
-import Foundation
+import XCTest
 
-class DIContainer {
-    static let shared = DIContainer()
-    private var services: [String: Any] = [:]
+@testable import iOSEngineerCodeCheck
 
-    func register<Service>(_ service: Service, for type: Service.Type) {
-        let key = String(describing: type)
-        services[key] = service
+class AppErrorTests: XCTestCase {
+    func testNetworkErrorDescription() {
+        let error = AppError.network(.invalidURL)
+        XCTAssertEqual(error.localizedDescription, "The URL provided was invalid.")
     }
 
-    func resolve<Service>(_ type: Service.Type) -> Service {
-        let key = String(describing: type)
-        guard let service = services[key] as? Service else {
-            fatalError("No registered service for \(type)")
-        }
-        return service
+    func testUnknownErrorDescription() {
+        let error = AppError.unknown("Unknown error")
+        XCTAssertEqual(error.localizedDescription, "Unknown error")
     }
 }

@@ -27,10 +27,14 @@ struct RepositoryRow: View {
         HStack {
             Text(repository.name)
                 .font(.body)
+                .accessibilityIdentifier("repositoryName_\(repository.name)")
+
             Spacer()
+
             Text(repository.language)
                 .font(.body)
                 .foregroundColor(.secondary)
+                .accessibilityIdentifier("repositoryLanguage_\(repository.language)")
         }
         .padding(.vertical, 4)
     }

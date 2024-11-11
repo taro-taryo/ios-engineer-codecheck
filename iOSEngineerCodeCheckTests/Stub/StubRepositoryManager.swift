@@ -1,6 +1,6 @@
 //
-//  RepositoryManager.swift
-//  iOSEngineerCodeCheck
+//  StubRepositoryManager.swift
+//  iOSEngineerCodeCheckTests
 //
 //  Created by taro-taryo on 2024/11/10.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
@@ -17,24 +17,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
 import Foundation
 
-class RepositoryManager: RepositoryFetchable {
-    private let searchService: RepositoryFetchable
+@testable import iOSEngineerCodeCheck
 
-    init(searchService: RepositoryFetchable = SearchService()) {
-        self.searchService = searchService
-    }
+class StubRepositoryManager: RepositoryFetchable {
+    var result: Result<[Repository], Error>?
+    var shouldReturnEmptyResult = false
+    var shouldReturnError = false
+    var shouldReturnErrorForEmptySearchText = false
 
     func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
-        guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        if shouldReturnError
+            || (shouldReturnErrorForEmptySearchText
+                && searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+        {
             completion(.failure(AppError.network(.invalidURL)))
-            return
+        } else if shouldReturnEmptyResult {
+            completion(.success([]))
+        } else if let result = result {
+            completion(result)
+        } else {
+            let sampleRepo = Repository.stub(name: "Sample Repo", language: "Swift", stars: 100)
+            completion(.success([sampleRepo]))
         }
-
-        searchService.fetchRepositories(for: searchWord, completion: completion)
     }
 }

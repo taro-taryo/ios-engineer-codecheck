@@ -35,14 +35,15 @@ class RepositoryListViewModel: ObservableObject {
         self.repositoryManager = repositoryManager
     }
 
-    func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
-    ) {
-        repositoryManager.fetchRepositories(for: searchWord, completion: completion)
+    func searchRepositories(completion: @escaping (Result<[Repository], Error>) -> Void = { _ in })
+    {
+        fetchRepositories(for: searchText, completion: completion)
     }
 
-    func searchRepositories() {
-        fetchRepositories(for: searchText) { [weak self] result in
+    private func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+    ) {
+        repositoryManager.fetchRepositories(for: searchWord) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let repositories):
@@ -54,6 +55,7 @@ class RepositoryListViewModel: ObservableObject {
                         self?.error = AppError.unknown(error.localizedDescription)
                     }
                 }
+                completion(result)
             }
         }
     }

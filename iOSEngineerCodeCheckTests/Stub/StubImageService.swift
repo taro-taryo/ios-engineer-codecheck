@@ -1,6 +1,6 @@
 //
-//  DIContainer.swift
-//  iOSEngineerCodeCheck
+//  StubImageService.swift
+//  iOSEngineerCodeCheckTests
 //
 //  Created by taro-taryo on 2024/11/10.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
@@ -18,22 +18,19 @@
 // limitations under the License.
 //
 
-import Foundation
+import UIKit
 
-class DIContainer {
-    static let shared = DIContainer()
-    private var services: [String: Any] = [:]
+@testable import iOSEngineerCodeCheck
 
-    func register<Service>(_ service: Service, for type: Service.Type) {
-        let key = String(describing: type)
-        services[key] = service
-    }
+class StubImageService: ImageFetchable {
+    var image: UIImage?
+    var shouldReturnError = false
 
-    func resolve<Service>(_ type: Service.Type) -> Service {
-        let key = String(describing: type)
-        guard let service = services[key] as? Service else {
-            fatalError("No registered service for \(type)")
+    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        if shouldReturnError {
+            completion(nil)
+        } else {
+            completion(image ?? UIImage(systemName: "photo"))
         }
-        return service
     }
 }
