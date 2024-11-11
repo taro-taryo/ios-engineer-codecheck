@@ -23,7 +23,6 @@ import XCTest
 @testable import iOSEngineerCodeCheck
 
 class RepositoryManagerTests: XCTestCase {
-
     var repositoryManager: RepositoryManager!
     var stubSearchService: StubSearchService!
 
@@ -41,8 +40,8 @@ class RepositoryManagerTests: XCTestCase {
 
     func testFetchRepositoriesSuccess() {
         let expectation = XCTestExpectation(description: "Repositories fetched successfully")
-
         stubSearchService.result = .success([Repository.stub()])
+
         repositoryManager.fetchRepositories(for: "swift") { result in
             if case .success(let repositories) = result {
                 XCTAssertEqual(repositories.count, 1)
@@ -56,8 +55,8 @@ class RepositoryManagerTests: XCTestCase {
 
     func testFetchRepositoriesFailure() {
         let expectation = XCTestExpectation(description: "Repositories fetch failed with error")
-
         stubSearchService.result = .failure(AppError.network(.invalidURL))
+
         repositoryManager.fetchRepositories(for: "invalid") { result in
             if case .failure(let error) = result {
                 XCTAssertEqual(
@@ -76,6 +75,20 @@ class RepositoryManagerTests: XCTestCase {
             if case .failure(let error) = result {
                 XCTAssertEqual(
                     error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    func testNetworkErrorReturnsAppError() {
+        let expectation = XCTestExpectation(description: "Network error returns AppError")
+        stubSearchService.shouldReturnError = true
+
+        repositoryManager.fetchRepositories(for: "invalidURL") { result in
+            if case .failure(let error as AppError) = result {
+                XCTAssertEqual(error.localizedDescription, "The URL provided was invalid.")
                 expectation.fulfill()
             }
         }

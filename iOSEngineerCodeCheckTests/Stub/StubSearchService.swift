@@ -26,6 +26,7 @@ class StubSearchService: RepositoryFetchable {
     var result: Result<[Repository], Error>?
     var shouldReturnError = false
     var shouldReturnRequestFailedError = false
+    var shouldReturnInvalidData = false
 
     func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
@@ -43,6 +44,15 @@ class StubSearchService: RepositoryFetchable {
                                 ])))))
         } else if shouldReturnError {
             completion(.failure(AppError.network(.invalidURL)))
+        } else if shouldReturnInvalidData {
+            // 不正なJSONデータでデコードエラーを発生させる
+            let invalidData = Data("invalid data".utf8)
+            do {
+                _ = try JSONDecoder().decode(RepositoriesResponse.self, from: invalidData)
+                completion(.failure(AppError.unknown("Unexpected success on invalid data")))
+            } catch {
+                completion(.failure(AppError.unknown("Failed to decode response.")))
+            }
         } else if let result = result {
             completion(result)
         } else {
