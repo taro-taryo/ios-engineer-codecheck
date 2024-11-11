@@ -35,7 +35,11 @@ class RepositoryListViewModel: ObservableObject {
         self.repositoryManager = repositoryManager
     }
 
-    func fetchRepositories(
+    func searchRepositories() {
+        fetchRepositories(for: searchText) { _ in }
+    }
+
+    private func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
         repositoryManager.fetchRepositories(for: searchWord) { [weak self] result in
@@ -53,9 +57,5 @@ class RepositoryListViewModel: ObservableObject {
                 completion(result)
             }
         }
-    }
-
-    func searchRepositories() {
-        fetchRepositories(for: searchText) { _ in }
     }
 }

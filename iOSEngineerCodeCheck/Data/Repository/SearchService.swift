@@ -17,7 +17,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
 import Foundation
 
 class SearchService: RepositoryFetchable {
@@ -28,7 +27,6 @@ class SearchService: RepositoryFetchable {
             completion(.failure(AppError.network(.invalidURL)))
             return
         }
-
         let urlString = "https://api.github.com/search/repositories?q=\(searchWord)"
         guard
             let encodedURLString = urlString.addingPercentEncoding(
@@ -38,18 +36,15 @@ class SearchService: RepositoryFetchable {
             completion(.failure(AppError.network(.invalidURL)))
             return
         }
-
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(AppError.network(.requestFailed(error))))
                 return
             }
-
             guard let data = data else {
                 completion(.failure(AppError.network(.noData)))
                 return
             }
-
             do {
                 let decodedResponse = try JSONDecoder().decode(
                     RepositoriesResponse.self, from: data)

@@ -22,7 +22,12 @@ import SwiftUI
 
 struct DetailView: View {
     let repository: Repository
-    @StateObject private var imageLoader = ImageLoader()
+    @StateObject private var imageLoader: ImageLoader
+
+    init(repository: Repository) {
+        self.repository = repository
+        _imageLoader = StateObject(wrappedValue: ImageLoader(urlString: repository.ownerAvatarURL))
+    }
 
     var body: some View {
         VStack {
@@ -37,11 +42,9 @@ struct DetailView: View {
                     .frame(width: 200, height: 200)
                     .padding(.top, 16)
             }
-
             Text(repository.name)
                 .font(.title)
                 .padding(.top, 8)
-
             VStack(alignment: .leading, spacing: 8) {
                 Text("Language: \(repository.language)")
                 Text("Stars: \(repository.stars)")
@@ -51,9 +54,6 @@ struct DetailView: View {
             }
             .padding()
             Spacer()
-        }
-        .onAppear {
-            imageLoader.loadImage(from: repository.ownerAvatarURL)
         }
         .navigationTitle("Repository Details")
         .navigationBarTitleDisplayMode(.inline)
