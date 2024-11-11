@@ -24,8 +24,17 @@ class SearchService: RepositoryFetchable {
     func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
+        guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            completion(.failure(AppError.network(.invalidURL)))
+            return
+        }
+
         let urlString = "https://api.github.com/search/repositories?q=\(searchWord)"
-        guard let url = URL(string: urlString) else {
+        guard
+            let encodedURLString = urlString.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed),
+            let url = URL(string: encodedURLString)
+        else {
             completion(.failure(AppError.network(.invalidURL)))
             return
         }
