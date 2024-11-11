@@ -218,6 +218,7 @@
 		BFD945FF244DC5EB0012785A /* iOSEngineerCodeCheckUITests */ = {
 			isa = PBXGroup;
 			children = (
+				C65F476D2CE1F1E8007F8AD9 /* Stub */,
 				BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */,
 				BFD94602244DC5EC0012785A /* Info.plist */,
 			);
@@ -367,6 +368,17 @@
 				C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		C65F476D2CE1F1E8007F8AD9 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				C65F476E2CE1F202007F8AD9 /* Repository+Stub.swift */,
+				C65F476F2CE1F202007F8AD9 /* StubImageService.swift */,
+				C65F47702CE1F202007F8AD9 /* StubRepositoryManager.swift */,
+				C65F47712CE1F202007F8AD9 /* StubSearchService.swift */,
+			);
+			path = Stub;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -570,6 +582,10 @@
 				C64030CE2CE0CFCE0026BE3D /* RepositoryManager.swift in Sources */,
 				C64030CF2CE0CFCE0026BE3D /* RepositoryFetchable.swift in Sources */,
 				C64030D02CE0CFCE0026BE3D /* ContentView.swift in Sources */,
+				C65F47722CE1F202007F8AD9 /* StubSearchService.swift in Sources */,
+				C65F47732CE1F202007F8AD9 /* StubImageService.swift in Sources */,
+				C65F47742CE1F202007F8AD9 /* Repository+Stub.swift in Sources */,
+				C65F47752CE1F202007F8AD9 /* StubRepositoryManager.swift in Sources */,
 				C64030D12CE0CFCE0026BE3D /* KeyboardAvoider.swift in Sources */,
 				C64030D22CE0CFCE0026BE3D /* DetailView.swift in Sources */,
 				C64030D32CE0CFCE0026BE3D /* RepositoryError.swift in Sources */,
