@@ -11,43 +11,111 @@ import XCTest
 @testable import iOSEngineerCodeCheck
 
 class iOSEngineerCodeCheckTests: XCTestCase {
-
-    let repositoryManagerTests = RepositoryManagerTests()
-    let repositoryListViewModelTests = RepositoryListViewModelTests()
-    let searchServiceTests = SearchServiceTests()
-    let imageLoaderTests = ImageLoaderTests()
-
-    override func setUpWithError() throws {
-        // 各テストクラスのセットアップメソッドを呼び出し
-        try super.setUpWithError()
-        repositoryManagerTests.setUp()
-        repositoryListViewModelTests.setUp()
-        searchServiceTests.setUp()
-        imageLoaderTests.setUp()
-    }
-
-    override func tearDownWithError() throws {
-        // 各テストクラスのクリーンアップメソッドを呼び出し
-        repositoryManagerTests.tearDown()
-        repositoryListViewModelTests.tearDown()
-        searchServiceTests.tearDown()
-        imageLoaderTests.tearDown()
-        try super.tearDownWithError()
-    }
-
     func testAll() throws {
-        // 各テストクラスのテストメソッドを実行
+        // RepositoryManagerTests
+        var repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
         repositoryManagerTests.testFetchRepositoriesSuccess()
+        repositoryManagerTests.tearDown()
+
+        repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
         repositoryManagerTests.testFetchRepositoriesFailure()
+        repositoryManagerTests.tearDown()
+
+        repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
+        repositoryManagerTests.testEmptySearchWordReturnsError()
+        repositoryManagerTests.tearDown()
+
+        repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
+        repositoryManagerTests.testNetworkErrorReturnsAppError()
+        repositoryManagerTests.tearDown()
+
+        // RepositoryListViewModelTests
+        var repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
+        repositoryListViewModelTests.testInitialValues()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
         repositoryListViewModelTests.testFetchRepositoriesWithValidSearchText()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
         repositoryListViewModelTests.testFetchRepositoriesWithInvalidSearchText()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
         repositoryListViewModelTests.testSearchRepositoriesUpdatesRepositories()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
         repositoryListViewModelTests.testEmptySearchTextReturnsError()
+        repositoryListViewModelTests.tearDown()
+
+        // SearchServiceTests
+        var searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
+        searchServiceTests.testDecodeErrorReturnsAppError()
+        searchServiceTests.tearDown()
+
+        searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
         searchServiceTests.testFetchRepositoriesSuccess()
+        searchServiceTests.tearDown()
+
+        searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
         searchServiceTests.testFetchRepositoriesInvalidURL()
+        searchServiceTests.tearDown()
+
+        searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
         searchServiceTests.testFetchRepositoriesRequestFailed()
+        searchServiceTests.tearDown()
+
+        // ImageLoaderTests
+        var imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
+        imageLoaderTests.testInitialImageIsNil()
+        imageLoaderTests.tearDown()
+
+        imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
         imageLoaderTests.testLoadImageWithValidURL()
+        imageLoaderTests.tearDown()
+
+        imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
         imageLoaderTests.testLoadImageWithInvalidURL()
+        imageLoaderTests.tearDown()
+
+        imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
         imageLoaderTests.testLoadImageWithNilURL()
+        imageLoaderTests.tearDown()
+
+        // AppErrorTests
+        var appErrorTests = AppErrorTests()
+        appErrorTests.testNetworkErrorDescription()
+
+        appErrorTests = AppErrorTests()
+        appErrorTests.testUnknownErrorDescription()
+
+        // NetworkErrorTests
+        var networkErrorTests = NetworkErrorTests()
+        networkErrorTests.testInvalidURLErrorDescription()
+
+        networkErrorTests = NetworkErrorTests()
+        networkErrorTests.testNoDataErrorDescription()
+
+        networkErrorTests = NetworkErrorTests()
+        networkErrorTests.testRequestFailedErrorDescription()
     }
 }
