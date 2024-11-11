@@ -20,6 +20,7 @@
 
 import UIKit
 import XCTest
+
 @testable import iOSEngineerCodeCheck
 
 class ImageLoaderTests: XCTestCase {
@@ -36,6 +37,10 @@ class ImageLoaderTests: XCTestCase {
         imageLoader = nil
         stubImageService = nil
         super.tearDown()
+    }
+
+    func testInitialImageIsNil() {
+        XCTAssertNil(imageLoader.image, "Initial image should be nil")
     }
 
     func testLoadImageWithValidURL() {

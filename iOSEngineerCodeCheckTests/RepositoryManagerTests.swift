@@ -19,6 +19,7 @@
 //
 
 import XCTest
+
 @testable import iOSEngineerCodeCheck
 
 class RepositoryManagerTests: XCTestCase {
@@ -58,7 +59,8 @@ class RepositoryManagerTests: XCTestCase {
 
         repositoryManager.fetchRepositories(for: "invalid") { result in
             if case .failure(let error) = result {
-                XCTAssertEqual(error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
+                XCTAssertEqual(
+                    error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
                 expectation.fulfill()
             }
         }
@@ -71,7 +73,22 @@ class RepositoryManagerTests: XCTestCase {
 
         repositoryManager.fetchRepositories(for: "") { result in
             if case .failure(let error) = result {
-                XCTAssertEqual(error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
+                XCTAssertEqual(
+                    error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    func testNetworkErrorReturnsAppError() {
+        let expectation = XCTestExpectation(description: "Network error returns AppError")
+        stubSearchService.shouldReturnError = true
+
+        repositoryManager.fetchRepositories(for: "invalidURL") { result in
+            if case .failure(let error as AppError) = result {
+                XCTAssertEqual(error.localizedDescription, "The URL provided was invalid.")
                 expectation.fulfill()
             }
         }

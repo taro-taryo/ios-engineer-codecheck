@@ -19,6 +19,7 @@
 //
 
 import XCTest
+
 @testable import iOSEngineerCodeCheck
 
 class RepositoryListViewModelTests: XCTestCase {
@@ -35,6 +36,11 @@ class RepositoryListViewModelTests: XCTestCase {
         viewModel = nil
         stubRepositoryManager = nil
         super.tearDown()
+    }
+
+    func testInitialValues() {
+        XCTAssertTrue(viewModel.searchText.isEmpty, "searchText should be initially empty")
+        XCTAssertTrue(viewModel.repositories.isEmpty, "repositories should be initially empty")
     }
 
     func testFetchRepositoriesWithValidSearchText() {
@@ -58,7 +64,8 @@ class RepositoryListViewModelTests: XCTestCase {
 
         viewModel.searchRepositories { result in
             if case .failure(let error) = result {
-                XCTAssertEqual(error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
+                XCTAssertEqual(
+                    error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
                 expectation.fulfill()
             }
         }
@@ -90,7 +97,9 @@ class RepositoryListViewModelTests: XCTestCase {
         viewModel.searchRepositories { _ in
             DispatchQueue.main.async {
                 XCTAssertNotNil(self.viewModel.error)
-                XCTAssertEqual(self.viewModel.error?.localizedDescription, AppError.network(.invalidURL).localizedDescription)
+                XCTAssertEqual(
+                    self.viewModel.error?.localizedDescription,
+                    AppError.network(.invalidURL).localizedDescription)
                 expectation.fulfill()
             }
         }

@@ -1,7 +1,7 @@
 //
 //  NetworkErrorTests.swift
 //  iOSEngineerCodeCheck
-//  
+//
 //  Created by taro-taryo on 2024/11/11.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
@@ -19,6 +19,7 @@
 //
 
 import XCTest
+
 @testable import iOSEngineerCodeCheck
 
 class NetworkErrorTests: XCTestCase {
@@ -33,7 +34,9 @@ class NetworkErrorTests: XCTestCase {
     }
 
     func testRequestFailedErrorDescription() {
-        let error = NetworkError.requestFailed(NSError(domain: "", code: -1009, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+        let error = NetworkError.requestFailed(
+            NSError(domain: "", code: -1009, userInfo: [NSLocalizedDescriptionKey: "Network error"])
+        )
         XCTAssertEqual(error.localizedDescription, "Request failed with error: Network error")
     }
 }

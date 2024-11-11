@@ -23,7 +23,6 @@ import XCTest
 @testable import iOSEngineerCodeCheck
 
 class SearchServiceTests: XCTestCase {
-
     var searchService: StubSearchService!
 
     override func setUp() {
@@ -36,10 +35,22 @@ class SearchServiceTests: XCTestCase {
         super.tearDown()
     }
 
+    func testDecodeErrorReturnsAppError() {
+        let expectation = XCTestExpectation(description: "Decode error returns AppError")
+        searchService.shouldReturnInvalidData = true
+
+        searchService.fetchRepositories(for: "invalidData") { result in
+            if case .failure(let error as AppError) = result {
+                XCTAssertEqual(error.localizedDescription, "Failed to decode response.")
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 1.0)
+    }
+
     func testFetchRepositoriesSuccess() {
         let expectation = XCTestExpectation(description: "Repositories fetched successfully")
-
-        // 成功結果を設定
         searchService.result = .success([Repository.stub()])
 
         searchService.fetchRepositories(for: "swift") { result in
@@ -55,8 +66,6 @@ class SearchServiceTests: XCTestCase {
     func testFetchRepositoriesInvalidURL() {
         let expectation = XCTestExpectation(
             description: "Repositories fetch failed with invalid URL error")
-
-        // 無効なURLでエラーを返す設定
         searchService.shouldReturnError = true
 
         searchService.fetchRepositories(for: "") { result in
@@ -72,8 +81,6 @@ class SearchServiceTests: XCTestCase {
 
     func testFetchRepositoriesRequestFailed() {
         let expectation = XCTestExpectation(description: "Request failed error returned")
-
-        // リクエスト失敗エラーを強制する設定
         searchService.shouldReturnRequestFailedError = true
 
         searchService.fetchRepositories(for: "unreachable") { result in

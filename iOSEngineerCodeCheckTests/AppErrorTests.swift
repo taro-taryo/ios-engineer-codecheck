@@ -1,7 +1,7 @@
 //
 //  AppErrorTests.swift
 //  iOSEngineerCodeCheck
-//  
+//
 //  Created by taro-taryo on 2024/11/11.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
@@ -19,6 +19,7 @@
 //
 
 import XCTest
+
 @testable import iOSEngineerCodeCheck
 
 class AppErrorTests: XCTestCase {
