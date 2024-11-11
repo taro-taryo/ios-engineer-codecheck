@@ -1,54 +1,31 @@
-# 株式会社ゆめみ iOS エンジニアコードチェック課題
+# iOSEngineerCodeCheck プロジェクト
 
 ## 概要
+このプロジェクトは、GitHubのリポジトリを検索し、一覧表示されたリポジトリの詳細情報を確認できるiOSアプリケーションです。検索結果からリポジトリを選択することで、リポジトリの詳細情報（名前、使用言語、スター数、ウォッチャー数、フォーク数、オープンなイシュー数、オーナーのアバター画像）を表示します。
 
-本プロジェクトは株式会社ゆめみ（以下弊社）が、弊社に iOS エンジニアを希望する方に出す課題のベースプロジェクトです。本課題が与えられた方は、下記の説明を詳しく読んだ上で課題を取り組んでください。
+## 課題: Fat View Controller の回避
+本プロジェクトでは `ViewController` が必要以上の責務を抱えていたため、いわゆる "Fat View Controller" 状態となっていました。今回のリファクタリングにより、以下の責務の分離を行い、各 `ViewController` の役割を明確化しました。
 
-新卒／未経験者エンジニアの場合、本リファクタリングの通常課題の代わりに、[新規アプリ作成の特別課題](https://yumemi-ios-junior-engineer-codecheck.app.swift.cloud)も選択できますので、ご自身が得意と感じる方を選んでください。特別課題を選んだ場合、通常課題の取り組みは不要です。新規アプリ作成の課題の説明を詳しく読んだ上で課題を取り組んでください。
+### リファクタリング内容
+- **検索機能の分離**: GitHub APIを使ったリポジトリ検索を `SearchService` クラスに切り出しました。これにより、`ViewController` のコードが簡潔になり、責務が検索機能から分離されました。
+- **画像取得機能の分離**: リポジトリのオーナーのアバター画像の非同期取得を `ImageService` クラスに移行しました。この変更により、画像の取得処理が `DetailViewController` から分離され、画像処理に特化した責務として扱われるようになりました。
 
-## アプリ仕様
+## ファイル構成
+- **ViewController.swift**: GitHubのリポジトリを検索し、検索結果をリスト表示する画面。`SearchService` を使って検索し、検索結果を表示します。
+- **DetailViewController.swift**: 選択されたリポジトリの詳細情報を表示する画面。各リポジトリの詳細情報と、`ImageService` を使用してリポジトリのオーナーのアバター画像を表示します。
+- **Repository.swift**: `Repository`構造体および`RepositoriesResponse`構造体を定義し、GitHub APIのレスポンスからリポジトリのデータをデコードします。
+- **SearchService.swift**: GitHubのAPIからリポジトリデータを取得するためのサービスクラス。非同期でデータ取得し、取得結果を `Result` 型で返却します。
+- **ImageService.swift**: 画像取得に関する処理を担当するクラス。指定されたURLから画像データを非同期でダウンロードし、`UIImage`として返却します。
+- **AppDelegate.swift** & **SceneDelegate.swift**: アプリケーションのライフサイクルイベントを管理します。
+- **iOSEngineerCodeCheckTests.swift**: 単体テスト用のファイル。
+- **iOSEngineerCodeCheckUITests.swift**: UIテスト用のファイル。
 
-本アプリは GitHub のリポジトリーを検索するアプリです。
+## 使用技術
+- **言語**: Swift
+- **UIフレームワーク**: UIKit
+- **ネットワーク**: `URLSession`を使用してGitHub APIと通信し、検索および画像の非同期取得を行います。
+- **データ解析**: `JSONDecoder`を用いてGitHub APIからのレスポンスデータをパース。
 
-![動作イメージ](README_Images/app.gif)
+## 生成AIの利用について
+このREADMEおよびプロジェクトの一部コードは、生成AIを活用して作成しました。そのため、内容にはAIが生成したものが含まれています。
 
-### 環境
-
-- IDE：基本最新の安定版（本概要更新時点では Xcode 15.2）
-- Swift：基本最新の安定版（本概要更新時点では Swift 5.9）
-- 開発ターゲット：基本最新の安定版（本概要更新時点では iOS 17.2）
-- サードパーティーライブラリーの利用：オープンソースのものに限り制限しない
-
-### 動作
-
-1. 何かしらのキーワードを入力
-2. GitHub API（`search/repositories`）でリポジトリーを検索し、結果一覧を概要（リポジトリ名）で表示
-3. 特定の結果を選択したら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数）を表示
-
-## 課題取り組み方法
-
-Issues を確認した上、本プロジェクトを [**Duplicate** してください](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository)（Fork しないようにしてください。必要ならプライベートリポジトリーにしても大丈夫です）。今後のコミットは全てご自身のリポジトリーで行ってください。
-
-コードチェックの課題 Issue は全て [`課題`](https://github.com/yumemi/ios-engineer-codecheck/milestone/1) Milestone がついており、難易度に応じて Label が [`初級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A初級+milestone%3A課題)、[`中級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A中級+milestone%3A課題+) と [`ボーナス`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3Aボーナス+milestone%3A課題+) に分けられています。課題の必須／選択は下記の表とします：
-
-|   | 初級 | 中級 | ボーナス
-|--:|:--:|:--:|:--:|
-| 新卒／未経験者 | 必須 | 選択 | 選択 |
-| 中途／経験者 | 必須 | 必須 | 選択 |
-
-
-課題 Issueをご自身のリポジトリーにコピーするGitHub Actionsをご用意しております。  
-[こちらのWorkflow](./.github/workflows/copy-issues.yml)を[手動でトリガーする](https://docs.github.com/ja/actions/managing-workflow-runs/manually-running-a-workflow)ことでコピーできますのでご活用下さい。
-
-課題が完成したら、リポジトリーのアドレスを教えてください。
-
-## 参考情報
-
-提出された課題の評価ポイントについても詳しく書かれてありますので、ぜひご覧ください。
-
-- [私が（iOS エンジニアの）採用でコードチェックする時何を見ているのか](https://qiita.com/lovee/items/d76c68341ec3e7beb611)
-- [CocoaPods の利用手引き](https://qiita.com/ykws/items/b951a2e24ca85013e722)
-- [ChatGPT (Model: GPT-4) でコードリファクタリングをやってみる](https://qiita.com/mitsuharu_e/items/213491c668ab75924cfd)
-
-ChatGPTなどAIサービスの利用は禁止しておりません。  
-利用にあたって工夫したプロンプトやソースコメント等をご提出頂くと加点評価する場合がございます。 (減点評価はありません)
