@@ -58,8 +58,6 @@ struct KeyboardAvoider: ViewModifier {
     @ObservedObject private var keyboardResponder = KeyboardResponder()
 
     func body(content: Content) -> some View {
-        content
-            .padding(.bottom, keyboardResponder.keyboardHeight)
-            .accessibilityIdentifier("keyboardAvoider")
+        content.padding(.bottom, keyboardResponder.keyboardHeight)
     }
 }

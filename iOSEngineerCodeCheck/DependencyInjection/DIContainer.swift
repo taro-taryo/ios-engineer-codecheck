@@ -22,7 +22,6 @@ import Foundation
 
 class DIContainer {
     static let shared = DIContainer()
-
     private var services: [String: Any] = [:]
 
     func register<Service>(_ service: Service, for type: Service.Type) {
