@@ -1,54 +1,38 @@
-# 株式会社ゆめみ iOS エンジニアコードチェック課題
+# iOSEngineerCodeCheck プロジェクト
 
 ## 概要
+このプロジェクトは、GitHubのリポジトリを検索し、検索結果をリスト表示し、詳細情報を確認できるiOSアプリケーションです。リストからリポジトリを選択すると、詳細画面でリポジトリの名前、使用言語、スター数、ウォッチャー数、フォーク数、オープンなイシュー数、オーナーのアバター画像などの情報が表示されます。
 
-本プロジェクトは株式会社ゆめみ（以下弊社）が、弊社に iOS エンジニアを希望する方に出す課題のベースプロジェクトです。本課題が与えられた方は、下記の説明を詳しく読んだ上で課題を取り組んでください。
+## アーキテクチャ
+このプロジェクトでは、**Clean Architecture** を適用し、プレゼンテーションロジックやデータ取得ロジック、依存性の管理を明確に分離しました。このアーキテクチャにより、各層が単一の責任を持ち、テスト可能で拡張性の高い設計となっています。
 
-新卒／未経験者エンジニアの場合、本リファクタリングの通常課題の代わりに、[新規アプリ作成の特別課題](https://yumemi-ios-junior-engineer-codecheck.app.swift.cloud)も選択できますので、ご自身が得意と感じる方を選んでください。特別課題を選んだ場合、通常課題の取り組みは不要です。新規アプリ作成の課題の説明を詳しく読んだ上で課題を取り組んでください。
+### アーキテクチャの適用内容
+- **Clean Architecture**: 
+  - **Presentation** 層: ユーザーインターフェースに関わる部分を管理しています。`View` や `ViewModel` で構成されており、`SwiftUI` を使用して宣言的なUIを構築しています。
+  - **Domain** 層: ビジネスロジックを管理する層で、リポジトリ取得や画像取得のインターフェースを定義したプロトコル (`RepositoryFetchable` や `ImageFetchable`) を提供し、具体的なデータソースに依存しない設計です。
+  - **Data** 層: データの取得および加工を行う層です。APIからリポジトリ情報を取得する `SearchService` や、画像を取得する `ImageService` が含まれます。
+  - **Dependency Injection**: `DIContainer` と `ServiceLocator` を使用して依存性を解決し、各層で必要なコンポーネントを注入しています。これにより、テストが容易になり、モジュールの交換が柔軟に行えます。
 
-## アプリ仕様
+### 主な構成要素
+- **DIContainer**: アプリケーション全体で使用するサービスを一元管理し、依存性を解決するためのコンテナ。
+- **ServiceLocator**: アプリの起動時にDIコンテナにサービスを登録し、必要な場所での依存性注入を可能にします。
+- **エラーハンドリング**: `AppError` と `NetworkError` を使用してエラーの種類を管理し、ユーザーに適切なフィードバックを提供します。
 
-本アプリは GitHub のリポジトリーを検索するアプリです。
+## ファイル構成
+- **App/iOSEngineerCodeCheckApp.swift**: アプリケーションのエントリーポイントで、DIコンテナにサービスを登録する初期設定を行います。
+- **View/Screen/ContentView.swift**: メイン画面で、検索バーとリポジトリ一覧を表示するSwiftUIビューです。
+- **View/Screen/DetailView.swift**: リポジトリの詳細情報を表示するSwiftUIビューで、`ImageLoader` を使用してリポジトリのオーナーのアバター画像を取得・表示します。
+- **Domain/ViewModel/RepositoryListViewModel.swift**: 検索機能やリポジトリ情報の取得を担当するビューモデルで、ユーザーの検索操作に応じて `RepositoryManager` からデータを取得し、UIを更新します。
+- **Data/Repository/RepositoryManager.swift**: リポジトリ取得ロジックを担当し、`SearchService` を通じてAPIからデータを取得します。
+- **Data/Service/ImageService.swift**: 画像取得のサービスで、`ImageFetchable` プロトコルに準拠しています。
+- **DependencyInjection/DIContainer.swift** と **ServiceLocator.swift**: 依存性の管理と解決のためのDIコンテナおよびサービスロケーターです。
 
-![動作イメージ](README_Images/app.gif)
+## 使用技術
+- **言語**: Swift
+- **アーキテクチャ**: Clean Architecture
+- **UIフレームワーク**: SwiftUI
+- **ネットワーク**: `URLSession`を利用してGitHub APIと通信し、リポジトリと画像データの非同期取得を行います。
+- **データ解析**: `JSONDecoder`でGitHub APIのレスポンスデータをSwiftの構造体にデコードしています。
 
-### 環境
-
-- IDE：基本最新の安定版（本概要更新時点では Xcode 15.2）
-- Swift：基本最新の安定版（本概要更新時点では Swift 5.9）
-- 開発ターゲット：基本最新の安定版（本概要更新時点では iOS 17.2）
-- サードパーティーライブラリーの利用：オープンソースのものに限り制限しない
-
-### 動作
-
-1. 何かしらのキーワードを入力
-2. GitHub API（`search/repositories`）でリポジトリーを検索し、結果一覧を概要（リポジトリ名）で表示
-3. 特定の結果を選択したら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数）を表示
-
-## 課題取り組み方法
-
-Issues を確認した上、本プロジェクトを [**Duplicate** してください](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository)（Fork しないようにしてください。必要ならプライベートリポジトリーにしても大丈夫です）。今後のコミットは全てご自身のリポジトリーで行ってください。
-
-コードチェックの課題 Issue は全て [`課題`](https://github.com/yumemi/ios-engineer-codecheck/milestone/1) Milestone がついており、難易度に応じて Label が [`初級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A初級+milestone%3A課題)、[`中級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A中級+milestone%3A課題+) と [`ボーナス`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3Aボーナス+milestone%3A課題+) に分けられています。課題の必須／選択は下記の表とします：
-
-|   | 初級 | 中級 | ボーナス
-|--:|:--:|:--:|:--:|
-| 新卒／未経験者 | 必須 | 選択 | 選択 |
-| 中途／経験者 | 必須 | 必須 | 選択 |
-
-
-課題 Issueをご自身のリポジトリーにコピーするGitHub Actionsをご用意しております。  
-[こちらのWorkflow](./.github/workflows/copy-issues.yml)を[手動でトリガーする](https://docs.github.com/ja/actions/managing-workflow-runs/manually-running-a-workflow)ことでコピーできますのでご活用下さい。
-
-課題が完成したら、リポジトリーのアドレスを教えてください。
-
-## 参考情報
-
-提出された課題の評価ポイントについても詳しく書かれてありますので、ぜひご覧ください。
-
-- [私が（iOS エンジニアの）採用でコードチェックする時何を見ているのか](https://qiita.com/lovee/items/d76c68341ec3e7beb611)
-- [CocoaPods の利用手引き](https://qiita.com/ykws/items/b951a2e24ca85013e722)
-- [ChatGPT (Model: GPT-4) でコードリファクタリングをやってみる](https://qiita.com/mitsuharu_e/items/213491c668ab75924cfd)
-
-ChatGPTなどAIサービスの利用は禁止しておりません。  
-利用にあたって工夫したプロンプトやソースコメント等をご提出頂くと加点評価する場合がございます。 (減点評価はありません)
+## 生成AIの利用について
+このREADMEおよび一部コードは、生成AIを活用して作成しました。生成AIを利用することで、迅速に高品質なコードとドキュメントを作成し、プロジェクトのアーキテクチャ設計に集中することができました。
