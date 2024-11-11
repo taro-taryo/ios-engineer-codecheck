@@ -28,7 +28,9 @@ struct RepositoryRow: View {
             Text(repository.name)
                 .font(.body)
                 .accessibilityIdentifier("repositoryName_\(repository.name)")
+
             Spacer()
+
             Text(repository.language)
                 .font(.body)
                 .foregroundColor(.secondary)
