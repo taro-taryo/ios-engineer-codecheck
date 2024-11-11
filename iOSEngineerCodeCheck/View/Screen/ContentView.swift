@@ -39,8 +39,7 @@ struct ContentView: View {
                     Alert(
                         title: Text("Error"),
                         message: Text(error.localizedDescription),
-                        dismissButton: .default(Text("OK"))
-                    )
+                        dismissButton: .default(Text("OK")))
                 }
                 .modifier(KeyboardAvoider())
             }
