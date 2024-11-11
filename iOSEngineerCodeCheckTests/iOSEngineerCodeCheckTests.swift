@@ -7,47 +7,53 @@
 //
 
 import XCTest
-
 @testable import iOSEngineerCodeCheck
 
 class iOSEngineerCodeCheckTests: XCTestCase {
-
-    let repositoryManagerTests = RepositoryManagerTests()
-    let repositoryListViewModelTests = RepositoryListViewModelTests()
-    let searchServiceTests = SearchServiceTests()
-    let imageLoaderTests = ImageLoaderTests()
-
-    override func setUpWithError() throws {
-        // 各テストクラスのセットアップメソッドを呼び出し
-        try super.setUpWithError()
-        repositoryManagerTests.setUp()
-        repositoryListViewModelTests.setUp()
-        searchServiceTests.setUp()
-        imageLoaderTests.setUp()
-    }
-
-    override func tearDownWithError() throws {
-        // 各テストクラスのクリーンアップメソッドを呼び出し
-        repositoryManagerTests.tearDown()
-        repositoryListViewModelTests.tearDown()
-        searchServiceTests.tearDown()
-        imageLoaderTests.tearDown()
-        try super.tearDownWithError()
-    }
-
+    
     func testAll() throws {
-        // 各テストクラスのテストメソッドを実行
+        // RepositoryManagerTests
+        let repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
         repositoryManagerTests.testFetchRepositoriesSuccess()
         repositoryManagerTests.testFetchRepositoriesFailure()
+        repositoryManagerTests.testEmptySearchWordReturnsError()
+        repositoryManagerTests.tearDown()
+
+        // RepositoryListViewModelTests
+        let repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
         repositoryListViewModelTests.testFetchRepositoriesWithValidSearchText()
         repositoryListViewModelTests.testFetchRepositoriesWithInvalidSearchText()
         repositoryListViewModelTests.testSearchRepositoriesUpdatesRepositories()
         repositoryListViewModelTests.testEmptySearchTextReturnsError()
+        repositoryListViewModelTests.tearDown()
+
+        // SearchServiceTests
+        let searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
         searchServiceTests.testFetchRepositoriesSuccess()
         searchServiceTests.testFetchRepositoriesInvalidURL()
         searchServiceTests.testFetchRepositoriesRequestFailed()
+        searchServiceTests.tearDown()
+
+        // ImageLoaderTests
+        let imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
         imageLoaderTests.testLoadImageWithValidURL()
         imageLoaderTests.testLoadImageWithInvalidURL()
         imageLoaderTests.testLoadImageWithNilURL()
+        imageLoaderTests.tearDown()
+
+        // AppErrorTests
+        let appErrorTests = AppErrorTests()
+        appErrorTests.testNetworkErrorDescription()
+        appErrorTests.testUnknownErrorDescription()
+
+        // NetworkErrorTests
+        let networkErrorTests = NetworkErrorTests()
+        networkErrorTests.testInvalidURLErrorDescription()
+        networkErrorTests.testNoDataErrorDescription()
+        networkErrorTests.testRequestFailedErrorDescription()
     }
 }

@@ -20,11 +20,9 @@
 
 import UIKit
 import XCTest
-
 @testable import iOSEngineerCodeCheck
 
 class ImageLoaderTests: XCTestCase {
-
     var imageLoader: ImageLoader!
     var stubImageService: StubImageService!
 
@@ -42,8 +40,8 @@ class ImageLoaderTests: XCTestCase {
 
     func testLoadImageWithValidURL() {
         let expectation = XCTestExpectation(description: "Image loaded successfully")
-
         stubImageService.image = UIImage()
+
         imageLoader.loadImage(from: "validURL")
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -56,13 +54,15 @@ class ImageLoaderTests: XCTestCase {
 
     func testLoadImageWithInvalidURL() {
         let expectation = XCTestExpectation(description: "Image loading failed with nil")
-        stubImageService.shouldReturnError = true  // エラーを強制してnilを返すように設定
+        stubImageService.shouldReturnError = true
 
         imageLoader.loadImage(from: "invalidURL")
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             XCTAssertNil(self.imageLoader.image)
             expectation.fulfill()
         }
+
         wait(for: [expectation], timeout: 1.0)
     }
 

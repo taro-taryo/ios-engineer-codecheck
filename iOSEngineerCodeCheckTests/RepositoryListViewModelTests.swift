@@ -19,11 +19,9 @@
 //
 
 import XCTest
-
 @testable import iOSEngineerCodeCheck
 
 class RepositoryListViewModelTests: XCTestCase {
-
     var viewModel: RepositoryListViewModel!
     var stubRepositoryManager: StubRepositoryManager!
 
@@ -43,7 +41,7 @@ class RepositoryListViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Repositories fetched successfully")
         stubRepositoryManager.result = .success([Repository.stub()])
 
-        viewModel.fetchRepositories(for: "test") { result in
+        viewModel.searchRepositories { result in
             if case .success(let repositories) = result {
                 XCTAssertEqual(repositories.count, 1)
                 XCTAssertEqual(repositories.first?.name, "Sample Repo")
@@ -58,10 +56,9 @@ class RepositoryListViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Repositories fetch failed with error")
         stubRepositoryManager.result = .failure(AppError.network(.invalidURL))
 
-        viewModel.fetchRepositories(for: "invalid") { result in
+        viewModel.searchRepositories { result in
             if case .failure(let error) = result {
-                XCTAssertEqual(
-                    error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
+                XCTAssertEqual(error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
                 expectation.fulfill()
             }
         }
@@ -71,15 +68,15 @@ class RepositoryListViewModelTests: XCTestCase {
 
     func testSearchRepositoriesUpdatesRepositories() {
         let expectation = XCTestExpectation(description: "Repositories are updated")
-
         stubRepositoryManager.result = .success([Repository.stub()])
         viewModel.searchText = "swift"
-        viewModel.searchRepositories()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            XCTAssertEqual(self.viewModel.repositories.count, 1)
-            XCTAssertEqual(self.viewModel.repositories.first?.name, "Sample Repo")
-            expectation.fulfill()
+        viewModel.searchRepositories { _ in
+            DispatchQueue.main.async {
+                XCTAssertEqual(self.viewModel.repositories.count, 1)
+                XCTAssertEqual(self.viewModel.repositories.first?.name, "Sample Repo")
+                expectation.fulfill()
+            }
         }
 
         wait(for: [expectation], timeout: 1.0)
@@ -87,17 +84,15 @@ class RepositoryListViewModelTests: XCTestCase {
 
     func testEmptySearchTextReturnsError() {
         let expectation = XCTestExpectation(description: "Error returned for empty search text")
-
-        stubRepositoryManager.shouldReturnErrorForEmptySearchText = true  // 空の検索語でエラーを返すように設定
+        stubRepositoryManager.shouldReturnErrorForEmptySearchText = true
         viewModel.searchText = ""
-        viewModel.searchRepositories()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            XCTAssertNotNil(self.viewModel.error)
-            XCTAssertEqual(
-                self.viewModel.error?.localizedDescription,
-                AppError.network(.invalidURL).localizedDescription)
-            expectation.fulfill()
+        viewModel.searchRepositories { _ in
+            DispatchQueue.main.async {
+                XCTAssertNotNil(self.viewModel.error)
+                XCTAssertEqual(self.viewModel.error?.localizedDescription, AppError.network(.invalidURL).localizedDescription)
+                expectation.fulfill()
+            }
         }
 
         wait(for: [expectation], timeout: 1.0)
