@@ -17,7 +17,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
 import Foundation
 
 @testable import iOSEngineerCodeCheck
@@ -26,7 +25,7 @@ class StubRepositoryManager: RepositoryFetchable {
     var result: Result<[Repository], Error>?
     var shouldReturnEmptyResult = false
     var shouldReturnError = false
-    var shouldReturnErrorForEmptySearchText = false  // 空の検索語に対してエラーを返すかの制御用
+    var shouldReturnErrorForEmptySearchText = false
 
     func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
@@ -41,7 +40,8 @@ class StubRepositoryManager: RepositoryFetchable {
         } else if let result = result {
             completion(result)
         } else {
-            completion(.success([Repository.stub()]))  // デフォルトの成功パターン
+            let sampleRepo = Repository.stub(name: "Sample Repo", language: "Swift", stars: 100)
+            completion(.success([sampleRepo]))
         }
     }
 }
