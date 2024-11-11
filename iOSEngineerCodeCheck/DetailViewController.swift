@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var issuesLabel: UILabel!
 
-    var repository: Repository!
+    var repository: Repository?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,10 @@ class DetailViewController: UIViewController {
     }
 
     private func displayRepositoryDetails() {
-        // 選択されたリポジトリの詳細を取得して表示する
+        guard let repository = repository else {
+            print("リポジトリデータがnilです。")
+            return
+        }
         languageLabel.text = "Written in \(repository.language)"
         starsLabel.text = "\(repository.stars) stars"
         watchersLabel.text = "\(repository.watchers) watchers"
@@ -36,15 +39,24 @@ class DetailViewController: UIViewController {
     }
 
     func fetchImage() {
-        // リポジトリ所有者のアバター画像を取得する
-        guard let imageURL = repository.ownerAvatarURL
-        else { return }
+        guard let imageURLString = repository?.ownerAvatarURL,
+            let imageURL = URL(string: imageURLString)
+        else {
+            print("画像URLがnilまたは不正です。")
+            return
+        }
 
-        // 非同期リクエストで画像をダウンロードして設定
-        URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, response, error) in
-            guard let data = data, let image = UIImage(data: data) else { return }
+        URLSession.shared.dataTask(with: imageURL) { [weak self] (data, response, error) in
+            if let error = error {
+                print("画像のダウンロードエラー: \(error.localizedDescription)")
+                return
+            }
+            guard let data = data, let image = UIImage(data: data) else {
+                print("画像データがnilまたは変換に失敗しました。")
+                return
+            }
             DispatchQueue.main.async {
-                self.imageView.image = image
+                self?.imageView.image = image
             }
         }.resume()
     }
