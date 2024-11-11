@@ -24,13 +24,13 @@ import UIKit
 
 class StubImageService: ImageFetchable {
     var image: UIImage?
-    var shouldReturnError = false  // エラーを返すかの制御用
+    var shouldReturnError = false
 
     func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         if shouldReturnError {
-            completion(nil)  // エラー時はnilを返す
+            completion(nil)
         } else {
-            completion(image)  // 設定された画像、もしくはnilを返す
+            completion(image ?? UIImage(systemName: "photo"))
         }
     }
 }
