@@ -33,20 +33,24 @@ class KeyboardResponder: ObservableObject {
             with: NotificationCenter.default.publisher(
                 for: UIResponder.keyboardWillHideNotification)
         )
-        .sink { notification in
-            if notification.name == UIResponder.keyboardWillShowNotification,
-                let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
-                    as? CGRect
-            {
-                self.keyboardHeight = keyboardFrame.height
-            } else {
-                self.keyboardHeight = 0
-            }
+        .sink { [weak self] notification in
+            self?.handleKeyboardNotification(notification)
         }
     }
 
     deinit {
         cancellable?.cancel()
+    }
+
+    private func handleKeyboardNotification(_ notification: Notification) {
+        if notification.name == UIResponder.keyboardWillShowNotification,
+            let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+                as? CGRect
+        {
+            keyboardHeight = keyboardFrame.height
+        } else {
+            keyboardHeight = 0
+        }
     }
 }
 
@@ -54,7 +58,6 @@ struct KeyboardAvoider: ViewModifier {
     @ObservedObject private var keyboardResponder = KeyboardResponder()
 
     func body(content: Content) -> some View {
-        content
-            .padding(.bottom, keyboardResponder.keyboardHeight)
+        content.padding(.bottom, keyboardResponder.keyboardHeight)
     }
 }

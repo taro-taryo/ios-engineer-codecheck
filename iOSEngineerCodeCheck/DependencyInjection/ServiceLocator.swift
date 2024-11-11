@@ -21,8 +21,7 @@
 import Foundation
 
 class ServiceLocator {
-    static func configure() {
-        let container = DIContainer.shared
+    static func configure(container: DIContainer = DIContainer.shared) {
         container.register(
             RepositoryManager() as RepositoryFetchable, for: RepositoryFetchable.self)
         container.register(ImageService() as ImageFetchable, for: ImageFetchable.self)

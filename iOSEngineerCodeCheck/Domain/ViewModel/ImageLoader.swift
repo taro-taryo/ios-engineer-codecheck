@@ -25,8 +25,14 @@ class ImageLoader: ObservableObject {
     @Published var image: UIImage?
     private let imageService: ImageFetchable
 
-    init(imageService: ImageFetchable = DIContainer.shared.resolve(ImageFetchable.self)) {
+    init(
+        imageService: ImageFetchable = DIContainer.shared.resolve(ImageFetchable.self),
+        urlString: String? = nil
+    ) {
         self.imageService = imageService
+        if let urlString = urlString {
+            loadImage(from: urlString)
+        }
     }
 
     func loadImage(from urlString: String?) {
