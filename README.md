@@ -17,7 +17,7 @@
 
 ## アプリ仕様
 
-このアプリはGitHubのリポジトリを検索するためのものです。本仕様の一部はオリジナルのリポジトリ（[株式会社ゆめみの課題リポジトリ](https://github.com/taro-taryo/ios-engineer-codecheck)）から引用しています。
+このアプリはGitHubのリポジトリを検索するためのものです。本仕様の一部はオリジナルのリポジトリ（[株式会社ゆめみの課題リポジトリ](https://github.com/yumemi-inc/ios-engineer-codecheck)）から引用しています。
 
 ![動作イメージ](README_Images/app.gif)
 
