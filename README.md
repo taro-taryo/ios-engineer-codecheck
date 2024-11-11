@@ -1,54 +1,35 @@
-# 株式会社ゆめみ iOS エンジニアコードチェック課題
+# iOSEngineerCodeCheck プロジェクト
 
 ## 概要
+このプロジェクトは、GitHubのリポジトリを検索し、リスト表示されたリポジトリの詳細情報を確認できるiOSアプリケーションです。検索結果からリポジトリを選択することで、詳細画面でリポジトリの情報（リポジトリ名、使用言語、スター数、ウォッチャー数、フォーク数、オープンなイシュー数、オーナーのアバター画像）を表示します。
 
-本プロジェクトは株式会社ゆめみ（以下弊社）が、弊社に iOS エンジニアを希望する方に出す課題のベースプロジェクトです。本課題が与えられた方は、下記の説明を詳しく読んだ上で課題を取り組んでください。
+## 課題: プログラム構造のリファクタリング
+本プロジェクトは、コード内でDRY（Don't Repeat Yourself）やCQS（Command Query Separation）といった原則に違反している箇所がありました。さらに、単一責任原則（SRP）やインターフェイス分離の原則（ISP）なども意識し、驚き最小の原則に従ってリファクタリングを行いました。以下のリファクタリングを行うことで、可読性と保守性を向上させました。
 
-新卒／未経験者エンジニアの場合、本リファクタリングの通常課題の代わりに、[新規アプリ作成の特別課題](https://yumemi-ios-junior-engineer-codecheck.app.swift.cloud)も選択できますので、ご自身が得意と感じる方を選んでください。特別課題を選んだ場合、通常課題の取り組みは不要です。新規アプリ作成の課題の説明を詳しく読んだ上で課題を取り組んでください。
+### リファクタリング内容
+- **DRYの適用**: 重複していたコードを削減し、再利用可能なコンポーネントとして `ImageService` や `RepositoryManager` などのクラスを導入しました。
+- **CQSの導入**: クエリ（データ取得）とコマンド（状態変更）の分離を行いました。例えば、データ取得専用の `RepositoryFetchable` プロトコルを定義し、状態変更のないクエリ操作を独立させました。
+- **単一責任の徹底**: 各クラスが特定の責務にのみ集中するようにリファクタリングを行いました。データ取得ロジックを `SearchService` や `RepositoryManager` に移し、ビュー更新ロジックをビューやビューモデルに限定しました。
+- **インターフェイス分離の原則**: インターフェイスを役割ごとに分離し、例えば画像の取得に関する `ImageFetchable` プロトコルを導入することで、関心の分離を行いました。
+- **驚き最小の原則**: 予測可能で一貫性のあるコードにするため、SwiftUIを活用し、アプリ全体のUI構成を統一しました。
 
-## アプリ仕様
+## ファイル構成
+- **ContentView.swift**: メイン画面で、検索バーとリポジトリ一覧を表示するSwiftUIビューです。ユーザーが検索したリポジトリをリスト表示します。
+- **RepositoryListViewModel.swift**: リスト画面のビューモデルで、GitHub APIからリポジトリデータを取得し、UIにデータを提供します。`SearchService` を利用して検索機能を実装し、エラーも管理しています。
+- **DetailView.swift**: リポジトリの詳細情報を表示するSwiftUIビューで、`ImageLoader` を使用してオーナーのアバター画像を非同期で取得し表示します。
+- **Repository.swift**: `Repository` 構造体を定義し、GitHub APIからのレスポンスをデコードします。
+- **RepositoryManager.swift**: `RepositoryFetchable` を実装し、リポジトリのデータ取得機能を提供するクラス。`SearchService` を利用しています。
+- **ImageService.swift**: `ImageFetchable` プロトコルを実装し、画像の非同期取得を行うサービスクラス。
+- **ImageLoader.swift**: `ImageService` を使用して画像をロードし、SwiftUIビューに表示するための `ObservableObject` クラスです。
+- **KeyboardAvoider.swift**: SwiftUIビューのキーボードを避けるためのモディファイア。キーボードが表示される高さに応じてビューのパディングを調整します。
+- **RepositoryRow.swift**: リポジトリを一覧表示する際に各リポジトリの情報を表示する行ビューです。
+- **SearchService.swift**: GitHub APIを呼び出し、検索クエリに基づいてリポジトリのデータを取得するクラス。`RepositoryFetchable` プロトコルを準拠しています。
 
-本アプリは GitHub のリポジトリーを検索するアプリです。
+## 使用技術
+- **言語**: Swift
+- **UIフレームワーク**: SwiftUI
+- **ネットワーク**: `URLSession`を利用してGitHub APIと通信し、検索および画像の非同期取得を行います。
+- **データ解析**: `JSONDecoder`を用いてGitHub APIからのレスポンスデータをパースします。
 
-![動作イメージ](README_Images/app.gif)
-
-### 環境
-
-- IDE：基本最新の安定版（本概要更新時点では Xcode 15.2）
-- Swift：基本最新の安定版（本概要更新時点では Swift 5.9）
-- 開発ターゲット：基本最新の安定版（本概要更新時点では iOS 17.2）
-- サードパーティーライブラリーの利用：オープンソースのものに限り制限しない
-
-### 動作
-
-1. 何かしらのキーワードを入力
-2. GitHub API（`search/repositories`）でリポジトリーを検索し、結果一覧を概要（リポジトリ名）で表示
-3. 特定の結果を選択したら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数）を表示
-
-## 課題取り組み方法
-
-Issues を確認した上、本プロジェクトを [**Duplicate** してください](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository)（Fork しないようにしてください。必要ならプライベートリポジトリーにしても大丈夫です）。今後のコミットは全てご自身のリポジトリーで行ってください。
-
-コードチェックの課題 Issue は全て [`課題`](https://github.com/yumemi/ios-engineer-codecheck/milestone/1) Milestone がついており、難易度に応じて Label が [`初級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A初級+milestone%3A課題)、[`中級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A中級+milestone%3A課題+) と [`ボーナス`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3Aボーナス+milestone%3A課題+) に分けられています。課題の必須／選択は下記の表とします：
-
-|   | 初級 | 中級 | ボーナス
-|--:|:--:|:--:|:--:|
-| 新卒／未経験者 | 必須 | 選択 | 選択 |
-| 中途／経験者 | 必須 | 必須 | 選択 |
-
-
-課題 Issueをご自身のリポジトリーにコピーするGitHub Actionsをご用意しております。  
-[こちらのWorkflow](./.github/workflows/copy-issues.yml)を[手動でトリガーする](https://docs.github.com/ja/actions/managing-workflow-runs/manually-running-a-workflow)ことでコピーできますのでご活用下さい。
-
-課題が完成したら、リポジトリーのアドレスを教えてください。
-
-## 参考情報
-
-提出された課題の評価ポイントについても詳しく書かれてありますので、ぜひご覧ください。
-
-- [私が（iOS エンジニアの）採用でコードチェックする時何を見ているのか](https://qiita.com/lovee/items/d76c68341ec3e7beb611)
-- [CocoaPods の利用手引き](https://qiita.com/ykws/items/b951a2e24ca85013e722)
-- [ChatGPT (Model: GPT-4) でコードリファクタリングをやってみる](https://qiita.com/mitsuharu_e/items/213491c668ab75924cfd)
-
-ChatGPTなどAIサービスの利用は禁止しておりません。  
-利用にあたって工夫したプロンプトやソースコメント等をご提出頂くと加点評価する場合がございます。 (減点評価はありません)
+## 生成AIの利用について
+このREADMEおよびプロジェクトの一部コードは、生成AIを活用して作成しました。生成AIを利用することで、効率的に高品質なコードとドキュメントを作成できました。
