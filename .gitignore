@@ -133,3 +133,5 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,swift,xcode
+plane.txt
+tools/project_source_compression/tmp_swift_source
