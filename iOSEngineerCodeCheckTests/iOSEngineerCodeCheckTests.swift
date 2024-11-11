@@ -12,24 +12,42 @@ import XCTest
 
 class iOSEngineerCodeCheckTests: XCTestCase {
 
+    let repositoryManagerTests = RepositoryManagerTests()
+    let repositoryListViewModelTests = RepositoryListViewModelTests()
+    let searchServiceTests = SearchServiceTests()
+    let imageLoaderTests = ImageLoaderTests()
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        // 各テストクラスのセットアップメソッドを呼び出し
+        try super.setUpWithError()
+        repositoryManagerTests.setUp()
+        repositoryListViewModelTests.setUp()
+        searchServiceTests.setUp()
+        imageLoaderTests.setUp()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // 各テストクラスのクリーンアップメソッドを呼び出し
+        repositoryManagerTests.tearDown()
+        repositoryListViewModelTests.tearDown()
+        searchServiceTests.tearDown()
+        imageLoaderTests.tearDown()
+        try super.tearDownWithError()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testAll() throws {
+        // 各テストクラスのテストメソッドを実行
+        repositoryManagerTests.testFetchRepositoriesSuccess()
+        repositoryManagerTests.testFetchRepositoriesFailure()
+        repositoryListViewModelTests.testFetchRepositoriesWithValidSearchText()
+        repositoryListViewModelTests.testFetchRepositoriesWithInvalidSearchText()
+        repositoryListViewModelTests.testSearchRepositoriesUpdatesRepositories()
+        repositoryListViewModelTests.testEmptySearchTextReturnsError()
+        searchServiceTests.testFetchRepositoriesSuccess()
+        searchServiceTests.testFetchRepositoriesInvalidURL()
+        searchServiceTests.testFetchRepositoriesRequestFailed()
+        imageLoaderTests.testLoadImageWithValidURL()
+        imageLoaderTests.testLoadImageWithInvalidURL()
+        imageLoaderTests.testLoadImageWithNilURL()
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
