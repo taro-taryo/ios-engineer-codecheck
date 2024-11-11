@@ -30,47 +30,89 @@ struct DetailView: View {
     }
 
     var body: some View {
-        VStack {
+        ZStack {
+            backgroundGradient
+            ScrollView {
+                VStack(spacing: 16) {
+                    Spacer().frame(height: 60)  // 上部の余白
+                    repositoryImage
+                    repositoryTitle
+                    repositoryDetails
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 20)
+            }
+        }
+        .ignoresSafeArea()  // 画面全体をカバー
+    }
+
+    private var backgroundGradient: some View {
+        LinearGradient(
+            gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.purple.opacity(0.7)]),
+            startPoint: .top, endPoint: .bottom
+        )
+        .ignoresSafeArea()  // 背景を全画面に拡張
+    }
+
+    private var repositoryImage: some View {
+        Group {
             if let image = imageLoader.image {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 200, height: 200)
-                    .padding(.top, 16)
-                    .accessibilityIdentifier("avatarImage")
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.yellow, lineWidth: 4))
+                    .shadow(radius: 10)
+                    .frame(width: 150, height: 150)
+                    .padding(.top, 10)
             } else {
                 ProgressView()
-                    .frame(width: 200, height: 200)
-                    .padding(.top, 16)
-                    .accessibilityIdentifier("loadingIndicator")
+                    .frame(width: 150, height: 150)
+                    .padding(.top, 10)
             }
+        }
+    }
 
-            Text(repository.name)
-                .font(.title)
-                .padding(.top, 8)
-                .accessibilityIdentifier("repositoryName")
+    private var repositoryTitle: some View {
+        Text(repository.name)
+            .font(.largeTitle)
+            .foregroundColor(.white)
+            .padding(.vertical, 10)
+    }
 
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Language: \(repository.language)")
-                    .accessibilityIdentifier("repositoryLanguage")
+    private var repositoryDetails: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            detailRow(title: "Language", value: repository.language, icon: "globe")
+            detailRow(title: "Stars", value: "\(repository.stars)", icon: "star.fill")
+            detailRow(title: "Watchers", value: "\(repository.watchers)", icon: "eye.fill")
+            detailRow(title: "Forks", value: "\(repository.forks)", icon: "tuningfork")
+            detailRow(
+                title: "Open Issues", value: "\(repository.openIssues)",
+                icon: "exclamationmark.triangle.fill")
+        }
+        .background(Color.black.opacity(0.5))
+        .cornerRadius(12)
+        .padding(.vertical, 5)
+    }
 
-                Text("Stars: \(repository.stars)")
-                    .accessibilityIdentifier("repositoryStars")
+    private func detailRow(title: String, value: String, icon: String) -> some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(.yellow)
+                .frame(width: 20)
 
-                Text("Watchers: \(repository.watchers)")
-                    .accessibilityIdentifier("repositoryWatchers")
-
-                Text("Forks: \(repository.forks)")
-                    .accessibilityIdentifier("repositoryForks")
-
-                Text("Open Issues: \(repository.openIssues)")
-                    .accessibilityIdentifier("repositoryOpenIssues")
-            }
-            .padding()
+            Text("\(title):")
+                .fontWeight(.bold)
+                .foregroundColor(.yellow)
 
             Spacer()
+
+            Text(value)
+                .foregroundColor(.white)
+                .font(.subheadline)
+                .padding(10)
+                .background(Color.gray.opacity(0.3))
+                .cornerRadius(8)
         }
-        .navigationTitle("Repository Details")
-        .navigationBarTitleDisplayMode(.inline)
+        .padding(.horizontal)
     }
 }

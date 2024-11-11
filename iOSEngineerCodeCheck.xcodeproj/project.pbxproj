@@ -81,6 +81,15 @@
 		C68FDD0D2CE1F41A00168F8C /* StubImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68FDD092CE1F41A00168F8C /* StubImageService.swift */; };
 		C68FDD0E2CE1F41A00168F8C /* StubRepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68FDD0A2CE1F41A00168F8C /* StubRepositoryManager.swift */; };
 		C68FDD0F2CE1F41A00168F8C /* StubSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68FDD0B2CE1F41A00168F8C /* StubSearchService.swift */; };
+		C6A236C62CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236C52CE23AE8009ADF49 /* LanguageIconProvider.swift */; };
+		C6A236C72CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236C52CE23AE8009ADF49 /* LanguageIconProvider.swift */; };
+		C6A236C82CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236C52CE23AE8009ADF49 /* LanguageIconProvider.swift */; };
+		C6A236CA2CE23AF5009ADF49 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236C92CE23AF4009ADF49 /* UIConstants.swift */; };
+		C6A236CB2CE23AF5009ADF49 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236C92CE23AF4009ADF49 /* UIConstants.swift */; };
+		C6A236CC2CE23AF5009ADF49 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236C92CE23AF4009ADF49 /* UIConstants.swift */; };
+		C6A236CE2CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
+		C6A236CF2CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
+		C6A236D02CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
 		C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E53FC32CDF5E49001E078A /* Repository.swift */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +153,9 @@
 		C68FDD092CE1F41A00168F8C /* StubImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StubImageService.swift; path = iOSEngineerCodeCheckTests/Stub/StubImageService.swift; sourceTree = SOURCE_ROOT; };
 		C68FDD0A2CE1F41A00168F8C /* StubRepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StubRepositoryManager.swift; path = iOSEngineerCodeCheckTests/Stub/StubRepositoryManager.swift; sourceTree = SOURCE_ROOT; };
 		C68FDD0B2CE1F41A00168F8C /* StubSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StubSearchService.swift; path = iOSEngineerCodeCheckTests/Stub/StubSearchService.swift; sourceTree = SOURCE_ROOT; };
+		C6A236C52CE23AE8009ADF49 /* LanguageIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageIconProvider.swift; sourceTree = "<group>"; };
+		C6A236C92CE23AF4009ADF49 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
+		C6A236CD2CE23F8E009ADF49 /* UITheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITheme.swift; sourceTree = "<group>"; };
 		C6E53FC32CDF5E49001E078A /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -330,6 +342,8 @@
 			isa = PBXGroup;
 			children = (
 				C65049892CE0B75A00507163 /* KeyboardAvoider.swift */,
+				C6A236C92CE23AF4009ADF49 /* UIConstants.swift */,
+				C6A236CD2CE23F8E009ADF49 /* UITheme.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -355,6 +369,7 @@
 		C650498D2CE0B86900507163 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				C6A236C52CE23AE8009ADF49 /* LanguageIconProvider.swift */,
 				C6835D2A2CE0659E00CCF57C /* RepositoryRow.swift */,
 				C65049862CE0B74200507163 /* SearchBar.swift */,
 				C65049882CE0B75000507163 /* Modifiers */,
@@ -538,6 +553,9 @@
 				C65049872CE0B74400507163 /* SearchBar.swift in Sources */,
 				C65049842CE0B52000507163 /* NetworkError.swift in Sources */,
 				C650497A2CE0AFFC00507163 /* RepositoryError.swift in Sources */,
+				C6A236CB2CE23AF5009ADF49 /* UIConstants.swift in Sources */,
+				C6A236C72CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */,
+				C6A236CF2CE23F8F009ADF49 /* UITheme.swift in Sources */,
 				C6835D312CE0662800CCF57C /* ImageLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,6 +571,7 @@
 				C64030B92CE0CFCE0026BE3D /* Repository.swift in Sources */,
 				C64030BA2CE0CFCE0026BE3D /* RepositoryError.swift in Sources */,
 				C64030BB2CE0CFCE0026BE3D /* ImageLoader.swift in Sources */,
+				C6A236CC2CE23AF5009ADF49 /* UIConstants.swift in Sources */,
 				C64030BC2CE0CFCE0026BE3D /* SearchBar.swift in Sources */,
 				C64030E02CE0D1860026BE3D /* ImageLoaderTests.swift in Sources */,
 				C64030E22CE0D19D0026BE3D /* RepositoryManagerTests.swift in Sources */,
@@ -560,6 +579,7 @@
 				C64030DE2CE0D1670026BE3D /* RepositoryListViewModelTests.swift in Sources */,
 				C64030BE2CE0CFCE0026BE3D /* (null) in Sources */,
 				C61A4EF12CE0D481004F3E27 /* StubImageService.swift in Sources */,
+				C6A236CE2CE23F8F009ADF49 /* UITheme.swift in Sources */,
 				C61A4EF72CE1993B004F3E27 /* AppErrorTests.swift in Sources */,
 				C64030BF2CE0CFCE0026BE3D /* DIContainer.swift in Sources */,
 				C64030C02CE0CFCE0026BE3D /* DetailView.swift in Sources */,
@@ -573,6 +593,7 @@
 				C64030C62CE0CFCE0026BE3D /* ServiceLocator.swift in Sources */,
 				C64030C72CE0CFCE0026BE3D /* RepositoryManager.swift in Sources */,
 				C64030C82CE0CFCE0026BE3D /* SearchService.swift in Sources */,
+				C6A236C62CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */,
 				C64030E42CE0D1B20026BE3D /* SearchServiceTests.swift in Sources */,
 				C64030C92CE0CFCE0026BE3D /* ContentView.swift in Sources */,
 				BFD945F6244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift in Sources */,
@@ -588,6 +609,7 @@
 				C68FDD0D2CE1F41A00168F8C /* StubImageService.swift in Sources */,
 				C68FDD0E2CE1F41A00168F8C /* StubRepositoryManager.swift in Sources */,
 				C68FDD0F2CE1F41A00168F8C /* StubSearchService.swift in Sources */,
+				C6A236CA2CE23AF5009ADF49 /* UIConstants.swift in Sources */,
 				C64030CB2CE0CFCE0026BE3D /* DIContainer.swift in Sources */,
 				C64030CC2CE0CFCE0026BE3D /* (null) in Sources */,
 				C64030CD2CE0CFCE0026BE3D /* ImageLoader.swift in Sources */,
@@ -597,6 +619,7 @@
 				C64030D12CE0CFCE0026BE3D /* KeyboardAvoider.swift in Sources */,
 				C64030D22CE0CFCE0026BE3D /* DetailView.swift in Sources */,
 				C64030D32CE0CFCE0026BE3D /* RepositoryError.swift in Sources */,
+				C6A236D02CE23F8F009ADF49 /* UITheme.swift in Sources */,
 				C64030D42CE0CFCE0026BE3D /* RepositoryRow.swift in Sources */,
 				C64030D52CE0CFCE0026BE3D /* RepositoryListViewModel.swift in Sources */,
 				C64030D62CE0CFCE0026BE3D /* SearchService.swift in Sources */,
@@ -606,6 +629,7 @@
 				C64030DA2CE0CFCE0026BE3D /* Repository.swift in Sources */,
 				C64030DB2CE0CFCE0026BE3D /* SearchBar.swift in Sources */,
 				C64030DC2CE0CFCE0026BE3D /* NetworkError.swift in Sources */,
+				C6A236C82CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */,
 				BFD94601244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

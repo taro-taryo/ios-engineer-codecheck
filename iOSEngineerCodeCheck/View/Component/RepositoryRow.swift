@@ -25,17 +25,44 @@ struct RepositoryRow: View {
 
     var body: some View {
         HStack {
-            Text(repository.name)
-                .font(.body)
-                .accessibilityIdentifier("repositoryName_\(repository.name)")
+            VStack(alignment: .leading, spacing: 4) {
+                Text(repository.name)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .lineLimit(1)
 
+                HStack {
+                    if let icon = LanguageIconProvider.icon(for: repository.language) {
+                        icon
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.yellow)
+                    }
+                    Text(repository.language)
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.8))
+                }
+            }
             Spacer()
 
-            Text(repository.language)
-                .font(.body)
-                .foregroundColor(.secondary)
-                .accessibilityIdentifier("repositoryLanguage_\(repository.language)")
+            VStack(alignment: .trailing) {
+                Label("\(repository.stars)", systemImage: "star.fill")
+                    .foregroundColor(.yellow)
+                Label("\(repository.forks)", systemImage: "tuningfork")
+                    .foregroundColor(.blue)
+            }
         }
-        .padding(.vertical, 4)
+        .padding()
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.blue, Color.purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .cornerRadius(15)
+        .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5)
+        .scaleEffect(1.05)
+        .animation(.spring())
     }
 }

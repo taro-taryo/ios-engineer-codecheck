@@ -17,11 +17,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+
 import Foundation
 
 class SearchService: RepositoryFetchable {
     func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+        for searchWord: String,
+        completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
         guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             completion(.failure(AppError.network(.invalidURL)))

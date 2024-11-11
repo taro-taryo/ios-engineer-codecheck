@@ -134,4 +134,24 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
             avatarImage.waitForExistence(timeout: 10),
             "Avatar image should be displayed in detail view")
     }
+
+    func testRepositoryRowDisplaysIconsAndLanguage() {
+        let app = XCUIApplication()
+        app.launchArguments.append("--uitesting")
+        app.launch()
+
+        let searchBarField = app.otherElements["searchBarField"]
+        XCTAssertTrue(searchBarField.waitForExistence(timeout: 5))
+        searchBarField.tap()
+        searchBarField.typeText("Swift")
+        app.keyboards.buttons["search"].tap()
+
+        let firstRepositoryRow = app.collectionViews["repositoryList"].cells.element(boundBy: 0)
+        XCTAssertTrue(firstRepositoryRow.exists)
+
+        let repositoryName = firstRepositoryRow.staticTexts["repositoryName_Swift Repo"]
+        let repositoryLanguage = firstRepositoryRow.staticTexts["repositoryLanguage_Swift"]
+        XCTAssertTrue(repositoryName.exists)
+        XCTAssertTrue(repositoryLanguage.exists)
+    }
 }
