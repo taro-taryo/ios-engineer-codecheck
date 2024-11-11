@@ -28,6 +28,7 @@ struct SearchBar: UIViewRepresentable {
         let searchBar = UISearchBar()
         searchBar.placeholder = "GitHubリポジトリを検索"
         searchBar.delegate = context.coordinator
+        searchBar.accessibilityIdentifier = "searchBar"
         return searchBar
     }
 
