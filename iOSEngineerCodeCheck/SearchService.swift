@@ -20,8 +20,8 @@
 
 import Foundation
 
-class SearchService {
-    func searchRepositories(
+class SearchService: RepositoryFetchable {
+    func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
         let urlString = "https://api.github.com/search/repositories?q=\(searchWord)"

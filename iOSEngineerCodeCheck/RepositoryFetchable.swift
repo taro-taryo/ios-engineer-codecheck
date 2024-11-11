@@ -1,5 +1,5 @@
 //
-//  ImageService.swift
+//  RepositoryFetchable.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -17,25 +17,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import UIKit
 
-protocol ImageFetchable {
-    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void)
-}
+import Foundation
 
-class ImageService: ImageFetchable {
-    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(nil)
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil, let image = UIImage(data: data) else {
-                completion(nil)
-                return
-            }
-            completion(image)
-        }.resume()
-    }
+protocol RepositoryFetchable {
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+    )
 }
