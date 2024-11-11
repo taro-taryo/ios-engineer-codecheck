@@ -1,54 +1,34 @@
-# 株式会社ゆめみ iOS エンジニアコードチェック課題
+# iOSEngineerCodeCheck プロジェクト
 
 ## 概要
+このプロジェクトは、GitHubのリポジトリを検索し、各リポジトリの詳細情報を表示するiOSアプリケーションです。検索結果のリストからリポジトリを選択すると、そのリポジトリの詳細情報が表示されます。
 
-本プロジェクトは株式会社ゆめみ（以下弊社）が、弊社に iOS エンジニアを希望する方に出す課題のベースプロジェクトです。本課題が与えられた方は、下記の説明を詳しく読んだ上で課題を取り組んでください。
+## 機能
+- **リポジトリ検索**: GitHubのリポジトリを検索し、リスト表示します。
+- **リポジトリ詳細表示**: 選択したリポジトリの名前、使用言語、スター数、ウォッチャー数、フォーク数、オープンなイシュー数、およびオーナーのアバター画像を表示します。
 
-新卒／未経験者エンジニアの場合、本リファクタリングの通常課題の代わりに、[新規アプリ作成の特別課題](https://yumemi-ios-junior-engineer-codecheck.app.swift.cloud)も選択できますので、ご自身が得意と感じる方を選んでください。特別課題を選んだ場合、通常課題の取り組みは不要です。新規アプリ作成の課題の説明を詳しく読んだ上で課題を取り組んでください。
+## ファイル構成
+- **ViewController.swift**: 検索バーとリポジトリ一覧を表示するメイン画面のロジックを実装しています。`UISearchBarDelegate` を利用し、検索バーで入力した文字列をもとにGitHubのAPIを使用してリポジトリを検索します。
+- **DetailViewController.swift**: 選択されたリポジトリの詳細情報を表示する画面です。`displayRepositoryDetails`メソッドでリポジトリの詳細情報を表示し、`fetchImage`メソッドでオーナーのアバター画像を取得します。
+- **Repository.swift**: `Repository`構造体を定義し、リポジトリのプロパティを管理します。GitHub APIから取得したJSONデータをデコードし、各リポジトリの名前、言語、スター数、ウォッチャー数、フォーク数、オープンなイシュー数、およびオーナーのアバターURLを保持します。
+- **AppDelegate.swift** & **SceneDelegate.swift**: アプリケーションのライフサイクルイベントを管理します。
+- **iOSEngineerCodeCheckTests.swift**: 単体テストを行うためのファイルです。現在のバージョンでは、サンプルのテストメソッドが含まれていますが、機能追加が必要です。
+- **iOSEngineerCodeCheckUITests.swift**: UIテストを行うためのファイルです。アプリケーションの起動テストやパフォーマンステストのサンプルが含まれています。
 
-## アプリ仕様
+## 使用技術
+- **言語**: Swift
+- **UIフレームワーク**: UIKit
+- **ネットワーク**: `URLSession`を使用してGitHub APIと通信します。
+- **非同期処理**: GitHub APIのレスポンスは非同期で処理され、メインスレッドでUIを更新します。
 
-本アプリは GitHub のリポジトリーを検索するアプリです。
+## 課題
+- **コードの可読性向上**:
+  - 命名規則の改善（Swift API Design Guidelinesに準拠）
+  - インデントの統一とネストの削減
+  - コメントの適切な追加
+  - スペースや改行の整備
 
-![動作イメージ](README_Images/app.gif)
+このプロジェクトは、上記のリストをもとにリファクタリングを行い、可読性とメンテナンス性を高めることを目指しました。
 
-### 環境
-
-- IDE：基本最新の安定版（本概要更新時点では Xcode 15.2）
-- Swift：基本最新の安定版（本概要更新時点では Swift 5.9）
-- 開発ターゲット：基本最新の安定版（本概要更新時点では iOS 17.2）
-- サードパーティーライブラリーの利用：オープンソースのものに限り制限しない
-
-### 動作
-
-1. 何かしらのキーワードを入力
-2. GitHub API（`search/repositories`）でリポジトリーを検索し、結果一覧を概要（リポジトリ名）で表示
-3. 特定の結果を選択したら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数）を表示
-
-## 課題取り組み方法
-
-Issues を確認した上、本プロジェクトを [**Duplicate** してください](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository)（Fork しないようにしてください。必要ならプライベートリポジトリーにしても大丈夫です）。今後のコミットは全てご自身のリポジトリーで行ってください。
-
-コードチェックの課題 Issue は全て [`課題`](https://github.com/yumemi/ios-engineer-codecheck/milestone/1) Milestone がついており、難易度に応じて Label が [`初級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A初級+milestone%3A課題)、[`中級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A中級+milestone%3A課題+) と [`ボーナス`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3Aボーナス+milestone%3A課題+) に分けられています。課題の必須／選択は下記の表とします：
-
-|   | 初級 | 中級 | ボーナス
-|--:|:--:|:--:|:--:|
-| 新卒／未経験者 | 必須 | 選択 | 選択 |
-| 中途／経験者 | 必須 | 必須 | 選択 |
-
-
-課題 Issueをご自身のリポジトリーにコピーするGitHub Actionsをご用意しております。  
-[こちらのWorkflow](./.github/workflows/copy-issues.yml)を[手動でトリガーする](https://docs.github.com/ja/actions/managing-workflow-runs/manually-running-a-workflow)ことでコピーできますのでご活用下さい。
-
-課題が完成したら、リポジトリーのアドレスを教えてください。
-
-## 参考情報
-
-提出された課題の評価ポイントについても詳しく書かれてありますので、ぜひご覧ください。
-
-- [私が（iOS エンジニアの）採用でコードチェックする時何を見ているのか](https://qiita.com/lovee/items/d76c68341ec3e7beb611)
-- [CocoaPods の利用手引き](https://qiita.com/ykws/items/b951a2e24ca85013e722)
-- [ChatGPT (Model: GPT-4) でコードリファクタリングをやってみる](https://qiita.com/mitsuharu_e/items/213491c668ab75924cfd)
-
-ChatGPTなどAIサービスの利用は禁止しておりません。  
-利用にあたって工夫したプロンプトやソースコメント等をご提出頂くと加点評価する場合がございます。 (減点評価はありません)
+## 生成AIの利用について
+このREADMEとプロジェクトの一部コードは、生成AIを活用して作成しました。そのため、内容にはAIが生成したものが含まれています。
