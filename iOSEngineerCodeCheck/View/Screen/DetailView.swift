@@ -96,7 +96,7 @@ struct DetailView: View {
     }
 
     private var repositoryDetails: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 12) {
             detailRow(title: "Language", value: repository.language, icon: "globe")
             detailRow(title: "Stars", value: "\(repository.stars)", icon: "star.fill")
             detailRow(title: "Watchers", value: "\(repository.watchers)", icon: "eye.fill")
@@ -105,29 +105,35 @@ struct DetailView: View {
                 title: "Open Issues", value: "\(repository.openIssues)",
                 icon: "exclamationmark.triangle.fill")
         }
-        .background(Color.black.opacity(0.5))
-        .cornerRadius(12)
+        .padding(10)
+        .background(Color.black.opacity(0.25))
+        .cornerRadius(15)
         .padding(.vertical, 5)
     }
 
     private func detailRow(title: String, value: String, icon: String) -> some View {
-        HStack {
+        HStack(spacing: 10) {
             Image(systemName: icon)
                 .foregroundColor(.yellow)
-                .frame(width: 20)
+                .frame(width: 24, height: 24)
+                .background(Color.black.opacity(0.2))
+                .clipShape(Circle())
 
-            Text("\(title):")
-                .fontWeight(.bold)
-                .foregroundColor(.yellow)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.caption)
+                    .foregroundColor(.yellow)
+                    .fontWeight(.bold)
 
+                Text(value)
+                    .foregroundColor(.white)
+                    .font(.body)
+                    .padding(8)
+                    .background(Color.blue.opacity(0.3))
+                    .cornerRadius(8)
+                    .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
+            }
             Spacer()
-
-            Text(value)
-                .foregroundColor(.white)
-                .font(.subheadline)
-                .padding(10)
-                .background(Color.gray.opacity(0.3))
-                .cornerRadius(8)
         }
         .padding(.horizontal)
     }
