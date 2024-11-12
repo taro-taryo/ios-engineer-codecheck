@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  NetworkError.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -19,28 +19,21 @@
 //
 
 import Foundation
-import SwiftUI
 
-class ImageLoader: ObservableObject {
-    @Published var image: UIImage?
-    private let fetchImageUseCase: FetchImageUseCaseProtocol
+enum NetworkError: LocalizedError {
+    case invalidURL
+    case noData
+    case requestFailed(Error)
 
-    init(
-        fetchImageUseCase: FetchImageUseCaseProtocol = DIContainer.shared.resolve(
-            FetchImageUseCaseProtocol.self), urlString: String? = nil
-    ) {
-        self.fetchImageUseCase = fetchImageUseCase
-        if let urlString = urlString {
-            loadImage(from: urlString)
-        }
-    }
-
-    func loadImage(from urlString: String?) {
-        guard let urlString = urlString else { return }
-        fetchImageUseCase.execute(urlString: urlString) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.image = image
-            }
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return String(localized: "error_invalid_url")
+        case .noData:
+            return String(localized: "error_no_data_received")
+        case .requestFailed(let error):
+            return String(
+                format: String(localized: "error_request_failed"), error.localizedDescription)
         }
     }
 }

@@ -1,8 +1,8 @@
 //
-//  RepositoryFetchable.swift
+//  FetchImageUseCase.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,9 +18,20 @@
 // limitations under the License.
 //
 
-import Foundation
+import UIKit
 
-protocol RepositoryFetchable {
-    func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void)
+protocol FetchImageUseCaseProtocol {
+    func execute(urlString: String, completion: @escaping (UIImage?) -> Void)
+}
+
+class FetchImageUseCase: FetchImageUseCaseProtocol {
+    private let imageFetchable: ImageFetchable
+
+    init(imageFetchable: ImageFetchable) {
+        self.imageFetchable = imageFetchable
+    }
+
+    func execute(urlString: String, completion: @escaping (UIImage?) -> Void) {
+        imageFetchable.fetchImage(from: urlString, completion: completion)
+    }
 }
