@@ -144,7 +144,10 @@ struct ContentView: View {
                     .transition(.opacity)
             } else {
                 List(viewModel.repositories) { repository in
-                    NavigationLink(destination: DetailView(repository: repository)) {
+                    NavigationLink(
+                        destination: DetailView(repository: repository).navigationBarColor(
+                            UIColor.clear)
+                    ) {
                         RepositoryRow(repository: repository)
                     }
                     .listRowBackground(Color.clear)

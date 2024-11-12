@@ -34,20 +34,19 @@ struct DetailView: View {
         ZStack {
             backgroundGradient
             ScrollView {
-                VStack(spacing: 16) {
-                    Spacer().frame(height: 60)
+                VStack(spacing: 20) {
                     repositoryImage
                     repositoryTitle
                     repositoryDetails
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 20)
+                .padding(.bottom, 30)
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(
+            leading:
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }) {
@@ -57,9 +56,11 @@ struct DetailView: View {
                     }
                     .foregroundColor(.white)
                 }
-            }
-        }
-        .ignoresSafeArea()
+        )
+    }
+
+    func navigationBarColor(_ backgroundColor: UIColor?) -> some View {
+        self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
     }
 
     private var backgroundGradient: some View {
@@ -76,27 +77,27 @@ struct DetailView: View {
                 Image(uiImage: image)
                     .resizable()
                     .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.yellow, lineWidth: 4))
-                    .shadow(radius: 10)
-                    .frame(width: 150, height: 150)
-                    .padding(.top, 10)
+                    .overlay(Circle().stroke(Color.orange, lineWidth: 4))
+                    .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+                    .frame(width: 160, height: 160)
+                    .padding(.top, 100)
             } else {
                 ProgressView()
-                    .frame(width: 150, height: 150)
-                    .padding(.top, 10)
+                    .frame(width: 160, height: 160)
+                    .padding(.top, 100)
             }
         }
     }
 
     private var repositoryTitle: some View {
         Text(repository.name)
-            .font(.largeTitle)
+            .font(.largeTitle.bold())
             .foregroundColor(.white)
             .padding(.vertical, 10)
     }
 
     private var repositoryDetails: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 15) {
             detailRow(title: "Language", value: repository.language, icon: "globe")
             detailRow(title: "Stars", value: "\(repository.stars)", icon: "star.fill")
             detailRow(title: "Watchers", value: "\(repository.watchers)", icon: "eye.fill")
@@ -105,33 +106,33 @@ struct DetailView: View {
                 title: "Open Issues", value: "\(repository.openIssues)",
                 icon: "exclamationmark.triangle.fill")
         }
-        .padding(10)
-        .background(Color.black.opacity(0.25))
+        .padding()
+        .background(Color.black.opacity(0.2))
         .cornerRadius(15)
         .padding(.vertical, 5)
     }
 
     private func detailRow(title: String, value: String, icon: String) -> some View {
-        HStack(spacing: 10) {
+        HStack(alignment: .top, spacing: 12) {
             Image(systemName: icon)
-                .foregroundColor(.yellow)
-                .frame(width: 24, height: 24)
+                .foregroundColor(.orange)
+                .frame(width: 26, height: 26)
                 .background(Color.black.opacity(0.2))
                 .clipShape(Circle())
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.caption)
-                    .foregroundColor(.yellow)
-                    .fontWeight(.bold)
+                    .foregroundColor(.orange)
+                    .fontWeight(.semibold)
 
                 Text(value)
                     .foregroundColor(.white)
                     .font(.body)
-                    .padding(8)
+                    .padding(10)
                     .background(Color.blue.opacity(0.3))
                     .cornerRadius(8)
-                    .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
+                    .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
             }
             Spacer()
         }
