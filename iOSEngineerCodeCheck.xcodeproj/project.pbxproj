@@ -77,6 +77,9 @@
 		C6835D2F2CE0660500CCF57C /* RepositoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D2E2CE0660500CCF57C /* RepositoryListViewModel.swift */; };
 		C6835D312CE0662800CCF57C /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D302CE0662800CCF57C /* ImageLoader.swift */; };
 		C6835D372CE06A7900CCF57C /* RepositoryFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */; };
+		C68F7AEE2CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */; };
+		C68F7AEF2CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */; };
+		C68F7AF02CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */; };
 		C68FDD0C2CE1F41A00168F8C /* Repository+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68FDD082CE1F41A00168F8C /* Repository+Stub.swift */; };
 		C68FDD0D2CE1F41A00168F8C /* StubImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68FDD092CE1F41A00168F8C /* StubImageService.swift */; };
 		C68FDD0E2CE1F41A00168F8C /* StubRepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68FDD0A2CE1F41A00168F8C /* StubRepositoryManager.swift */; };
@@ -149,6 +152,7 @@
 		C6835D2E2CE0660500CCF57C /* RepositoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListViewModel.swift; sourceTree = "<group>"; };
 		C6835D302CE0662800CCF57C /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFetchable.swift; sourceTree = "<group>"; };
+		C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		C68FDD082CE1F41A00168F8C /* Repository+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Repository+Stub.swift"; path = "iOSEngineerCodeCheckTests/Stub/Repository+Stub.swift"; sourceTree = SOURCE_ROOT; };
 		C68FDD092CE1F41A00168F8C /* StubImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StubImageService.swift; path = iOSEngineerCodeCheckTests/Stub/StubImageService.swift; sourceTree = SOURCE_ROOT; };
 		C68FDD0A2CE1F41A00168F8C /* StubRepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StubRepositoryManager.swift; path = iOSEngineerCodeCheckTests/Stub/StubRepositoryManager.swift; sourceTree = SOURCE_ROOT; };
@@ -344,6 +348,7 @@
 				C65049892CE0B75A00507163 /* KeyboardAvoider.swift */,
 				C6A236C92CE23AF4009ADF49 /* UIConstants.swift */,
 				C6A236CD2CE23F8E009ADF49 /* UITheme.swift */,
+				C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -536,6 +541,7 @@
 			files = (
 				C6835D2F2CE0660500CCF57C /* RepositoryListViewModel.swift in Sources */,
 				C6835D372CE06A7900CCF57C /* RepositoryFetchable.swift in Sources */,
+				C68F7AF02CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */,
 				C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */,
 				C65049822CE0B51A00507163 /* AppError.swift in Sources */,
 				C650497F2CE0B2AD00507163 /* ServiceLocator.swift in Sources */,
@@ -578,6 +584,7 @@
 				C64030BD2CE0CFCE0026BE3D /* ImageService.swift in Sources */,
 				C64030DE2CE0D1670026BE3D /* RepositoryListViewModelTests.swift in Sources */,
 				C64030BE2CE0CFCE0026BE3D /* (null) in Sources */,
+				C68F7AEE2CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */,
 				C61A4EF12CE0D481004F3E27 /* StubImageService.swift in Sources */,
 				C6A236CE2CE23F8F009ADF49 /* UITheme.swift in Sources */,
 				C61A4EF72CE1993B004F3E27 /* AppErrorTests.swift in Sources */,
@@ -626,6 +633,7 @@
 				C64030D72CE0CFCE0026BE3D /* RepositoriesResponse.swift in Sources */,
 				C64030D82CE0CFCE0026BE3D /* ImageService.swift in Sources */,
 				C64030D92CE0CFCE0026BE3D /* ServiceLocator.swift in Sources */,
+				C68F7AEF2CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */,
 				C64030DA2CE0CFCE0026BE3D /* Repository.swift in Sources */,
 				C64030DB2CE0CFCE0026BE3D /* SearchBar.swift in Sources */,
 				C64030DC2CE0CFCE0026BE3D /* NetworkError.swift in Sources */,
