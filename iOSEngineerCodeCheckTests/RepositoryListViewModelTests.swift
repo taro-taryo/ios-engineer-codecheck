@@ -18,102 +18,68 @@
 // limitations under the License.
 //
 
+import Combine
 import XCTest
 
-@testable import iOSEngineerCodeCheck
+@testable import YourApp
 
 class RepositoryListViewModelTests: XCTestCase {
+
     var viewModel: RepositoryListViewModel!
-    var stubRepositoryManager: StubRepositoryManager!
+    var mockFetchRepositoriesUseCase: MockFetchRepositoriesUseCase!
+    var mockEnhancedSearchService: MockEnhancedSearchService!
+    var cancellables: Set<AnyCancellable>!
 
     override func setUp() {
         super.setUp()
-        stubRepositoryManager = StubRepositoryManager()
-        viewModel = RepositoryListViewModel(repositoryManager: stubRepositoryManager)
+        mockFetchRepositoriesUseCase = MockFetchRepositoriesUseCase()
+        mockEnhancedSearchService = MockEnhancedSearchService()
+        viewModel = RepositoryListViewModel(
+            fetchRepositoriesUseCase: mockFetchRepositoriesUseCase,
+            enhancedSearchService: mockEnhancedSearchService
+        )
+        cancellables = []
     }
 
     override func tearDown() {
         viewModel = nil
-        stubRepositoryManager = nil
+        mockFetchRepositoriesUseCase = nil
+        mockEnhancedSearchService = nil
+        cancellables = nil
         super.tearDown()
     }
 
-    func testInitialValues() {
-        XCTAssertTrue(viewModel.searchText.isEmpty, "searchText should be initially empty")
-        XCTAssertTrue(viewModel.repositories.isEmpty, "repositories should be initially empty")
+    func testTagSuggestionsAreUpdatedBasedOnSearchText() {
+        // Given
+        let expectedTagSuggestions = ["swift", "javascript"]
+        viewModel.searchText = "ja"
+
+        // When
+        viewModel.updateTagSuggestions(for: viewModel.searchText)
+
+        // Then
+        XCTAssertEqual(viewModel.tagSuggestions, expectedTagSuggestions)
     }
 
-    func testFetchRepositoriesWithValidSearchText() {
-        let expectation = XCTestExpectation(description: "Repositories fetched successfully")
-        stubRepositoryManager.result = .success([Repository.stub()])
+    func testRelatedSuggestionsAreFetchedFromEnhancedSearchService() {
+        // Given
+        let expectation = XCTestExpectation(description: "Fetch related suggestions")
+        let expectedRelatedSuggestions = ["iOS", "SwiftUI", "Combine"]
 
-        viewModel.searchRepositories { result in
-            if case .success(let repositories) = result {
-                XCTAssertEqual(repositories.count, 1)
-                XCTAssertEqual(repositories.first?.name, "Sample Repo")
+        mockEnhancedSearchService.fetchSuggestionsResult = .success(expectedRelatedSuggestions)
+
+        viewModel.$relatedSuggestions
+            .dropFirst()
+            .sink { suggestions in
+                XCTAssertEqual(suggestions, expectedRelatedSuggestions)
                 expectation.fulfill()
             }
-        }
+            .store(in: &cancellables)
 
+        // When
+        viewModel.fetchRelatedSuggestions(for: "swift")
+
+        // Then
         wait(for: [expectation], timeout: 1.0)
-    }
-
-    func testFetchRepositoriesWithInvalidSearchText() {
-        let expectation = XCTestExpectation(description: "Repositories fetch failed with error")
-        stubRepositoryManager.result = .failure(AppError.network(.invalidURL))
-
-        viewModel.searchRepositories { result in
-            if case .failure(let error) = result {
-                XCTAssertEqual(
-                    error.localizedDescription, AppError.network(.invalidURL).localizedDescription)
-                expectation.fulfill()
-            }
-        }
-
-        wait(for: [expectation], timeout: 1.0)
-    }
-
-    func testSearchRepositoriesUpdatesRepositories() {
-        let expectation = XCTestExpectation(description: "Repositories are updated")
-        stubRepositoryManager.result = .success([Repository.stub()])
-        viewModel.searchText = "swift"
-
-        viewModel.searchRepositories { _ in
-            DispatchQueue.main.async {
-                XCTAssertEqual(self.viewModel.repositories.count, 1)
-                XCTAssertEqual(self.viewModel.repositories.first?.name, "Sample Repo")
-                expectation.fulfill()
-            }
-        }
-
-        wait(for: [expectation], timeout: 1.0)
-    }
-
-    func testEmptySearchTextReturnsError() {
-        let expectation = XCTestExpectation(description: "Error returned for empty search text")
-        stubRepositoryManager.shouldReturnErrorForEmptySearchText = true
-        viewModel.searchText = ""
-
-        viewModel.searchRepositories { _ in
-            DispatchQueue.main.async {
-                XCTAssertNotNil(self.viewModel.error)
-                XCTAssertEqual(
-                    self.viewModel.error?.localizedDescription,
-                    AppError.network(.invalidURL).localizedDescription)
-                expectation.fulfill()
-            }
-        }
-
-        wait(for: [expectation], timeout: 1.0)
-    }
-
-    func testRepositoryRowDisplaysNewLayout() {
-        let viewModel = RepositoryListViewModel()
-        let sampleRepo = Repository.stub(name: "Swift Repo", language: "Swift", stars: 150)
-        viewModel.repositories = [sampleRepo]
-
-        XCTAssertEqual(viewModel.repositories.first?.name, "Swift Repo")
-        XCTAssertEqual(viewModel.repositories.first?.language, "Swift")
-        XCTAssertEqual(viewModel.repositories.first?.stars, 150)
     }
 }

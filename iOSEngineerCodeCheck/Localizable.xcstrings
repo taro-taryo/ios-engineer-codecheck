@@ -115,6 +115,16 @@
         }
       }
     },
+    "ui_related_topics_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "関連トピック"
+          }
+        }
+      }
+    },
     "ui_search_placeholder" : {
       "comment" : "General UI Texts",
       "extractionState" : "manual",
@@ -145,6 +155,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stars"
+          }
+        }
+      }
+    },
+    "ui_tag_suggestions_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグ候補"
           }
         }
       }
