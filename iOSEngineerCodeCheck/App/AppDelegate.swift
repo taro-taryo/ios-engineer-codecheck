@@ -29,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    // UISceneSession Lifecycle
     func application(
         _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,

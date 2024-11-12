@@ -30,13 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
-        // 本番用の依存注入を設定
         ServiceLocator.configure()
-
-        // ContentViewをルートビューとして設定
         let contentView = ContentView()
-
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UIHostingController(rootView: contentView)
         self.window = window

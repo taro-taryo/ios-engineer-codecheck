@@ -28,13 +28,13 @@ class RepositoryManager: RepositoryFetchable {
     }
 
     func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+        for searchWord: String,
+        completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
         guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             completion(.failure(AppError.network(.invalidURL)))
             return
         }
-
         searchService.fetchRepositories(for: searchWord, completion: completion)
     }
 }

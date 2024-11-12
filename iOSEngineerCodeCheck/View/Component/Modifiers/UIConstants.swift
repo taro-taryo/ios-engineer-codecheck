@@ -1,8 +1,8 @@
 //
-//  RepositoryFetchable.swift
+//  UIConstants.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/11.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,10 @@
 // limitations under the License.
 //
 
-import Foundation
+import SwiftUI
 
-protocol RepositoryFetchable {
-    func fetchRepositories(
-        for searchWord: String,
-        completion: @escaping (Result<[Repository], Error>) -> Void
-    )
+struct UIConstants {
+    static let themeColor = Color.blue.opacity(0.8)
+    static let cardBackgroundColor = Color.white
+    static let accentTextColor = Color.gray
 }

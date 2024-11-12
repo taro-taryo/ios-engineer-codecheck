@@ -24,9 +24,14 @@ import Foundation
 class RepositoryListViewModel: ObservableObject {
     @Published var repositories: [Repository] = []
     @Published var searchText: String = ""
+    @Published var tagSuggestions: [String] = []
     @Published var error: AppError?
 
     private let repositoryManager: RepositoryFetchable
+    private let allTags = [
+        "swift", "javascript", "python", "java", "ruby", "php", "c++", "c#", "go", "kotlin", "dart",
+        "typescript", "html", "css", "shell", "rust", "scala", "julia", "r", "matlab",
+    ]
 
     init(
         repositoryManager: RepositoryFetchable = DIContainer.shared.resolve(
@@ -35,15 +40,13 @@ class RepositoryListViewModel: ObservableObject {
         self.repositoryManager = repositoryManager
     }
 
-    func searchRepositories(completion: @escaping (Result<[Repository], Error>) -> Void = { _ in })
-    {
-        fetchRepositories(for: searchText, completion: completion)
+    // インクリメンタルサーチ用のタグ候補更新
+    func updateTagSuggestions(for query: String) {
+        tagSuggestions = allTags.filter { $0.contains(query.lowercased()) }
     }
 
-    private func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
-    ) {
-        repositoryManager.fetchRepositories(for: searchWord) { [weak self] result in
+    func searchRepositories() {
+        repositoryManager.fetchRepositories(for: searchText) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let repositories):
@@ -55,7 +58,6 @@ class RepositoryListViewModel: ObservableObject {
                         self?.error = AppError.unknown(error.localizedDescription)
                     }
                 }
-                completion(result)
             }
         }
     }
