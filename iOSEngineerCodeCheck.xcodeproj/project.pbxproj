@@ -232,13 +232,13 @@
 			isa = PBXGroup;
 			children = (
 				C650498B2CE0B84200507163 /* App */,
-				C65049852CE0B71B00507163 /* Presentation */,
-				C65049762CE0AFA200507163 /* Domain */,
+				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
 				C65049702CE0A65F00507163 /* Data */,
 				C650497B2CE0B28E00507163 /* DependencyInjection */,
-				C65049802CE0B50F00507163 /* Error */,
-				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
+				C65049762CE0AFA200507163 /* Domain */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
+				C65049852CE0B71B00507163 /* Presentation */,
+				C69EBF352CE303F300D7B272 /* Shared */,
 			);
 			path = iOSEngineerCodeCheck;
 			sourceTree = "<group>";
@@ -283,9 +283,9 @@
 		C65049702CE0A65F00507163 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				C65049722CE0A66D00507163 /* DataSource */,
 				C65049712CE0A66700507163 /* Model */,
 				C650498E2CE0BD3100507163 /* Service */,
-				C65049722CE0A66D00507163 /* Repository */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -299,14 +299,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		C65049722CE0A66D00507163 /* Repository */ = {
+		C65049722CE0A66D00507163 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				C6835D262CE0508900CCF57C /* RepositoryManager.swift */,
 				C68F7AFB2CE2FB1700364D51 /* RepositoryDataSource.swift */,
+				C6835D262CE0508900CCF57C /* RepositoryManager.swift */,
 				C6835D1C2CE03EE000CCF57C /* SearchService.swift */,
 			);
-			path = Repository;
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		C65049762CE0AFA200507163 /* Domain */ = {
@@ -359,8 +359,8 @@
 		C65049852CE0B71B00507163 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				C650498C2CE0B85300507163 /* Screen */,
 				C650498D2CE0B86900507163 /* Component */,
+				C650498C2CE0B85300507163 /* Screen */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -369,9 +369,9 @@
 			isa = PBXGroup;
 			children = (
 				C65049892CE0B75A00507163 /* KeyboardAvoider.swift */,
+				C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */,
 				C6A236C92CE23AF4009ADF49 /* UIConstants.swift */,
 				C6A236CD2CE23F8E009ADF49 /* UITheme.swift */,
-				C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -397,11 +397,11 @@
 		C650498D2CE0B86900507163 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				C69EBF312CE2FE9500D7B272 /* RepositoryViewData.swift */,
 				C68F7AFA2CE2FA1A00364D51 /* Helpers */,
-				C6835D2A2CE0659E00CCF57C /* RepositoryRow.swift */,
-				C65049862CE0B74200507163 /* SearchBar.swift */,
 				C65049882CE0B75000507163 /* Modifiers */,
+				C6835D2A2CE0659E00CCF57C /* RepositoryRow.swift */,
+				C69EBF312CE2FE9500D7B272 /* RepositoryViewData.swift */,
+				C65049862CE0B74200507163 /* SearchBar.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -448,6 +448,22 @@
 				C68F7B002CE2FC5700364D51 /* ImageFetchable.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		C69EBF352CE303F300D7B272 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				C65049802CE0B50F00507163 /* Error */,
+				C69EBF362CE3040C00D7B272 /* Utilities */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		C69EBF362CE3040C00D7B272 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
