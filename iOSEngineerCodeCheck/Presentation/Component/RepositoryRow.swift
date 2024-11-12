@@ -21,7 +21,7 @@
 import SwiftUI
 
 struct RepositoryRow: View {
-    let repository: Repository
+    let repository: RepositoryViewData
 
     var body: some View {
         HStack {
@@ -33,8 +33,7 @@ struct RepositoryRow: View {
 
                 HStack {
                     if let icon = LanguageIconProvider.icon(for: repository.language) {
-                        icon
-                            .resizable()
+                        icon.resizable()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.yellow)
                     }
@@ -43,6 +42,7 @@ struct RepositoryRow: View {
                         .foregroundColor(.white.opacity(0.8))
                 }
             }
+
             Spacer()
 
             VStack(alignment: .trailing) {
@@ -55,10 +55,8 @@ struct RepositoryRow: View {
         .padding()
         .background(
             LinearGradient(
-                gradient: Gradient(colors: [Color.blue, Color.purple]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+                gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .topLeading,
+                endPoint: .bottomTrailing)
         )
         .cornerRadius(15)
         .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5)

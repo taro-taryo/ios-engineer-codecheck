@@ -21,11 +21,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject private var viewModel = RepositoryListViewModel()
+    @StateObject private var viewModel: RepositoryListViewModel
     @State private var isIncrementalSearchMode = false
-    @State private var searchMode: SearchMode = .text
 
-    enum SearchMode { case text, tag }
+    init(
+        viewModel: RepositoryListViewModel = DIContainer.shared.resolve(
+            RepositoryListViewModel.self)
+    ) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         NavigationView {
@@ -33,28 +37,17 @@ struct ContentView: View {
                 backgroundGradient
                 VStack(spacing: 16) {
                     searchBar
-
                     if isIncrementalSearchMode && !viewModel.tagSuggestions.isEmpty {
                         tagSuggestionsScrollView
                     }
-
-                    HStack {
-                        Image(systemName: searchMode == .text ? "text.magnifyingglass" : "tag.fill")
-                            .foregroundColor(searchMode == .text ? .blue : .orange)
-
-                        Text(searchModeText)
-                            .foregroundColor(searchMode == .text ? .blue : .orange)
-                            .fontWeight(.semibold)
-                            .font(.subheadline)
-                    }
-                    .padding(.bottom, 5)
-
                     searchResultsView
                 }
                 .alert(item: $viewModel.error) { error in
                     Alert(
-                        title: Text("Error"), message: Text(error.localizedDescription),
-                        dismissButton: .default(Text("OK")))
+                        title: Text("Error"),
+                        message: Text(error.localizedDescription),
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
             }
         }
@@ -72,25 +65,15 @@ struct ContentView: View {
         SearchBar(
             text: $viewModel.searchText,
             onTextChanged: { newText in
-                viewModel.searchText = newText
-                if !newText.isEmpty {
-                    viewModel.updateTagSuggestions(for: newText)
-                    viewModel.searchRepositories()
-                    searchMode = .text
-                    isIncrementalSearchMode = true
-                } else {
-                    isIncrementalSearchMode = false
-                }
+                viewModel.onSearchTextChanged(newText)
+                isIncrementalSearchMode = !newText.isEmpty
             },
             onSearchButtonClicked: {
-                if !viewModel.searchText.isEmpty {
-                    viewModel.searchRepositories()
-                    searchMode = .text
-                }
+                viewModel.searchRepositories()
             },
             onCancel: {
+                viewModel.onSearchCancelled()
                 isIncrementalSearchMode = false
-                viewModel.searchText = ""
             }
         )
         .padding(.horizontal)
@@ -102,9 +85,7 @@ struct ContentView: View {
             HStack(spacing: 10) {
                 ForEach(viewModel.tagSuggestions, id: \.self) { suggestion in
                     Button(action: {
-                        viewModel.searchText = suggestion
-                        viewModel.searchRepositories()
-                        searchMode = .tag
+                        viewModel.onTagSuggestionSelected(suggestion)
                         isIncrementalSearchMode = false
                     }) {
                         Text(suggestion)
@@ -120,22 +101,12 @@ struct ContentView: View {
         }
     }
 
-    private var searchModeText: String {
-        switch searchMode {
-        case .text:
-            return "Searching by text"
-        case .tag:
-            return "Searching by tag"
-        }
-    }
-
     private var searchResultsView: some View {
         VStack(alignment: .leading) {
             Text("Search Results")
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.leading)
-
             if viewModel.repositories.isEmpty {
                 Text("No repositories found")
                     .foregroundColor(.white)
@@ -144,10 +115,7 @@ struct ContentView: View {
                     .transition(.opacity)
             } else {
                 List(viewModel.repositories) { repository in
-                    NavigationLink(
-                        destination: DetailView(repository: repository).navigationBarColor(
-                            UIColor.clear)
-                    ) {
+                    NavigationLink(destination: DetailView(repository: repository)) {
                         RepositoryRow(repository: repository)
                     }
                     .listRowBackground(Color.clear)

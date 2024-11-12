@@ -1,8 +1,8 @@
 //
-//  SceneDelegate.swift
+//  FetchRepositoriesUseCase.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/11.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,20 @@
 // limitations under the License.
 //
 
-import SwiftUI
-import UIKit
+import Foundation
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    var window: UIWindow?
+protocol FetchRepositoriesUseCaseProtocol {
+    func execute(searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void)
+}
 
-    func scene(
-        _ scene: UIScene,
-        willConnectTo session: UISceneSession,
-        options connectionOptions: UIScene.ConnectionOptions
-    ) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        ServiceLocator.configure()
+class FetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol {
+    private let repositoryFetchable: RepositoryFetchable
 
-        let contentView = ContentView()
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UIHostingController(rootView: contentView)
-        self.window = window
-        window.makeKeyAndVisible()
+    init(repositoryFetchable: RepositoryFetchable) {
+        self.repositoryFetchable = repositoryFetchable
+    }
+
+    func execute(searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void) {
+        repositoryFetchable.fetchRepositories(for: searchWord, completion: completion)
     }
 }

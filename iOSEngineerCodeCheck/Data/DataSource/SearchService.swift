@@ -22,13 +22,13 @@ import Foundation
 
 class SearchService: RepositoryFetchable {
     func fetchRepositories(
-        for searchWord: String,
-        completion: @escaping (Result<[Repository], Error>) -> Void
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
         guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             completion(.failure(AppError.network(.invalidURL)))
             return
         }
+
         let urlString = "https://api.github.com/search/repositories?q=\(searchWord)"
         guard
             let encodedURLString = urlString.addingPercentEncoding(
@@ -38,15 +38,18 @@ class SearchService: RepositoryFetchable {
             completion(.failure(AppError.network(.invalidURL)))
             return
         }
+
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(AppError.network(.requestFailed(error))))
                 return
             }
+
             guard let data = data else {
                 completion(.failure(AppError.network(.noData)))
                 return
             }
+
             do {
                 let decodedResponse = try JSONDecoder().decode(
                     RepositoriesResponse.self, from: data)

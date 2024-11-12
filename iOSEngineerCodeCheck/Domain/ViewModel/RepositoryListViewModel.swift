@@ -22,35 +22,53 @@ import Combine
 import Foundation
 
 class RepositoryListViewModel: ObservableObject {
-    @Published var repositories: [Repository] = []
+    @Published var repositories: [RepositoryViewData] = []
     @Published var searchText: String = ""
     @Published var tagSuggestions: [String] = []
     @Published var error: AppError?
 
-    private let repositoryManager: RepositoryFetchable
+    private let fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol
     private let allTags = [
         "swift", "javascript", "python", "java", "ruby", "php", "c++", "c#", "go", "kotlin", "dart",
         "typescript", "html", "css", "shell", "rust", "scala", "julia", "r", "matlab",
     ]
 
     init(
-        repositoryManager: RepositoryFetchable = DIContainer.shared.resolve(
-            RepositoryFetchable.self)
+        fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol = DIContainer.shared.resolve(
+            FetchRepositoriesUseCaseProtocol.self)
     ) {
-        self.repositoryManager = repositoryManager
+        self.fetchRepositoriesUseCase = fetchRepositoriesUseCase
     }
 
-    // インクリメンタルサーチ用のタグ候補更新
-    func updateTagSuggestions(for query: String) {
+    func onSearchTextChanged(_ newText: String) {
+        searchText = newText
+        updateTagSuggestions(for: newText)
+
+        if !newText.isEmpty {
+            searchRepositories()
+        }
+    }
+
+    func onSearchCancelled() {
+        searchText = ""
+        tagSuggestions = []
+    }
+
+    func onTagSuggestionSelected(_ tag: String) {
+        searchText = tag
+        searchRepositories()
+    }
+
+    private func updateTagSuggestions(for query: String) {
         tagSuggestions = allTags.filter { $0.contains(query.lowercased()) }
     }
 
     func searchRepositories() {
-        repositoryManager.fetchRepositories(for: searchText) { [weak self] result in
+        fetchRepositoriesUseCase.execute(searchWord: searchText) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let repositories):
-                    self?.repositories = repositories
+                    self?.repositories = repositories.map { RepositoryViewData(repository: $0) }
                 case .failure(let error):
                     if let appError = error as? AppError {
                         self?.error = appError

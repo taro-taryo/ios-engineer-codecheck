@@ -1,8 +1,8 @@
 //
-//  SceneDelegate.swift
+//  RepositoryViewData.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/11.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,26 @@
 // limitations under the License.
 //
 
-import SwiftUI
-import UIKit
+import Foundation
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    var window: UIWindow?
+struct RepositoryViewData: Identifiable {
+    let id: UUID
+    let name: String
+    let language: String
+    let stars: Int
+    let watchers: Int
+    let forks: Int
+    let openIssues: Int
+    let ownerAvatarURL: String?
 
-    func scene(
-        _ scene: UIScene,
-        willConnectTo session: UISceneSession,
-        options connectionOptions: UIScene.ConnectionOptions
-    ) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        ServiceLocator.configure()
-
-        let contentView = ContentView()
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UIHostingController(rootView: contentView)
-        self.window = window
-        window.makeKeyAndVisible()
+    init(repository: Repository) {
+        self.id = repository.id
+        self.name = repository.name
+        self.language = repository.language
+        self.stars = repository.stars
+        self.watchers = repository.watchers
+        self.forks = repository.forks
+        self.openIssues = repository.openIssues
+        self.ownerAvatarURL = repository.ownerAvatarURL
     }
 }

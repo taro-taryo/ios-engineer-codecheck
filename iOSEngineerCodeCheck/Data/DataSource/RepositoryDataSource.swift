@@ -1,8 +1,8 @@
 //
-//  SceneDelegate.swift
+//  RepositoryDataSource.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/11.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,18 @@
 // limitations under the License.
 //
 
-import SwiftUI
-import UIKit
+import Foundation
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    var window: UIWindow?
+class RepositoryDataSource: RepositoryFetchable {
+    private let searchService: RepositoryFetchable
 
-    func scene(
-        _ scene: UIScene,
-        willConnectTo session: UISceneSession,
-        options connectionOptions: UIScene.ConnectionOptions
+    init(searchService: RepositoryFetchable = SearchService()) {
+        self.searchService = searchService
+    }
+
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        ServiceLocator.configure()
-
-        let contentView = ContentView()
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UIHostingController(rootView: contentView)
-        self.window = window
-        window.makeKeyAndVisible()
+        searchService.fetchRepositories(for: searchWord, completion: completion)
     }
 }
