@@ -22,6 +22,7 @@ import SwiftUI
 
 struct RepositoryRow: View {
     let repository: RepositoryViewData
+    @EnvironmentObject private var bookmarkViewModel: BookmarkViewModel
 
     var body: some View {
         HStack {
@@ -44,16 +45,25 @@ struct RepositoryRow: View {
                 RepositoryBadgeView(stars: repository.stars, forks: repository.forks)
             }
             Spacer()
-            VStack(alignment: .trailing) {
-                Label("\(repository.watchers)", systemImage: "eye.fill")
-                    .foregroundColor(.secondary)
-                Label("\(repository.openIssues)", systemImage: "exclamationmark.triangle.fill")
-                    .foregroundColor(.orange)
+
+            // ブックマークボタン
+            Button(action: {
+                bookmarkViewModel.toggleBookmark(for: repository)
+            }) {
+                Image(
+                    systemName: bookmarkViewModel.isBookmarked(repository: repository)
+                        ? "bookmark.fill" : "bookmark"
+                )
+                .foregroundColor(.blue)
+                .padding()
             }
+            .buttonStyle(PlainButtonStyle())
         }
         .padding()
         .background(Color(UIColor.systemGray6))
         .cornerRadius(15)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+        .contentShape(Rectangle())
     }
+
 }

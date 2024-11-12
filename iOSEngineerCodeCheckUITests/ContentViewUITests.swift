@@ -99,4 +99,49 @@ class ContentViewUITests: XCTestCase {
             searchResults.exists,
             "Search results should be displayed after selecting a related topic suggestion.")
     }
+
+    func testSearchBarInputAndSuggestionTap() {
+        // 検索バーにテキストを入力して、サジェスチョンが表示されることを確認
+        let searchBar = app.textFields["SearchBar"]
+        XCTAssertTrue(searchBar.exists)
+
+        searchBar.tap()
+        searchBar.typeText("Swift")
+
+        let suggestionButton = app.buttons["swift"]  // 仮のサジェスチョン名
+        XCTAssertTrue(suggestionButton.waitForExistence(timeout: 2))
+
+        suggestionButton.tap()
+        XCTAssertEqual(searchBar.value as? String, "swift")
+    }
+
+    func testDrawerMenuToggle() {
+        // ドロワーメニューの開閉ができるか確認
+        let menuButton = app.buttons["line.horizontal.3"]
+        XCTAssertTrue(menuButton.exists)
+
+        menuButton.tap()
+        let drawerMenu = app.otherElements["DrawerMenu"]
+        XCTAssertTrue(drawerMenu.waitForExistence(timeout: 2))
+
+        menuButton.tap()
+        XCTAssertFalse(drawerMenu.exists)
+    }
+
+    func testBookmarkViewOpenAndClose() {
+        // ブックマーク画面が開閉できるか確認
+        let menuButton = app.buttons["line.horizontal.3"]
+        menuButton.tap()
+
+        let bookmarksButton = app.buttons["View Bookmarks"]
+        XCTAssertTrue(bookmarksButton.exists)
+
+        bookmarksButton.tap()
+
+        let bookmarkList = app.tables["BookmarkList"]
+        XCTAssertTrue(bookmarkList.waitForExistence(timeout: 2))
+
+        app.buttons["Close"].tap()
+        XCTAssertFalse(bookmarkList.exists)
+    }
 }
