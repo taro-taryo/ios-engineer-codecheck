@@ -23,6 +23,7 @@ import SwiftUI
 struct DetailView: View {
     let repository: Repository
     @StateObject private var imageLoader: ImageLoader
+    @Environment(\.presentationMode) var presentationMode
 
     init(repository: Repository) {
         self.repository = repository
@@ -34,7 +35,7 @@ struct DetailView: View {
             backgroundGradient
             ScrollView {
                 VStack(spacing: 16) {
-                    Spacer().frame(height: 60)  // 上部の余白
+                    Spacer().frame(height: 60)
                     repositoryImage
                     repositoryTitle
                     repositoryDetails
@@ -43,7 +44,22 @@ struct DetailView: View {
                 .padding(.bottom, 20)
             }
         }
-        .ignoresSafeArea()  // 画面全体をカバー
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                    .foregroundColor(.white)
+                }
+            }
+        }
+        .ignoresSafeArea()
     }
 
     private var backgroundGradient: some View {
@@ -51,7 +67,7 @@ struct DetailView: View {
             gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.purple.opacity(0.7)]),
             startPoint: .top, endPoint: .bottom
         )
-        .ignoresSafeArea()  // 背景を全画面に拡張
+        .ignoresSafeArea()
     }
 
     private var repositoryImage: some View {
