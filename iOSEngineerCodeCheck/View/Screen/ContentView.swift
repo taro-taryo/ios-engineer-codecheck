@@ -51,8 +51,6 @@ struct ContentView: View {
 
                     searchResultsView
                 }
-                .navigationTitle("Repositories")
-                .navigationBarTitleDisplayMode(.inline)
                 .alert(item: $viewModel.error) { error in
                     Alert(
                         title: Text("Error"), message: Text(error.localizedDescription),
