@@ -22,7 +22,21 @@ import Foundation
 
 class ServiceLocator {
     static func configure(container: DIContainer = DIContainer.shared) {
-        // 依存サービスの順序を見直し、EnhancedSearchServiceを先に登録
+        container.register(
+            BookmarkDataSource() as BookmarkDataSourceProtocol, for: BookmarkDataSourceProtocol.self
+        )
+        container.register(
+            BookmarkRepositoryUseCase(
+                bookmarkDataSource: container.resolve(BookmarkDataSourceProtocol.self))
+                as BookmarkRepositoryUseCaseProtocol,
+            for: BookmarkRepositoryUseCaseProtocol.self
+        )
+        container.register(
+            BookmarkViewModel(
+                bookmarkUseCase: container.resolve(BookmarkRepositoryUseCaseProtocol.self)),
+            for: BookmarkViewModel.self
+        )
+
         container.register(
             EnhancedSearchService() as EnhancedSearchServiceProtocol,
             for: EnhancedSearchServiceProtocol.self)

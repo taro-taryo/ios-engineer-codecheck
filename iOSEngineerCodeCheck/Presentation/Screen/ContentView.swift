@@ -22,7 +22,11 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel: RepositoryListViewModel
-    @State private var isIncrementalSearchMode = false
+    @StateObject private var bookmarkViewModel = BookmarkViewModel(
+        bookmarkUseCase: DIContainer.shared.resolve(BookmarkRepositoryUseCaseProtocol.self))
+    @State private var isDrawerOpen = false
+    @State private var isBookmarkViewPresented = false
+    @FocusState private var isSearchFieldFocused: Bool
 
     init(
         viewModel: RepositoryListViewModel = DIContainer.shared.resolve(
@@ -35,21 +39,60 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 backgroundGradient
-                VStack(spacing: 16) {
-                    searchBar
-                    if isIncrementalSearchMode {
-                        suggestionsScrollView
+                    .onTapGesture {
+                        isSearchFieldFocused = false
                     }
-                    searchResultsView
-                }
-                .alert(item: $viewModel.error) { error in
-                    Alert(
-                        title: Text(String(localized: "ui_alert_error_title")),
-                        message: Text(error.localizedDescription),
-                        dismissButton: .default(Text(String(localized: "ui_alert_ok_button")))
-                    )
-                }
+                mainContent
+                drawerMenu
             }
+            .navigationBarItems(leading: menuButton)
+            .environmentObject(bookmarkViewModel)
+            .sheet(isPresented: $isBookmarkViewPresented) {
+                BookmarkView()
+                    .environmentObject(bookmarkViewModel)
+            }
+        }
+    }
+
+    private var mainContent: some View {
+        VStack(spacing: 16) {
+            searchBar
+            if !viewModel.tagSuggestions.isEmpty || !viewModel.relatedSuggestions.isEmpty {
+                suggestionsScrollView
+            }
+            searchResultsView
+        }
+        .alert(item: $viewModel.error) { error in
+            Alert(
+                title: Text(String(localized: "ui_alert_error_title")),
+                message: Text(error.localizedDescription),
+                dismissButton: .default(Text(String(localized: "ui_alert_ok_button")))
+            )
+        }
+    }
+
+    private var drawerMenu: some View {
+        Group {
+            if isDrawerOpen {
+                DrawerMenu(
+                    isDrawerOpen: $isDrawerOpen,
+                    isBookmarkViewPresented: $isBookmarkViewPresented
+                )
+                .environmentObject(bookmarkViewModel)
+                .transition(.move(edge: .leading))
+            }
+        }
+    }
+
+    private var menuButton: some View {
+        Button(action: {
+            withAnimation {
+                isDrawerOpen.toggle()
+            }
+        }) {
+            Image(systemName: "line.horizontal.3")
+                .imageScale(.large)
+                .foregroundColor(.white)
         }
     }
 
@@ -66,33 +109,31 @@ struct ContentView: View {
             text: $viewModel.searchText,
             onTextChanged: { newText in
                 viewModel.onSearchTextChanged(newText)
-                isIncrementalSearchMode = !newText.isEmpty
             },
             onSearchButtonClicked: {
                 viewModel.searchRepositories()
             },
             onCancel: {
                 viewModel.onSearchCancelled()
-                isIncrementalSearchMode = false
             }
         )
+        .focused($isSearchFieldFocused)
         .padding(.horizontal)
         .padding(.top, 10)
     }
 
     private var suggestionsScrollView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // タグ候補表示
             if !viewModel.tagSuggestions.isEmpty {
                 Text(String(localized: "ui_tag_suggestions_title"))
                     .font(.subheadline)
-                    .foregroundColor(.white)  // "検索結果"に合わせて白色に設定
+                    .foregroundColor(.white)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(viewModel.tagSuggestions, id: \.self) { suggestion in
                             Button(action: {
                                 viewModel.onTagSuggestionSelected(suggestion)
-                                isIncrementalSearchMode = false
+                                isSearchFieldFocused = false
                             }) {
                                 Text(suggestion)
                                     .foregroundColor(.white)
@@ -107,17 +148,16 @@ struct ContentView: View {
                 }
             }
 
-            // 強化版インクリメンタルサジェスト（トピックベース）表示
             if !viewModel.relatedSuggestions.isEmpty {
                 Text(String(localized: "ui_related_topics_title"))
                     .font(.subheadline)
-                    .foregroundColor(.white)  // "検索結果"に合わせて白色に設定
+                    .foregroundColor(.white)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(viewModel.relatedSuggestions, id: \.self) { suggestion in
                             Button(action: {
                                 viewModel.onTagSuggestionSelected(suggestion)
-                                isIncrementalSearchMode = false
+                                isSearchFieldFocused = false
                             }) {
                                 Text(suggestion)
                                     .foregroundColor(.white)
@@ -141,6 +181,7 @@ struct ContentView: View {
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.leading)
+
             if viewModel.repositories.isEmpty {
                 Text(String(localized: "ui_no_repositories_found"))
                     .foregroundColor(.white)
@@ -149,11 +190,12 @@ struct ContentView: View {
                     .transition(.opacity)
             } else {
                 List(viewModel.repositories) { repository in
-                    NavigationLink(destination: DetailView(repository: repository)) {
-                        RepositoryRow(repository: repository)
-                    }
-                    .listRowBackground(Color.clear)
-                    .padding(.vertical, 5)
+                    RepositoryRow(repository: repository)
+                        .listRowBackground(Color.clear)
+                        .padding(.vertical, 5)
+                        .onTapGesture {
+                            isSearchFieldFocused = false
+                        }
                 }
                 .listStyle(PlainListStyle())
                 .transition(.slide)

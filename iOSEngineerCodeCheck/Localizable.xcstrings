@@ -4,6 +4,9 @@
     "%lld" : {
 
     },
+    "Bookmarks" : {
+
+    },
     "error_invalid_url" : {
       "comment" : "Error Messages",
       "extractionState" : "manual",
@@ -38,6 +41,12 @@
         }
       }
     },
+    "Menu" : {
+
+    },
+    "No bookmarks available." : {
+
+    },
     "ui_alert_error_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -56,6 +65,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        }
+      }
+    },
+    "ui_delete_book_mark_toast" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "元に戻す"
           }
         }
       }

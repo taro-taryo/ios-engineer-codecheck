@@ -60,9 +60,9 @@ struct DetailView: View {
     private var backgroundGradient: some View {
         LinearGradient(
             gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.purple.opacity(0.7)]),
-            startPoint: .top, endPoint: .bottom
-        )
-        .ignoresSafeArea()
+            startPoint: .top,
+            endPoint: .bottom
+        ).ignoresSafeArea()
     }
 
     private var repositoryImage: some View {
@@ -121,13 +121,11 @@ struct DetailView: View {
                 .frame(width: 26, height: 26)
                 .background(Color.black.opacity(0.2))
                 .clipShape(Circle())
-
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.caption)
                     .foregroundColor(.orange)
                     .fontWeight(.semibold)
-
                 Text(value)
                     .foregroundColor(.white)
                     .font(.body)
