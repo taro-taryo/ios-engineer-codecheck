@@ -17,3 +17,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+
+import Foundation
+
+protocol FetchRepositoriesUseCaseProtocol {
+    func execute(searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void)
+}
+
+class FetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol {
+    private let repositoryFetchable: RepositoryFetchable
+
+    init(repositoryFetchable: RepositoryFetchable) {
+        self.repositoryFetchable = repositoryFetchable
+    }
+
+    func execute(searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void) {
+        repositoryFetchable.fetchRepositories(for: searchWord, completion: completion)
+    }
+}

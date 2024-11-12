@@ -23,13 +23,13 @@ import SwiftUI
 
 class ImageLoader: ObservableObject {
     @Published var image: UIImage?
-    private let imageService: ImageFetchable
+    private let fetchImageUseCase: FetchImageUseCaseProtocol
 
     init(
-        imageService: ImageFetchable = DIContainer.shared.resolve(ImageFetchable.self),
-        urlString: String? = nil
+        fetchImageUseCase: FetchImageUseCaseProtocol = DIContainer.shared.resolve(
+            FetchImageUseCaseProtocol.self), urlString: String? = nil
     ) {
-        self.imageService = imageService
+        self.fetchImageUseCase = fetchImageUseCase
         if let urlString = urlString {
             loadImage(from: urlString)
         }
@@ -37,7 +37,7 @@ class ImageLoader: ObservableObject {
 
     func loadImage(from urlString: String?) {
         guard let urlString = urlString else { return }
-        imageService.fetchImage(from: urlString) { [weak self] image in
+        fetchImageUseCase.execute(urlString: urlString) { [weak self] image in
             DispatchQueue.main.async {
                 self?.image = image
             }

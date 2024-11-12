@@ -21,11 +21,11 @@
 import SwiftUI
 
 struct DetailView: View {
-    let repository: Repository
+    let repository: RepositoryViewData
     @StateObject private var imageLoader: ImageLoader
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode  // presentationMode を環境変数として取得
 
-    init(repository: Repository) {
+    init(repository: RepositoryViewData) {
         self.repository = repository
         _imageLoader = StateObject(wrappedValue: ImageLoader(urlString: repository.ownerAvatarURL))
     }
@@ -46,21 +46,17 @@ struct DetailView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
-            leading:
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
-                    }
-                    .foregroundColor(.white)
+            leading: Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "chevron.left")
+                    Text("Back")
                 }
+                .foregroundColor(.white)
+            }
         )
-    }
-
-    func navigationBarColor(_ backgroundColor: UIColor?) -> some View {
-        self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
+        .modifier(NavigationBarModifier(backgroundColor: .clear))  // ナビゲーションバーを透明に設定
     }
 
     private var backgroundGradient: some View {
@@ -125,7 +121,6 @@ struct DetailView: View {
                     .font(.caption)
                     .foregroundColor(.orange)
                     .fontWeight(.semibold)
-
                 Text(value)
                     .foregroundColor(.white)
                     .font(.body)

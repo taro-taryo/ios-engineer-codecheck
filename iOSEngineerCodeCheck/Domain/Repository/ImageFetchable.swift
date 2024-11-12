@@ -1,5 +1,5 @@
 //
-//  FetchImageUseCase.swift
+//  ImageFetchable.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/12.
@@ -20,18 +20,6 @@
 
 import UIKit
 
-protocol FetchImageUseCaseProtocol {
-    func execute(urlString: String, completion: @escaping (UIImage?) -> Void)
-}
-
-class FetchImageUseCase: FetchImageUseCaseProtocol {
-    private let imageFetchable: ImageFetchable
-
-    init(imageFetchable: ImageFetchable) {
-        self.imageFetchable = imageFetchable
-    }
-
-    func execute(urlString: String, completion: @escaping (UIImage?) -> Void) {
-        imageFetchable.fetchImage(from: urlString, completion: completion)
-    }
+protocol ImageFetchable {
+    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void)
 }

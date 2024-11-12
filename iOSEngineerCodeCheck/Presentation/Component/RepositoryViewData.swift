@@ -1,5 +1,5 @@
 //
-//  FetchImageUseCase.swift
+//  RepositoryViewData.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/12.
@@ -18,20 +18,26 @@
 // limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-protocol FetchImageUseCaseProtocol {
-    func execute(urlString: String, completion: @escaping (UIImage?) -> Void)
-}
+struct RepositoryViewData: Identifiable {
+    let id: UUID
+    let name: String
+    let language: String
+    let stars: Int
+    let watchers: Int
+    let forks: Int
+    let openIssues: Int
+    let ownerAvatarURL: String?
 
-class FetchImageUseCase: FetchImageUseCaseProtocol {
-    private let imageFetchable: ImageFetchable
-
-    init(imageFetchable: ImageFetchable) {
-        self.imageFetchable = imageFetchable
-    }
-
-    func execute(urlString: String, completion: @escaping (UIImage?) -> Void) {
-        imageFetchable.fetchImage(from: urlString, completion: completion)
+    init(repository: Repository) {
+        self.id = repository.id
+        self.name = repository.name
+        self.language = repository.language
+        self.stars = repository.stars
+        self.watchers = repository.watchers
+        self.forks = repository.forks
+        self.openIssues = repository.openIssues
+        self.ownerAvatarURL = repository.ownerAvatarURL
     }
 }

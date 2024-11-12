@@ -22,69 +22,49 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var text: String
-    var onTextChanged: (String) -> Void  // テキスト変更時のクロージャ
-    var onSearchButtonClicked: () -> Void  // 検索ボタンクリック時のクロージャ
-    var onCancel: () -> Void  // キャンセルボタンクリック時のクロージャ
-    @State private var isEditing = false
-    @State private var suggestions: [String] = []
+    var onTextChanged: (String) -> Void
+    var onSearchButtonClicked: () -> Void
+    var onCancel: () -> Void
 
-    private let allTags = [
-        "swift", "javascript", "python", "java", "ruby", "php", "c++", "c#", "go", "kotlin", "dart",
-        "typescript", "html", "css", "shell", "rust", "scala", "julia", "r", "matlab",
-    ]
+    @State private var isEditing = false
 
     var body: some View {
-        VStack {
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(isEditing ? .white : .gray)
-                    .padding(.leading, 10)
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(isEditing ? .white : .gray)
+                .padding(.leading, 10)
 
-                TextField("Search GitHub Repositories", text: $text)
-                    .onChange(of: text) { newText in
-                        if !newText.isEmpty {
-                            onTextChanged(newText)  // テキスト変更ごとにクロージャを呼び出してインクリメンタルサーチを実行
-                        }
-                    }
-                    .padding(10)
-                    .padding(.leading, -5)
-                    .foregroundColor(.white)
-                    .background(isEditing ? Color.blue.opacity(0.9) : Color.gray.opacity(0.5))
-                    .cornerRadius(15)
-                    .transition(.move(edge: .leading))
+            TextField("Search GitHub Repositories", text: $text)
+                .onChange(of: text) { newText in
+                    onTextChanged(newText)
+                }
+                .padding(10)
+                .foregroundColor(.white)
+                .background(isEditing ? Color.blue.opacity(0.9) : Color.gray.opacity(0.5))
+                .cornerRadius(15)
+                .transition(.move(edge: .leading))
 
-                if isEditing {
-                    Button(action: {
-                        text = ""
-                        suggestions = []
-                        onCancel()  // キャンセルボタンでのクロージャ呼び出し
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.white)
-                            .padding(.trailing, 10)
-                    }
-                    .transition(.scale)
+            if isEditing {
+                Button(action: {
+                    text = ""
+                    onCancel()
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.white)
+                        .padding(.trailing, 10)
                 }
-            }
-            .padding(.horizontal, isEditing ? 16 : 10)
-            .padding(.vertical, 8)
-            .background(Color.black.opacity(isEditing ? 0.8 : 0.5))
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5)
-            .onTapGesture {
-                withAnimation {
-                    isEditing = true
-                }
+                .transition(.scale)
             }
         }
-    }
-
-    // テキストに応じた候補を更新
-    private func updateSuggestions(for query: String) {
-        if query.isEmpty {
-            suggestions = []
-        } else {
-            suggestions = allTags.filter { $0.contains(query.lowercased()) }
+        .padding(.horizontal, isEditing ? 16 : 10)
+        .padding(.vertical, 8)
+        .background(Color.black.opacity(isEditing ? 0.8 : 0.5))
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5)
+        .onTapGesture {
+            withAnimation {
+                isEditing = true
+            }
         }
     }
 }
