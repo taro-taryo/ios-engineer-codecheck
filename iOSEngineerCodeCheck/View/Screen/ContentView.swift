@@ -23,32 +23,25 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject private var viewModel = RepositoryListViewModel()
     @State private var isIncrementalSearchMode = false
-    @State private var searchMode: SearchMode = .text  // 現在の検索モードを示すプロパティ
+    @State private var searchMode: SearchMode = .text
 
-    enum SearchMode {
-        case text, tag
-    }
+    enum SearchMode { case text, tag }
 
     var body: some View {
         NavigationView {
             ZStack {
                 backgroundGradient
-
                 VStack(spacing: 16) {
-                    // タグ候補を横スクロールで表示
+                    searchBar
+
                     if isIncrementalSearchMode && !viewModel.tagSuggestions.isEmpty {
                         tagSuggestionsScrollView
                     }
 
-                    // 検索バー
-                    searchBar
-
-                    // 検索モードの表示
                     Text(searchModeText)
                         .foregroundColor(.gray)
                         .padding(.bottom, 5)
 
-                    // 検索結果の表示
                     searchResultsView
                 }
                 .navigationTitle("Repositories")
@@ -76,8 +69,8 @@ struct ContentView: View {
             onTextChanged: { newText in
                 viewModel.searchText = newText
                 if !newText.isEmpty {
-                    viewModel.updateTagSuggestions(for: newText)  // タグ候補を動的に更新
-                    viewModel.searchRepositories()  // リポジトリ検索をインクリメンタルサーチ
+                    viewModel.updateTagSuggestions(for: newText)
+                    viewModel.searchRepositories()
                     searchMode = .text
                     isIncrementalSearchMode = true
                 } else {
@@ -99,7 +92,6 @@ struct ContentView: View {
         .padding(.top, 10)
     }
 
-    // タグ候補の横スクロールビュー
     private var tagSuggestionsScrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
@@ -123,7 +115,6 @@ struct ContentView: View {
         }
     }
 
-    // 検索モードを表示するテキスト
     private var searchModeText: String {
         switch searchMode {
         case .text:
@@ -133,7 +124,6 @@ struct ContentView: View {
         }
     }
 
-    // 検索結果の表示
     private var searchResultsView: some View {
         VStack(alignment: .leading) {
             Text("Search Results")
