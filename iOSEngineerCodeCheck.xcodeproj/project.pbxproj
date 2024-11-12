@@ -108,6 +108,12 @@
 		C6A236CE2CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
 		C6A236CF2CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
 		C6A236D02CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
+		C6BFEF222CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */; };
+		C6BFEF232CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */; };
+		C6BFEF242CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */; };
+		C6BFEF262CE3233F008304B3 /* RepositoryBadgeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF252CE3233E008304B3 /* RepositoryBadgeViewTests.swift */; };
+		C6BFEF282CE32360008304B3 /* RepositoryRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF272CE32359008304B3 /* RepositoryRowTests.swift */; };
+		C6BFEF2A2CE3237E008304B3 /* RepositoryRowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF292CE3237C008304B3 /* RepositoryRowUITests.swift */; };
 		C6C6F5722CE30FEE00ACC55C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */; };
 		C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E53FC32CDF5E49001E078A /* Repository.swift */; };
 /* End PBXBuildFile section */
@@ -181,6 +187,10 @@
 		C6A236C52CE23AE8009ADF49 /* LanguageIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageIconProvider.swift; sourceTree = "<group>"; };
 		C6A236C92CE23AF4009ADF49 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		C6A236CD2CE23F8E009ADF49 /* UITheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITheme.swift; sourceTree = "<group>"; };
+		C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryBadgeView.swift; sourceTree = "<group>"; };
+		C6BFEF252CE3233E008304B3 /* RepositoryBadgeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryBadgeViewTests.swift; sourceTree = "<group>"; };
+		C6BFEF272CE32359008304B3 /* RepositoryRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRowTests.swift; sourceTree = "<group>"; };
+		C6BFEF292CE3237C008304B3 /* RepositoryRowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRowUITests.swift; sourceTree = "<group>"; };
 		C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C6E53FC32CDF5E49001E078A /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,6 +267,8 @@
 				C64030E32CE0D1B20026BE3D /* SearchServiceTests.swift */,
 				C61A4EF62CE1993A004F3E27 /* AppErrorTests.swift */,
 				C61A4EF82CE1994F004F3E27 /* NetworkErrorTests.swift */,
+				C6BFEF252CE3233E008304B3 /* RepositoryBadgeViewTests.swift */,
+				C6BFEF272CE32359008304B3 /* RepositoryRowTests.swift */,
 				BFD945F7244DC5EB0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheckTests;
@@ -267,6 +279,7 @@
 			children = (
 				C65F476D2CE1F1E8007F8AD9 /* Stub */,
 				BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */,
+				C6BFEF292CE3237C008304B3 /* RepositoryRowUITests.swift */,
 				BFD94602244DC5EC0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheckUITests;
@@ -402,6 +415,7 @@
 			children = (
 				C68F7AFA2CE2FA1A00364D51 /* Helpers */,
 				C65049882CE0B75000507163 /* Modifiers */,
+				C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */,
 				C6835D2A2CE0659E00CCF57C /* RepositoryRow.swift */,
 				C69EBF312CE2FE9500D7B272 /* RepositoryViewData.swift */,
 				C65049862CE0B74200507163 /* SearchBar.swift */,
@@ -611,6 +625,7 @@
 				C6835D1D2CE03EE000CCF57C /* SearchService.swift in Sources */,
 				C68F7AFE2CE2FB1800364D51 /* RepositoryDataSource.swift in Sources */,
 				C6835D2D2CE065E200CCF57C /* DetailView.swift in Sources */,
+				C6BFEF222CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */,
 				C68F7AF82CE2F98700364D51 /* FetchImageUseCase.swift in Sources */,
 				C6775E192CE1C78600252D97 /* SceneDelegate.swift in Sources */,
 				C69EBF342CE2FE9500D7B272 /* RepositoryViewData.swift in Sources */,
@@ -637,6 +652,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6BFEF282CE32360008304B3 /* RepositoryRowTests.swift in Sources */,
 				C68F7B012CE2FC5800364D51 /* ImageFetchable.swift in Sources */,
 				C64030B72CE0CFCE0026BE3D /* RepositoryFetchable.swift in Sources */,
 				C61A4EF52CE0D4A4004F3E27 /* Repository+Stub.swift in Sources */,
@@ -646,7 +662,9 @@
 				C68F7AF42CE2F97900364D51 /* FetchRepositoriesUseCase.swift in Sources */,
 				C64030BA2CE0CFCE0026BE3D /* RepositoryError.swift in Sources */,
 				C64030BB2CE0CFCE0026BE3D /* ImageLoader.swift in Sources */,
+				C6BFEF262CE3233F008304B3 /* RepositoryBadgeViewTests.swift in Sources */,
 				C6A236CC2CE23AF5009ADF49 /* UIConstants.swift in Sources */,
+				C6BFEF232CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */,
 				C64030BC2CE0CFCE0026BE3D /* SearchBar.swift in Sources */,
 				C64030E02CE0D1860026BE3D /* ImageLoaderTests.swift in Sources */,
 				C64030E22CE0D19D0026BE3D /* RepositoryManagerTests.swift in Sources */,
@@ -684,11 +702,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C64030CA2CE0CFCE0026BE3D /* AppError.swift in Sources */,
+				C6BFEF2A2CE3237E008304B3 /* RepositoryRowUITests.swift in Sources */,
 				C68FDD0C2CE1F41A00168F8C /* Repository+Stub.swift in Sources */,
 				C68FDD0D2CE1F41A00168F8C /* StubImageService.swift in Sources */,
 				C68F7AFC2CE2FB1800364D51 /* RepositoryDataSource.swift in Sources */,
 				C68FDD0E2CE1F41A00168F8C /* StubRepositoryManager.swift in Sources */,
 				C68FDD0F2CE1F41A00168F8C /* StubSearchService.swift in Sources */,
+				C6BFEF242CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */,
 				C6A236CA2CE23AF5009ADF49 /* UIConstants.swift in Sources */,
 				C64030CB2CE0CFCE0026BE3D /* DIContainer.swift in Sources */,
 				C64030CC2CE0CFCE0026BE3D /* (null) in Sources */,

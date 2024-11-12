@@ -26,6 +26,7 @@ class RepositoryListViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var tagSuggestions: [String] = []
     @Published var error: AppError?
+
     private let fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol
     private let allTags = [
         "swift", "javascript", "python", "java", "ruby", "php", "c++", "c#", "go", "kotlin", "dart",
@@ -42,9 +43,7 @@ class RepositoryListViewModel: ObservableObject {
     func onSearchTextChanged(_ newText: String) {
         searchText = newText
         updateTagSuggestions(for: newText)
-        if !newText.isEmpty {
-            searchRepositories()
-        }
+        if !newText.isEmpty { searchRepositories() }
     }
 
     func onSearchCancelled() {
