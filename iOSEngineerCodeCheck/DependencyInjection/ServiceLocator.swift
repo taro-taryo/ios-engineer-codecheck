@@ -22,17 +22,24 @@ import Foundation
 
 class ServiceLocator {
     static func configure(container: DIContainer = DIContainer.shared) {
+        // 依存サービスの順序を見直し、EnhancedSearchServiceを先に登録
+        container.register(
+            EnhancedSearchService() as EnhancedSearchServiceProtocol,
+            for: EnhancedSearchServiceProtocol.self)
+
         container.register(
             FetchRepositoriesUseCase(repositoryFetchable: RepositoryDataSource())
                 as FetchRepositoriesUseCaseProtocol, for: FetchRepositoriesUseCaseProtocol.self)
+
         container.register(
             FetchImageUseCase(imageFetchable: ImageService()) as FetchImageUseCaseProtocol,
             for: FetchImageUseCaseProtocol.self)
 
-        // RepositoryListViewModel の登録
         container.register(
             RepositoryListViewModel(
-                fetchRepositoriesUseCase: container.resolve(FetchRepositoriesUseCaseProtocol.self)),
+                fetchRepositoriesUseCase: container.resolve(FetchRepositoriesUseCaseProtocol.self),
+                enhancedSearchService: container.resolve(EnhancedSearchServiceProtocol.self)
+            ),
             for: RepositoryListViewModel.self
         )
     }

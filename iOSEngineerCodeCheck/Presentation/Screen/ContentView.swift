@@ -37,8 +37,8 @@ struct ContentView: View {
                 backgroundGradient
                 VStack(spacing: 16) {
                     searchBar
-                    if isIncrementalSearchMode && !viewModel.tagSuggestions.isEmpty {
-                        tagSuggestionsScrollView
+                    if isIncrementalSearchMode {
+                        suggestionsScrollView
                     }
                     searchResultsView
                 }
@@ -80,25 +80,59 @@ struct ContentView: View {
         .padding(.top, 10)
     }
 
-    private var tagSuggestionsScrollView: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
-                ForEach(viewModel.tagSuggestions, id: \.self) { suggestion in
-                    Button(action: {
-                        viewModel.onTagSuggestionSelected(suggestion)
-                        isIncrementalSearchMode = false
-                    }) {
-                        Text(suggestion)
-                            .foregroundColor(.white)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 12)
-                            .background(Color.blue)
-                            .cornerRadius(15)
+    private var suggestionsScrollView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            // タグ候補表示
+            if !viewModel.tagSuggestions.isEmpty {
+                Text(String(localized: "ui_tag_suggestions_title"))
+                    .font(.subheadline)
+                    .foregroundColor(.white)  // "検索結果"に合わせて白色に設定
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(viewModel.tagSuggestions, id: \.self) { suggestion in
+                            Button(action: {
+                                viewModel.onTagSuggestionSelected(suggestion)
+                                isIncrementalSearchMode = false
+                            }) {
+                                Text(suggestion)
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 12)
+                                    .background(Color.blue)
+                                    .cornerRadius(15)
+                            }
+                        }
                     }
+                    .padding(.horizontal)
                 }
             }
-            .padding(.horizontal)
+
+            // 強化版インクリメンタルサジェスト（トピックベース）表示
+            if !viewModel.relatedSuggestions.isEmpty {
+                Text(String(localized: "ui_related_topics_title"))
+                    .font(.subheadline)
+                    .foregroundColor(.white)  // "検索結果"に合わせて白色に設定
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(viewModel.relatedSuggestions, id: \.self) { suggestion in
+                            Button(action: {
+                                viewModel.onTagSuggestionSelected(suggestion)
+                                isIncrementalSearchMode = false
+                            }) {
+                                Text(suggestion)
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 12)
+                                    .background(Color.green)
+                                    .cornerRadius(15)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
         }
+        .padding(.top, 8)
     }
 
     private var searchResultsView: some View {
@@ -107,7 +141,6 @@ struct ContentView: View {
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.leading)
-
             if viewModel.repositories.isEmpty {
                 Text(String(localized: "ui_no_repositories_found"))
                     .foregroundColor(.white)

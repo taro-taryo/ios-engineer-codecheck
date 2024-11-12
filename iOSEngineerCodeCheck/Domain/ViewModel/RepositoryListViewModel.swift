@@ -25,39 +25,76 @@ class RepositoryListViewModel: ObservableObject {
     @Published var repositories: [RepositoryViewData] = []
     @Published var searchText: String = ""
     @Published var tagSuggestions: [String] = []
+    @Published var relatedSuggestions: [String] = []  // トピックベースの強化サジェスト
     @Published var error: AppError?
 
     private let fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol
+    private let enhancedSearchService: EnhancedSearchServiceProtocol
     private let allTags = [
         "swift", "javascript", "python", "java", "ruby", "php", "c++", "c#", "go", "kotlin", "dart",
         "typescript", "html", "css", "shell", "rust", "scala", "julia", "r", "matlab",
     ]
+    private var cancellables = Set<AnyCancellable>()
 
     init(
         fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol = DIContainer.shared.resolve(
-            FetchRepositoriesUseCaseProtocol.self)
+            FetchRepositoriesUseCaseProtocol.self),
+        enhancedSearchService: EnhancedSearchServiceProtocol = DIContainer.shared.resolve(
+            EnhancedSearchServiceProtocol.self)
     ) {
         self.fetchRepositoriesUseCase = fetchRepositoriesUseCase
+        self.enhancedSearchService = enhancedSearchService
+        setupSearchTextObserver()
+    }
+
+    private func setupSearchTextObserver() {
+        $searchText
+            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] text in
+                self?.updateTagSuggestions(for: text)
+                self?.fetchRelatedSuggestions(for: text)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func updateTagSuggestions(for query: String) {
+        tagSuggestions = allTags.filter { $0.contains(query.lowercased()) }
+    }
+
+    private func fetchRelatedSuggestions(for query: String) {
+        enhancedSearchService.fetchTopicSuggestions(for: query) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let suggestions):
+                    self?.relatedSuggestions = suggestions
+                case .failure(let error):
+                    if let appError = error as? AppError {
+                        self?.error = appError
+                    } else {
+                        self?.error = AppError.unknown(error.localizedDescription)
+                    }
+                }
+            }
+        }
     }
 
     func onSearchTextChanged(_ newText: String) {
         searchText = newText
-        updateTagSuggestions(for: newText)
-        if !newText.isEmpty { searchRepositories() }
+        if !newText.isEmpty {
+            searchRepositories()
+        }
     }
 
     func onSearchCancelled() {
         searchText = ""
         tagSuggestions = []
+        relatedSuggestions = []
     }
 
     func onTagSuggestionSelected(_ tag: String) {
         searchText = tag
         searchRepositories()
-    }
-
-    private func updateTagSuggestions(for query: String) {
-        tagSuggestions = allTags.filter { $0.contains(query.lowercased()) }
     }
 
     func searchRepositories() {
