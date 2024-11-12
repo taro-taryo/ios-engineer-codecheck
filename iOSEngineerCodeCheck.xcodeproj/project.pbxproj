@@ -108,6 +108,7 @@
 		C6A236CE2CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
 		C6A236CF2CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
 		C6A236D02CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
+		C6C6F5722CE30FEE00ACC55C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */; };
 		C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E53FC32CDF5E49001E078A /* Repository.swift */; };
 /* End PBXBuildFile section */
 
@@ -180,6 +181,7 @@
 		C6A236C52CE23AE8009ADF49 /* LanguageIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageIconProvider.swift; sourceTree = "<group>"; };
 		C6A236C92CE23AF4009ADF49 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		C6A236CD2CE23F8E009ADF49 /* UITheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITheme.swift; sourceTree = "<group>"; };
+		C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C6E53FC32CDF5E49001E078A /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -237,6 +239,7 @@
 				C650497B2CE0B28E00507163 /* DependencyInjection */,
 				C65049762CE0AFA200507163 /* Domain */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
+				C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */,
 				C65049852CE0B71B00507163 /* Presentation */,
 				C69EBF352CE303F300D7B272 /* Shared */,
 			);
@@ -553,6 +556,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = BFD945D2244DC5E80012785A;
 			productRefGroup = BFD945DC244DC5E80012785A /* Products */;
@@ -572,6 +576,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */,
+				C6C6F5722CE30FEE00ACC55C /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,11 +788,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -839,10 +846,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};

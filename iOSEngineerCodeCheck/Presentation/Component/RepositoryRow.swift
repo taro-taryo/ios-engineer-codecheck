@@ -48,6 +48,7 @@ struct RepositoryRow: View {
             VStack(alignment: .trailing) {
                 Label("\(repository.stars)", systemImage: "star.fill")
                     .foregroundColor(.yellow)
+
                 Label("\(repository.forks)", systemImage: "tuningfork")
                     .foregroundColor(.blue)
             }
