@@ -7,28 +7,120 @@
 //
 
 import XCTest
+
 @testable import iOSEngineerCodeCheck
 
 class iOSEngineerCodeCheckTests: XCTestCase {
+    func testAll() throws {
+        // RepositoryManagerTests
+        var repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
+        repositoryManagerTests.testFetchRepositoriesSuccess()
+        repositoryManagerTests.tearDown()
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
+        repositoryManagerTests.testFetchRepositoriesFailure()
+        repositoryManagerTests.tearDown()
+
+        repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
+        repositoryManagerTests.testEmptySearchWordReturnsError()
+        repositoryManagerTests.tearDown()
+
+        repositoryManagerTests = RepositoryManagerTests()
+        repositoryManagerTests.setUp()
+        repositoryManagerTests.testNetworkErrorReturnsAppError()
+        repositoryManagerTests.tearDown()
+
+        // RepositoryListViewModelTests
+        var repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
+        repositoryListViewModelTests.testInitialValues()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
+        repositoryListViewModelTests.testFetchRepositoriesWithValidSearchText()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
+        repositoryListViewModelTests.testFetchRepositoriesWithInvalidSearchText()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
+        repositoryListViewModelTests.testSearchRepositoriesUpdatesRepositories()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
+        repositoryListViewModelTests.testEmptySearchTextReturnsError()
+        repositoryListViewModelTests.tearDown()
+
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
+        repositoryListViewModelTests.testRepositoryRowDisplaysNewLayout()
+        repositoryListViewModelTests.tearDown()
+
+        // SearchServiceTests
+        var searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
+        searchServiceTests.testDecodeErrorReturnsAppError()
+        searchServiceTests.tearDown()
+
+        searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
+        searchServiceTests.testFetchRepositoriesSuccess()
+        searchServiceTests.tearDown()
+
+        searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
+        searchServiceTests.testFetchRepositoriesInvalidURL()
+        searchServiceTests.tearDown()
+
+        searchServiceTests = SearchServiceTests()
+        searchServiceTests.setUp()
+        searchServiceTests.testFetchRepositoriesRequestFailed()
+        searchServiceTests.tearDown()
+
+        // ImageLoaderTests
+        var imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
+        imageLoaderTests.testInitialImageIsNil()
+        imageLoaderTests.tearDown()
+
+        imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
+        imageLoaderTests.testLoadImageWithValidURL()
+        imageLoaderTests.tearDown()
+
+        imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
+        imageLoaderTests.testLoadImageWithInvalidURL()
+        imageLoaderTests.tearDown()
+
+        imageLoaderTests = ImageLoaderTests()
+        imageLoaderTests.setUp()
+        imageLoaderTests.testLoadImageWithNilURL()
+        imageLoaderTests.tearDown()
+
+        // AppErrorTests
+        var appErrorTests = AppErrorTests()
+        appErrorTests.testNetworkErrorDescription()
+
+        appErrorTests = AppErrorTests()
+        appErrorTests.testUnknownErrorDescription()
+
+        // NetworkErrorTests
+        var networkErrorTests = NetworkErrorTests()
+        networkErrorTests.testInvalidURLErrorDescription()
+
+        networkErrorTests = NetworkErrorTests()
+        networkErrorTests.testNoDataErrorDescription()
+
+        networkErrorTests = NetworkErrorTests()
+        networkErrorTests.testRequestFailedErrorDescription()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
