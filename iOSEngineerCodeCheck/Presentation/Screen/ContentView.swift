@@ -44,9 +44,9 @@ struct ContentView: View {
                 }
                 .alert(item: $viewModel.error) { error in
                     Alert(
-                        title: Text("Error"),
+                        title: Text(String(localized: "ui_alert_error_title")),
                         message: Text(error.localizedDescription),
-                        dismissButton: .default(Text("OK"))
+                        dismissButton: .default(Text(String(localized: "ui_alert_ok_button")))
                     )
                 }
             }
@@ -103,12 +103,13 @@ struct ContentView: View {
 
     private var searchResultsView: some View {
         VStack(alignment: .leading) {
-            Text("Search Results")
+            Text(String(localized: "ui_search_results_title"))
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.leading)
+
             if viewModel.repositories.isEmpty {
-                Text("No repositories found")
+                Text(String(localized: "ui_no_repositories_found"))
                     .foregroundColor(.white)
                     .font(.headline)
                     .padding()

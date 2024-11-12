@@ -28,11 +28,12 @@ enum NetworkError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "The URL provided was invalid."
+            return String(localized: "error_invalid_url")
         case .noData:
-            return "No data was received from the server."
+            return String(localized: "error_no_data_received")
         case .requestFailed(let error):
-            return "Request failed with error: \(error.localizedDescription)"
+            return String(
+                format: String(localized: "error_request_failed"), error.localizedDescription)
         }
     }
 }

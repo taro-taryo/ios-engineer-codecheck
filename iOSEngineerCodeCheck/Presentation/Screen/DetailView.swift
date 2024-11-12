@@ -23,7 +23,7 @@ import SwiftUI
 struct DetailView: View {
     let repository: RepositoryViewData
     @StateObject private var imageLoader: ImageLoader
-    @Environment(\.presentationMode) var presentationMode  // presentationMode を環境変数として取得
+    @Environment(\.presentationMode) var presentationMode
 
     init(repository: RepositoryViewData) {
         self.repository = repository
@@ -46,17 +46,15 @@ struct DetailView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
-            leading: Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }) {
+            leading: Button(action: { presentationMode.wrappedValue.dismiss() }) {
                 HStack {
                     Image(systemName: "chevron.left")
-                    Text("Back")
+                    Text(String(localized: "ui_navigation_back_button"))
                 }
                 .foregroundColor(.white)
             }
         )
-        .modifier(NavigationBarModifier(backgroundColor: .clear))  // ナビゲーションバーを透明に設定
+        .modifier(NavigationBarModifier(backgroundColor: .clear))
     }
 
     private var backgroundGradient: some View {
@@ -94,12 +92,20 @@ struct DetailView: View {
 
     private var repositoryDetails: some View {
         VStack(alignment: .leading, spacing: 15) {
-            detailRow(title: "Language", value: repository.language, icon: "globe")
-            detailRow(title: "Stars", value: "\(repository.stars)", icon: "star.fill")
-            detailRow(title: "Watchers", value: "\(repository.watchers)", icon: "eye.fill")
-            detailRow(title: "Forks", value: "\(repository.forks)", icon: "tuningfork")
             detailRow(
-                title: "Open Issues", value: "\(repository.openIssues)",
+                title: String(localized: "ui_language_title"), value: repository.language,
+                icon: "globe")
+            detailRow(
+                title: String(localized: "ui_stars_title"), value: "\(repository.stars)",
+                icon: "star.fill")
+            detailRow(
+                title: String(localized: "ui_watchers_title"), value: "\(repository.watchers)",
+                icon: "eye.fill")
+            detailRow(
+                title: String(localized: "ui_forks_title"), value: "\(repository.forks)",
+                icon: "tuningfork")
+            detailRow(
+                title: String(localized: "ui_open_issues_title"), value: "\(repository.openIssues)",
                 icon: "exclamationmark.triangle.fill")
         }
         .padding()
@@ -121,6 +127,7 @@ struct DetailView: View {
                     .font(.caption)
                     .foregroundColor(.orange)
                     .fontWeight(.semibold)
+
                 Text(value)
                     .foregroundColor(.white)
                     .font(.body)

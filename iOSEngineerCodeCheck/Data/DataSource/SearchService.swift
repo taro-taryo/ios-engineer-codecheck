@@ -44,12 +44,10 @@ class SearchService: RepositoryFetchable {
                 completion(.failure(AppError.network(.requestFailed(error))))
                 return
             }
-
             guard let data = data else {
                 completion(.failure(AppError.network(.noData)))
                 return
             }
-
             do {
                 let decodedResponse = try JSONDecoder().decode(
                     RepositoriesResponse.self, from: data)
