@@ -38,9 +38,16 @@ struct ContentView: View {
                         tagSuggestionsScrollView
                     }
 
-                    Text(searchModeText)
-                        .foregroundColor(.gray)
-                        .padding(.bottom, 5)
+                    HStack {
+                        Image(systemName: searchMode == .text ? "text.magnifyingglass" : "tag.fill")
+                            .foregroundColor(searchMode == .text ? .blue : .orange)
+
+                        Text(searchModeText)
+                            .foregroundColor(searchMode == .text ? .blue : .orange)
+                            .fontWeight(.semibold)
+                            .font(.subheadline)
+                    }
+                    .padding(.bottom, 5)
 
                     searchResultsView
                 }
