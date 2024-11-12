@@ -30,6 +30,26 @@ struct RepositoryViewData: Identifiable {
     let openIssues: Int
     let ownerAvatarURL: String?
 
+    init(
+        id: UUID = UUID(),
+        name: String,
+        language: String,
+        stars: Int,
+        watchers: Int,
+        forks: Int,
+        openIssues: Int,
+        ownerAvatarURL: String? = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.language = language
+        self.stars = stars
+        self.watchers = watchers
+        self.forks = forks
+        self.openIssues = openIssues
+        self.ownerAvatarURL = ownerAvatarURL
+    }
+
     init(repository: Repository) {
         self.id = repository.id
         self.name = repository.name
