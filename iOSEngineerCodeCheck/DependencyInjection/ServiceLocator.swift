@@ -23,7 +23,17 @@ import Foundation
 class ServiceLocator {
     static func configure(container: DIContainer = DIContainer.shared) {
         container.register(
-            RepositoryManager() as RepositoryFetchable, for: RepositoryFetchable.self)
-        container.register(ImageService() as ImageFetchable, for: ImageFetchable.self)
+            FetchRepositoriesUseCase(repositoryFetchable: RepositoryDataSource())
+                as FetchRepositoriesUseCaseProtocol, for: FetchRepositoriesUseCaseProtocol.self)
+        container.register(
+            FetchImageUseCase(imageFetchable: ImageService()) as FetchImageUseCaseProtocol,
+            for: FetchImageUseCaseProtocol.self)
+
+        // RepositoryListViewModel の登録
+        container.register(
+            RepositoryListViewModel(
+                fetchRepositoriesUseCase: container.resolve(FetchRepositoriesUseCaseProtocol.self)),
+            for: RepositoryListViewModel.self
+        )
     }
 }

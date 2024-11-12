@@ -20,16 +20,13 @@
 
 import UIKit
 
-protocol ImageFetchable {
-    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void)
-}
-
 class ImageService: ImageFetchable {
     func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(nil)
             return
         }
+
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil, let image = UIImage(data: data) else {
                 completion(nil)

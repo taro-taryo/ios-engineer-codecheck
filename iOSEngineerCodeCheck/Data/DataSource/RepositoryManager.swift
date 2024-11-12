@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  RepositoryManager.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -19,28 +19,22 @@
 //
 
 import Foundation
-import SwiftUI
 
-class ImageLoader: ObservableObject {
-    @Published var image: UIImage?
-    private let fetchImageUseCase: FetchImageUseCaseProtocol
+class RepositoryManager: RepositoryFetchable {
+    private let searchService: RepositoryFetchable
 
-    init(
-        fetchImageUseCase: FetchImageUseCaseProtocol = DIContainer.shared.resolve(
-            FetchImageUseCaseProtocol.self), urlString: String? = nil
-    ) {
-        self.fetchImageUseCase = fetchImageUseCase
-        if let urlString = urlString {
-            loadImage(from: urlString)
-        }
+    init(searchService: RepositoryFetchable = SearchService()) {
+        self.searchService = searchService
     }
 
-    func loadImage(from urlString: String?) {
-        guard let urlString = urlString else { return }
-        fetchImageUseCase.execute(urlString: urlString) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.image = image
-            }
+    func fetchRepositories(
+        for searchWord: String,
+        completion: @escaping (Result<[Repository], Error>) -> Void
+    ) {
+        guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            completion(.failure(AppError.network(.invalidURL)))
+            return
         }
+        searchService.fetchRepositories(for: searchWord, completion: completion)
     }
 }

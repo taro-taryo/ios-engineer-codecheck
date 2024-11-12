@@ -1,5 +1,5 @@
 //
-//  SceneDelegate.swift
+//  UIConstants.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/11.
@@ -19,23 +19,9 @@
 //
 
 import SwiftUI
-import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    var window: UIWindow?
-
-    func scene(
-        _ scene: UIScene,
-        willConnectTo session: UISceneSession,
-        options connectionOptions: UIScene.ConnectionOptions
-    ) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        ServiceLocator.configure()
-
-        let contentView = ContentView()
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UIHostingController(rootView: contentView)
-        self.window = window
-        window.makeKeyAndVisible()
-    }
+struct UIConstants {
+    static let themeColor = Color.blue.opacity(0.8)
+    static let cardBackgroundColor = Color.white
+    static let accentTextColor = Color.gray
 }

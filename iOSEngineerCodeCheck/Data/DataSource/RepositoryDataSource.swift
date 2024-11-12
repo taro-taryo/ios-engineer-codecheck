@@ -1,8 +1,8 @@
 //
-//  RepositoryManager.swift
+//  RepositoryDataSource.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,7 @@
 
 import Foundation
 
-class RepositoryManager: RepositoryFetchable {
+class RepositoryDataSource: RepositoryFetchable {
     private let searchService: RepositoryFetchable
 
     init(searchService: RepositoryFetchable = SearchService()) {
@@ -30,11 +30,6 @@ class RepositoryManager: RepositoryFetchable {
     func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
-        guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            completion(.failure(AppError.network(.invalidURL)))
-            return
-        }
-
         searchService.fetchRepositories(for: searchWord, completion: completion)
     }
 }

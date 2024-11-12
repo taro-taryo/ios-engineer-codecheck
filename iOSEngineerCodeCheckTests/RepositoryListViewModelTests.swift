@@ -106,4 +106,14 @@ class RepositoryListViewModelTests: XCTestCase {
 
         wait(for: [expectation], timeout: 1.0)
     }
+
+    func testRepositoryRowDisplaysNewLayout() {
+        let viewModel = RepositoryListViewModel()
+        let sampleRepo = Repository.stub(name: "Swift Repo", language: "Swift", stars: 150)
+        viewModel.repositories = [sampleRepo]
+
+        XCTAssertEqual(viewModel.repositories.first?.name, "Swift Repo")
+        XCTAssertEqual(viewModel.repositories.first?.language, "Swift")
+        XCTAssertEqual(viewModel.repositories.first?.stars, 150)
+    }
 }

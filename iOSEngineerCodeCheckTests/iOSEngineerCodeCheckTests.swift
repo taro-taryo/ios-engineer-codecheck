@@ -59,6 +59,11 @@ class iOSEngineerCodeCheckTests: XCTestCase {
         repositoryListViewModelTests.testEmptySearchTextReturnsError()
         repositoryListViewModelTests.tearDown()
 
+        repositoryListViewModelTests = RepositoryListViewModelTests()
+        repositoryListViewModelTests.setUp()
+        repositoryListViewModelTests.testRepositoryRowDisplaysNewLayout()
+        repositoryListViewModelTests.tearDown()
+
         // SearchServiceTests
         var searchServiceTests = SearchServiceTests()
         searchServiceTests.setUp()
