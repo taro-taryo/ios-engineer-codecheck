@@ -1,8 +1,8 @@
 //
-//  RepositoryRow.swift
+//  FetchRepositoriesUseCase.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,20 @@
 // limitations under the License.
 //
 
-import SwiftUI
+import Foundation
 
-struct RepositoryRow: View {
-    let repository: Repository
+protocol FetchRepositoriesUseCaseProtocol {
+    func execute(searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void)
+}
 
-    var body: some View {
-        HStack {
-            Text(repository.name)
-                .font(.body)
-                .accessibilityIdentifier("repositoryName_\(repository.name)")
+class FetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol {
+    private let repositoryFetchable: RepositoryFetchable
 
-            Spacer()
+    init(repositoryFetchable: RepositoryFetchable) {
+        self.repositoryFetchable = repositoryFetchable
+    }
 
-            Text(repository.language)
-                .font(.body)
-                .foregroundColor(.secondary)
-                .accessibilityIdentifier("repositoryLanguage_\(repository.language)")
-        }
-        .padding(.vertical, 4)
+    func execute(searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void) {
+        repositoryFetchable.fetchRepositories(for: searchWord, completion: completion)
     }
 }

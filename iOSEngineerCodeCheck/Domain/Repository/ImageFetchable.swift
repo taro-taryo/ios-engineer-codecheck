@@ -1,8 +1,8 @@
 //
-//  NetworkError.swift
+//  ImageFetchable.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,21 +18,8 @@
 // limitations under the License.
 //
 
-import Foundation
+import UIKit
 
-enum NetworkError: LocalizedError {
-    case invalidURL
-    case noData
-    case requestFailed(Error)
-
-    var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-            return "The URL provided was invalid."
-        case .noData:
-            return "No data was received from the server."
-        case .requestFailed(let error):
-            return "Request failed with error: \(error.localizedDescription)"
-        }
-    }
+protocol ImageFetchable {
+    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void)
 }
