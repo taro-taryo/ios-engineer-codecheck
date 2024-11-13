@@ -158,6 +158,9 @@
 		C6BFEF322CE32AFB008304B3 /* MockFetchRepositoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF312CE32AFA008304B3 /* MockFetchRepositoriesUseCase.swift */; };
 		C6BFEF342CE32B1E008304B3 /* ContentViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF332CE32B18008304B3 /* ContentViewUITests.swift */; };
 		C6C6F5722CE30FEE00ACC55C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */; };
+		C6DAE8082CE48F2800EF0E81 /* SuggestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DAE8072CE48F2700EF0E81 /* SuggestionButton.swift */; };
+		C6DAE8092CE48F2800EF0E81 /* SuggestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DAE8072CE48F2700EF0E81 /* SuggestionButton.swift */; };
+		C6DAE80A2CE48F2800EF0E81 /* SuggestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DAE8072CE48F2700EF0E81 /* SuggestionButton.swift */; };
 		C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E53FC32CDF5E49001E078A /* Repository.swift */; };
 /* End PBXBuildFile section */
 
@@ -252,6 +255,7 @@
 		C6BFEF312CE32AFA008304B3 /* MockFetchRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchRepositoriesUseCase.swift; sourceTree = "<group>"; };
 		C6BFEF332CE32B18008304B3 /* ContentViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewUITests.swift; sourceTree = "<group>"; };
 		C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		C6DAE8072CE48F2700EF0E81 /* SuggestionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionButton.swift; sourceTree = "<group>"; };
 		C6E53FC32CDF5E49001E078A /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -488,6 +492,7 @@
 				C6835D2A2CE0659E00CCF57C /* RepositoryRow.swift */,
 				C69EBF312CE2FE9500D7B272 /* RepositoryViewData.swift */,
 				C65049862CE0B74200507163 /* SearchBar.swift */,
+				C6DAE8072CE48F2700EF0E81 /* SuggestionButton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -733,6 +738,7 @@
 				C67C980D2CE4282E00899658 /* BookmarkRepositoryInterface.swift in Sources */,
 				C6BFEF222CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */,
 				C67C98002CE4274F00899658 /* FetchTopicSuggestionsUseCase.swift in Sources */,
+				C6DAE8082CE48F2800EF0E81 /* SuggestionButton.swift in Sources */,
 				C68F7AF82CE2F98700364D51 /* FetchImageUseCase.swift in Sources */,
 				C6775E192CE1C78600252D97 /* SceneDelegate.swift in Sources */,
 				C69EBF342CE2FE9500D7B272 /* RepositoryViewData.swift in Sources */,
@@ -810,6 +816,7 @@
 				C64030C52CE0CFCE0026BE3D /* KeyboardAvoider.swift in Sources */,
 				C61A4EF92CE19951004F3E27 /* NetworkErrorTests.swift in Sources */,
 				C67C98082CE4281500899658 /* BookmarkRepository.swift in Sources */,
+				C6DAE80A2CE48F2800EF0E81 /* SuggestionButton.swift in Sources */,
 				C6B40CF82CE32E05006BB8A7 /* BookmarkViewModel.swift in Sources */,
 				C64030C62CE0CFCE0026BE3D /* ServiceLocator.swift in Sources */,
 				C64030C72CE0CFCE0026BE3D /* RepositoryManager.swift in Sources */,
@@ -876,6 +883,7 @@
 				C64030DC2CE0CFCE0026BE3D /* NetworkError.swift in Sources */,
 				C6B40CF92CE32E05006BB8A7 /* BookmarkViewModel.swift in Sources */,
 				C6A236C82CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */,
+				C6DAE8092CE48F2800EF0E81 /* SuggestionButton.swift in Sources */,
 				BFD94601244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift in Sources */,
 				C6B40CF22CE32DBB006BB8A7 /* BookmarkUseCase.swift in Sources */,
 				C6B40CFD2CE32F51006BB8A7 /* BookmarkView.swift in Sources */,

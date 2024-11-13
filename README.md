@@ -1,33 +1,43 @@
-# iOSEngineerCodeCheck
+# iOSエンジニア 課題提出プロジェクト
 
-## 概要
-iOSEngineerCodeCheckは、GitHubのリポジトリ検索アプリケーションです。本アプリはGitHubのAPIを活用して、特定のキーワードに基づくリポジトリを検索し、その結果を一覧で表示します。また、各リポジトリの詳細情報を表示する画面や、ブックマーク機能、人気指標の視覚化、インクリメンタルサジェスト機能など、複数の便利な機能が含まれています。
+このリポジトリは、iOSエンジニアとしてのスキルを評価していただくための提出用プロジェクトです
 
-## 機能概要
-### ブックマーク機能
-- リポジトリをブックマークとして保存できる機能を実装しています。
-- 各リポジトリにはブックマークボタンが配置されており、ボタンのクリックで簡単にブックマークを追加または削除できます。
-- 削除直後には一定時間内に「元に戻す」機能を利用できるため、誤って削除したブックマークも簡単に復元できます。
+## リリース情報
+各課題ごとのリリースはこちらから確認できます。
 
-### インクリメンタルサジェスト機能
-- GitHubのトピック検索APIを活用し、検索キーワードに基づく関連トピックをリアルタイムでサジェストとして表示する機能を追加しました。
-- タグ候補と関連トピックの両方を提供し、ユーザーがより柔軟に候補を選択できるようにしています。
+- [課題-初級-Fat-VC-の回避](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-初級-Fat-VC-の回避)
+- [課題-初級-ソースコードの可読性の向上](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-初級-ソースコードの可読性の向上)
+- [課題-初級-ソースコードの安全性の向上](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-初級-ソースコードの安全性の向上)
+- [課題-初級-バグを修正](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-初級-バグを修正)
+- [課題-中級-アーキテクチャを適用](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-中級-アーキテクチャを適用)
+- [課題-中級-テストを追加](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-中級-テストを追加)
+- [課題-中級-プログラム構造をリファクタリング](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-中級-プログラム構造をリファクタリング)
+- [課題-ボーナス-新機能を追加](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-ボーナス-新機能を追加)
+- [課題-ボーナス-UIをブラッシュアップ](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-ボーナス-UIをブラッシュアップ)
 
-### リポジトリの人気指標をビジュアル化
-- スター数やフォーク数をバッジ表示することで、各リポジトリの人気度を視覚的に把握しやすくしました。
-- ビジュアル化により、ユーザーが人気リポジトリを簡単に見つけられるよう工夫しています。
+## アプリ仕様
 
-## 技術詳細
-- **開発環境**: Swift, SwiftUI
-- **依存注入**: `DIContainer` クラスを利用した依存注入により、各サービスやリポジトリのテストが容易です。
-- **エラーハンドリング**: `AppError` クラスを用いて統一的なエラーハンドリングを実現しています。
-- **テスト**: `XCTest`と`XCUITest`を用いた単体テストおよびUIテストにより、主要な機能の正確な動作を確認しています。
-- **UIカスタマイズ**: `UITheme`で統一されたテーマカラーや背景グラデーションを定義し、アプリ全体に統一感のあるデザインを提供しています。
+このアプリはGitHubのリポジトリを検索するためのものです。本仕様の一部はオリジナルのリポジトリ（[株式会社ゆめみの課題リポジトリ](https://github.com/yumemi-inc/ios-engineer-codecheck)）から引用しています。
 
-## 使用技術
-- **API連携**: GitHub APIを通じてリポジトリ情報やトピック情報を取得します。
-- **UI要素**: `SwiftUI`によるレスポンシブデザインを採用し、ユーザーインターフェースの操作感を向上させています。
-- **ブックマーク管理**: `BookmarkViewModel`を利用し、ブックマークの追加、削除、一覧表示を管理します。
+![動作イメージ](README_Images/app.gif)
 
-## 生成AIの利用について
-このREADMEおよび一部のコードは生成AIのサポートを受けて作成しました。生成AIの活用により、効率的かつ高品質なコード作成とドキュメント作成が可能となりました。
+### 動作
+
+1. キーワードを入力してリポジトリを検索
+2. GitHub API（`search/repositories`）を使用してリポジトリを検索し、結果一覧を概要（リポジトリ名）で表示
+3. 結果の1つを選択すると、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star数、Watcher数、Fork数、Issue数）が表示されます
+
+## 既知のバグと課題
+
+このプロジェクトにおいて現在確認されているバグや修正課題については、GitHubのIssueとして管理しています。以下のリンクから一覧をご確認いただけます。
+
+- [既知のバグと課題の一覧](https://github.com/taro-taryo/ios-engineer-codecheck/issues)
+
+現時点で未解決の項目がいくつかあるため、動作確認の際にはご留意ください。バグや修正が完了した際には、リリースノートおよびIssueで進捗を更新します。
+
+## 環境
+
+- 開発機OS: macOS Sequoia 15.1
+- XCode: Version 16.1 (16B40)
+- 開発言語: Swift 5
+- Minimum Deployments: iOS 17.2
