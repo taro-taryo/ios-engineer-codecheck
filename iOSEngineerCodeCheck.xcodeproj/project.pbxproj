@@ -16,7 +16,7 @@
 		C61A4EF52CE0D4A4004F3E27 /* Repository+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A4EF42CE0D4A4004F3E27 /* Repository+Stub.swift */; };
 		C61A4EF72CE1993B004F3E27 /* AppErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A4EF62CE1993A004F3E27 /* AppErrorTests.swift */; };
 		C61A4EF92CE19951004F3E27 /* NetworkErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A4EF82CE1994F004F3E27 /* NetworkErrorTests.swift */; };
-		C64030B72CE0CFCE0026BE3D /* RepositoryFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */; };
+		C64030B72CE0CFCE0026BE3D /* RepositoryRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D362CE06A7900CCF57C /* RepositoryRepositoryInterface.swift */; };
 		C64030B82CE0CFCE0026BE3D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049832CE0B52000507163 /* NetworkError.swift */; };
 		C64030B92CE0CFCE0026BE3D /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E53FC32CDF5E49001E078A /* Repository.swift */; };
 		C64030BA2CE0CFCE0026BE3D /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049792CE0AFFC00507163 /* RepositoryError.swift */; };
@@ -40,7 +40,7 @@
 		C64030CC2CE0CFCE0026BE3D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		C64030CD2CE0CFCE0026BE3D /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D302CE0662800CCF57C /* ImageLoader.swift */; };
 		C64030CE2CE0CFCE0026BE3D /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D262CE0508900CCF57C /* RepositoryManager.swift */; };
-		C64030CF2CE0CFCE0026BE3D /* RepositoryFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */; };
+		C64030CF2CE0CFCE0026BE3D /* RepositoryRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D362CE06A7900CCF57C /* RepositoryRepositoryInterface.swift */; };
 		C64030D02CE0CFCE0026BE3D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D282CE0650400CCF57C /* ContentView.swift */; };
 		C64030D12CE0CFCE0026BE3D /* KeyboardAvoider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049892CE0B75A00507163 /* KeyboardAvoider.swift */; };
 		C64030D22CE0CFCE0026BE3D /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D2C2CE065E200CCF57C /* DetailView.swift */; };
@@ -68,6 +68,24 @@
 		C650498A2CE0B76500507163 /* KeyboardAvoider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65049892CE0B75A00507163 /* KeyboardAvoider.swift */; };
 		C6775E152CE1C6FC00252D97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6775E142CE1C6FB00252D97 /* AppDelegate.swift */; };
 		C6775E192CE1C78600252D97 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6775E182CE1C78500252D97 /* SceneDelegate.swift */; };
+		C67C97F52CE424AD00899658 /* RepositoryRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C97F42CE424A300899658 /* RepositoryRemoteDataSource.swift */; };
+		C67C97F62CE424AD00899658 /* RepositoryRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C97F42CE424A300899658 /* RepositoryRemoteDataSource.swift */; };
+		C67C97F72CE424AD00899658 /* RepositoryRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C97F42CE424A300899658 /* RepositoryRemoteDataSource.swift */; };
+		C67C97FF2CE4274F00899658 /* FetchTopicSuggestionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C97FE2CE4274E00899658 /* FetchTopicSuggestionsUseCase.swift */; };
+		C67C98002CE4274F00899658 /* FetchTopicSuggestionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C97FE2CE4274E00899658 /* FetchTopicSuggestionsUseCase.swift */; };
+		C67C98012CE4274F00899658 /* FetchTopicSuggestionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C97FE2CE4274E00899658 /* FetchTopicSuggestionsUseCase.swift */; };
+		C67C98032CE427DD00899658 /* TopicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C98022CE427DC00899658 /* TopicRepository.swift */; };
+		C67C98042CE427DD00899658 /* TopicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C98022CE427DC00899658 /* TopicRepository.swift */; };
+		C67C98052CE427DD00899658 /* TopicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C98022CE427DC00899658 /* TopicRepository.swift */; };
+		C67C98072CE4281500899658 /* BookmarkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C98062CE4281400899658 /* BookmarkRepository.swift */; };
+		C67C98082CE4281500899658 /* BookmarkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C98062CE4281400899658 /* BookmarkRepository.swift */; };
+		C67C98092CE4281500899658 /* BookmarkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C98062CE4281400899658 /* BookmarkRepository.swift */; };
+		C67C980B2CE4282E00899658 /* BookmarkRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C980A2CE4282C00899658 /* BookmarkRepositoryInterface.swift */; };
+		C67C980C2CE4282E00899658 /* BookmarkRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C980A2CE4282C00899658 /* BookmarkRepositoryInterface.swift */; };
+		C67C980D2CE4282E00899658 /* BookmarkRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C980A2CE4282C00899658 /* BookmarkRepositoryInterface.swift */; };
+		C67C980F2CE4291300899658 /* TopicRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C980E2CE4291200899658 /* TopicRepositoryInterface.swift */; };
+		C67C98102CE4291300899658 /* TopicRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C980E2CE4291200899658 /* TopicRepositoryInterface.swift */; };
+		C67C98112CE4291300899658 /* TopicRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67C980E2CE4291200899658 /* TopicRepositoryInterface.swift */; };
 		C6835D1D2CE03EE000CCF57C /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D1C2CE03EE000CCF57C /* SearchService.swift */; };
 		C6835D212CE03FF200CCF57C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D202CE03FF200CCF57C /* ImageService.swift */; };
 		C6835D272CE0508900CCF57C /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D262CE0508900CCF57C /* RepositoryManager.swift */; };
@@ -76,7 +94,7 @@
 		C6835D2D2CE065E200CCF57C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D2C2CE065E200CCF57C /* DetailView.swift */; };
 		C6835D2F2CE0660500CCF57C /* RepositoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D2E2CE0660500CCF57C /* RepositoryListViewModel.swift */; };
 		C6835D312CE0662800CCF57C /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D302CE0662800CCF57C /* ImageLoader.swift */; };
-		C6835D372CE06A7900CCF57C /* RepositoryFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */; };
+		C6835D372CE06A7900CCF57C /* RepositoryRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6835D362CE06A7900CCF57C /* RepositoryRepositoryInterface.swift */; };
 		C68F7AEE2CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */; };
 		C68F7AEF2CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */; };
 		C68F7AF02CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */; };
@@ -86,9 +104,9 @@
 		C68F7AF72CE2F98700364D51 /* FetchImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AF62CE2F98200364D51 /* FetchImageUseCase.swift */; };
 		C68F7AF82CE2F98700364D51 /* FetchImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AF62CE2F98200364D51 /* FetchImageUseCase.swift */; };
 		C68F7AF92CE2F98700364D51 /* FetchImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AF62CE2F98200364D51 /* FetchImageUseCase.swift */; };
-		C68F7AFC2CE2FB1800364D51 /* RepositoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AFB2CE2FB1700364D51 /* RepositoryDataSource.swift */; };
-		C68F7AFD2CE2FB1800364D51 /* RepositoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AFB2CE2FB1700364D51 /* RepositoryDataSource.swift */; };
-		C68F7AFE2CE2FB1800364D51 /* RepositoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AFB2CE2FB1700364D51 /* RepositoryDataSource.swift */; };
+		C68F7AFC2CE2FB1800364D51 /* RepositoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AFB2CE2FB1700364D51 /* RepositoryRepository.swift */; };
+		C68F7AFD2CE2FB1800364D51 /* RepositoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AFB2CE2FB1700364D51 /* RepositoryRepository.swift */; };
+		C68F7AFE2CE2FB1800364D51 /* RepositoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7AFB2CE2FB1700364D51 /* RepositoryRepository.swift */; };
 		C68F7B012CE2FC5800364D51 /* ImageFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7B002CE2FC5700364D51 /* ImageFetchable.swift */; };
 		C68F7B022CE2FC5800364D51 /* ImageFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7B002CE2FC5700364D51 /* ImageFetchable.swift */; };
 		C68F7B032CE2FC5800364D51 /* ImageFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F7B002CE2FC5700364D51 /* ImageFetchable.swift */; };
@@ -108,6 +126,37 @@
 		C6A236CE2CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
 		C6A236CF2CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
 		C6A236D02CE23F8F009ADF49 /* UITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A236CD2CE23F8E009ADF49 /* UITheme.swift */; };
+		C6B40CF02CE32DBB006BB8A7 /* BookmarkUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CEF2CE32DBA006BB8A7 /* BookmarkUseCase.swift */; };
+		C6B40CF12CE32DBB006BB8A7 /* BookmarkUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CEF2CE32DBA006BB8A7 /* BookmarkUseCase.swift */; };
+		C6B40CF22CE32DBB006BB8A7 /* BookmarkUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CEF2CE32DBA006BB8A7 /* BookmarkUseCase.swift */; };
+		C6B40CF42CE32DEC006BB8A7 /* BookmarkRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CF32CE32DE5006BB8A7 /* BookmarkRemoteDataSource.swift */; };
+		C6B40CF52CE32DEC006BB8A7 /* BookmarkRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CF32CE32DE5006BB8A7 /* BookmarkRemoteDataSource.swift */; };
+		C6B40CF62CE32DEC006BB8A7 /* BookmarkRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CF32CE32DE5006BB8A7 /* BookmarkRemoteDataSource.swift */; };
+		C6B40CF82CE32E05006BB8A7 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CF72CE32E04006BB8A7 /* BookmarkViewModel.swift */; };
+		C6B40CF92CE32E05006BB8A7 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CF72CE32E04006BB8A7 /* BookmarkViewModel.swift */; };
+		C6B40CFA2CE32E05006BB8A7 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CF72CE32E04006BB8A7 /* BookmarkViewModel.swift */; };
+		C6B40CFC2CE32F51006BB8A7 /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CFB2CE32F50006BB8A7 /* BookmarkView.swift */; };
+		C6B40CFD2CE32F51006BB8A7 /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CFB2CE32F50006BB8A7 /* BookmarkView.swift */; };
+		C6B40CFE2CE32F51006BB8A7 /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CFB2CE32F50006BB8A7 /* BookmarkView.swift */; };
+		C6B40D002CE333B3006BB8A7 /* DrawerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CFF2CE333B2006BB8A7 /* DrawerMenu.swift */; };
+		C6B40D012CE333B3006BB8A7 /* DrawerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CFF2CE333B2006BB8A7 /* DrawerMenu.swift */; };
+		C6B40D022CE333B3006BB8A7 /* DrawerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40CFF2CE333B2006BB8A7 /* DrawerMenu.swift */; };
+		C6B40D042CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40D032CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift */; };
+		C6B40D052CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40D032CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift */; };
+		C6B40D062CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40D032CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift */; };
+		C6B40D202CE33EA0006BB8A7 /* ContentViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B40D1F2CE33E9F006BB8A7 /* ContentViewTests.swift */; };
+		C6BFEF222CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */; };
+		C6BFEF232CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */; };
+		C6BFEF242CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */; };
+		C6BFEF262CE3233F008304B3 /* RepositoryBadgeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF252CE3233E008304B3 /* RepositoryBadgeViewTests.swift */; };
+		C6BFEF282CE32360008304B3 /* RepositoryRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF272CE32359008304B3 /* RepositoryRowTests.swift */; };
+		C6BFEF2A2CE3237E008304B3 /* RepositoryRowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF292CE3237C008304B3 /* RepositoryRowUITests.swift */; };
+		C6BFEF2C2CE326CE008304B3 /* EnhancedSearchRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF2B2CE326CD008304B3 /* EnhancedSearchRemoteDataSource.swift */; };
+		C6BFEF2D2CE326CE008304B3 /* EnhancedSearchRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF2B2CE326CD008304B3 /* EnhancedSearchRemoteDataSource.swift */; };
+		C6BFEF2E2CE326CE008304B3 /* EnhancedSearchRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF2B2CE326CD008304B3 /* EnhancedSearchRemoteDataSource.swift */; };
+		C6BFEF302CE32AE0008304B3 /* MockEnhancedSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF2F2CE32ADF008304B3 /* MockEnhancedSearchService.swift */; };
+		C6BFEF322CE32AFB008304B3 /* MockFetchRepositoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF312CE32AFA008304B3 /* MockFetchRepositoriesUseCase.swift */; };
+		C6BFEF342CE32B1E008304B3 /* ContentViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFEF332CE32B18008304B3 /* ContentViewUITests.swift */; };
 		C6C6F5722CE30FEE00ACC55C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */; };
 		C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E53FC32CDF5E49001E078A /* Repository.swift */; };
 /* End PBXBuildFile section */
@@ -159,6 +208,12 @@
 		C65049892CE0B75A00507163 /* KeyboardAvoider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoider.swift; sourceTree = "<group>"; };
 		C6775E142CE1C6FB00252D97 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6775E182CE1C78500252D97 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		C67C97F42CE424A300899658 /* RepositoryRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRemoteDataSource.swift; sourceTree = "<group>"; };
+		C67C97FE2CE4274E00899658 /* FetchTopicSuggestionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTopicSuggestionsUseCase.swift; sourceTree = "<group>"; };
+		C67C98022CE427DC00899658 /* TopicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicRepository.swift; sourceTree = "<group>"; };
+		C67C98062CE4281400899658 /* BookmarkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRepository.swift; sourceTree = "<group>"; };
+		C67C980A2CE4282C00899658 /* BookmarkRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRepositoryInterface.swift; sourceTree = "<group>"; };
+		C67C980E2CE4291200899658 /* TopicRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicRepositoryInterface.swift; sourceTree = "<group>"; };
 		C6835D1C2CE03EE000CCF57C /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		C6835D202CE03FF200CCF57C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		C6835D262CE0508900CCF57C /* RepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryManager.swift; sourceTree = "<group>"; };
@@ -167,11 +222,11 @@
 		C6835D2C2CE065E200CCF57C /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		C6835D2E2CE0660500CCF57C /* RepositoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListViewModel.swift; sourceTree = "<group>"; };
 		C6835D302CE0662800CCF57C /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
-		C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFetchable.swift; sourceTree = "<group>"; };
+		C6835D362CE06A7900CCF57C /* RepositoryRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRepositoryInterface.swift; sourceTree = "<group>"; };
 		C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		C68F7AF22CE2F97200364D51 /* FetchRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoriesUseCase.swift; sourceTree = "<group>"; };
 		C68F7AF62CE2F98200364D51 /* FetchImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageUseCase.swift; sourceTree = "<group>"; };
-		C68F7AFB2CE2FB1700364D51 /* RepositoryDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDataSource.swift; sourceTree = "<group>"; };
+		C68F7AFB2CE2FB1700364D51 /* RepositoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRepository.swift; sourceTree = "<group>"; };
 		C68F7B002CE2FC5700364D51 /* ImageFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetchable.swift; sourceTree = "<group>"; };
 		C68FDD082CE1F41A00168F8C /* Repository+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Repository+Stub.swift"; path = "iOSEngineerCodeCheckTests/Stub/Repository+Stub.swift"; sourceTree = SOURCE_ROOT; };
 		C68FDD092CE1F41A00168F8C /* StubImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StubImageService.swift; path = iOSEngineerCodeCheckTests/Stub/StubImageService.swift; sourceTree = SOURCE_ROOT; };
@@ -181,6 +236,21 @@
 		C6A236C52CE23AE8009ADF49 /* LanguageIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageIconProvider.swift; sourceTree = "<group>"; };
 		C6A236C92CE23AF4009ADF49 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		C6A236CD2CE23F8E009ADF49 /* UITheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITheme.swift; sourceTree = "<group>"; };
+		C6B40CEF2CE32DBA006BB8A7 /* BookmarkUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkUseCase.swift; sourceTree = "<group>"; };
+		C6B40CF32CE32DE5006BB8A7 /* BookmarkRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRemoteDataSource.swift; sourceTree = "<group>"; };
+		C6B40CF72CE32E04006BB8A7 /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
+		C6B40CFB2CE32F50006BB8A7 /* BookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
+		C6B40CFF2CE333B2006BB8A7 /* DrawerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerMenu.swift; sourceTree = "<group>"; };
+		C6B40D032CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissKeyboardOnTapModifier.swift; sourceTree = "<group>"; };
+		C6B40D1F2CE33E9F006BB8A7 /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
+		C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryBadgeView.swift; sourceTree = "<group>"; };
+		C6BFEF252CE3233E008304B3 /* RepositoryBadgeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryBadgeViewTests.swift; sourceTree = "<group>"; };
+		C6BFEF272CE32359008304B3 /* RepositoryRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRowTests.swift; sourceTree = "<group>"; };
+		C6BFEF292CE3237C008304B3 /* RepositoryRowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRowUITests.swift; sourceTree = "<group>"; };
+		C6BFEF2B2CE326CD008304B3 /* EnhancedSearchRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnhancedSearchRemoteDataSource.swift; sourceTree = "<group>"; };
+		C6BFEF2F2CE32ADF008304B3 /* MockEnhancedSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEnhancedSearchService.swift; sourceTree = "<group>"; };
+		C6BFEF312CE32AFA008304B3 /* MockFetchRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchRepositoriesUseCase.swift; sourceTree = "<group>"; };
+		C6BFEF332CE32B18008304B3 /* ContentViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewUITests.swift; sourceTree = "<group>"; };
 		C6C6F5712CE30FEE00ACC55C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C6E53FC32CDF5E49001E078A /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,6 +327,9 @@
 				C64030E32CE0D1B20026BE3D /* SearchServiceTests.swift */,
 				C61A4EF62CE1993A004F3E27 /* AppErrorTests.swift */,
 				C61A4EF82CE1994F004F3E27 /* NetworkErrorTests.swift */,
+				C6BFEF252CE3233E008304B3 /* RepositoryBadgeViewTests.swift */,
+				C6BFEF272CE32359008304B3 /* RepositoryRowTests.swift */,
+				C6B40D1F2CE33E9F006BB8A7 /* ContentViewTests.swift */,
 				BFD945F7244DC5EB0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheckTests;
@@ -267,6 +340,8 @@
 			children = (
 				C65F476D2CE1F1E8007F8AD9 /* Stub */,
 				BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */,
+				C6BFEF292CE3237C008304B3 /* RepositoryRowUITests.swift */,
+				C6BFEF332CE32B18008304B3 /* ContentViewUITests.swift */,
 				BFD94602244DC5EC0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheckUITests;
@@ -279,6 +354,8 @@
 				C61A4EF02CE0D481004F3E27 /* StubImageService.swift */,
 				C61A4EF22CE0D490004F3E27 /* StubSearchService.swift */,
 				C61A4EF42CE0D4A4004F3E27 /* Repository+Stub.swift */,
+				C6BFEF2F2CE32ADF008304B3 /* MockEnhancedSearchService.swift */,
+				C6BFEF312CE32AFA008304B3 /* MockFetchRepositoriesUseCase.swift */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -286,6 +363,7 @@
 		C65049702CE0A65F00507163 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				C67C97FC2CE4253400899658 /* Repository */,
 				C65049722CE0A66D00507163 /* DataSource */,
 				C65049712CE0A66700507163 /* Model */,
 				C650498E2CE0BD3100507163 /* Service */,
@@ -305,7 +383,7 @@
 		C65049722CE0A66D00507163 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				C68F7AFB2CE2FB1700364D51 /* RepositoryDataSource.swift */,
+				C67C97F32CE4249B00899658 /* Remote */,
 				C6835D262CE0508900CCF57C /* RepositoryManager.swift */,
 				C6835D1C2CE03EE000CCF57C /* SearchService.swift */,
 			);
@@ -315,9 +393,9 @@
 		C65049762CE0AFA200507163 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				C67C97FD2CE4257800899658 /* RepositoryInterface */,
 				C68F7AFF2CE2FC4E00364D51 /* Repository */,
 				C68F7AF12CE2F96800364D51 /* UseCase */,
-				C65049772CE0AFBC00507163 /* ViewModel */,
 				C65049782CE0AFC400507163 /* Model */,
 			);
 			path = Domain;
@@ -326,8 +404,9 @@
 		C65049772CE0AFBC00507163 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C6835D2E2CE0660500CCF57C /* RepositoryListViewModel.swift */,
+				C6B40CF72CE32E04006BB8A7 /* BookmarkViewModel.swift */,
 				C6835D302CE0662800CCF57C /* ImageLoader.swift */,
+				C6835D2E2CE0660500CCF57C /* RepositoryListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -336,7 +415,6 @@
 			isa = PBXGroup;
 			children = (
 				C65049792CE0AFFC00507163 /* RepositoryError.swift */,
-				C6835D362CE06A7900CCF57C /* RepositoryFetchable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +442,7 @@
 			children = (
 				C650498D2CE0B86900507163 /* Component */,
 				C650498C2CE0B85300507163 /* Screen */,
+				C65049772CE0AFBC00507163 /* ViewModel */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -372,6 +451,7 @@
 			isa = PBXGroup;
 			children = (
 				C65049892CE0B75A00507163 /* KeyboardAvoider.swift */,
+				C6B40D032CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift */,
 				C68F7AED2CE2F1E100364D51 /* NavigationBarModifier.swift */,
 				C6A236C92CE23AF4009ADF49 /* UIConstants.swift */,
 				C6A236CD2CE23F8E009ADF49 /* UITheme.swift */,
@@ -400,8 +480,11 @@
 		C650498D2CE0B86900507163 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				C6B40CFB2CE32F50006BB8A7 /* BookmarkView.swift */,
+				C6B40CFF2CE333B2006BB8A7 /* DrawerMenu.swift */,
 				C68F7AFA2CE2FA1A00364D51 /* Helpers */,
 				C65049882CE0B75000507163 /* Modifiers */,
+				C6BFEF212CE321AA008304B3 /* RepositoryBadgeView.swift */,
 				C6835D2A2CE0659E00CCF57C /* RepositoryRow.swift */,
 				C69EBF312CE2FE9500D7B272 /* RepositoryViewData.swift */,
 				C65049862CE0B74200507163 /* SearchBar.swift */,
@@ -428,11 +511,43 @@
 			path = Stub;
 			sourceTree = "<group>";
 		};
+		C67C97F32CE4249B00899658 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				C6B40CF32CE32DE5006BB8A7 /* BookmarkRemoteDataSource.swift */,
+				C6BFEF2B2CE326CD008304B3 /* EnhancedSearchRemoteDataSource.swift */,
+				C67C97F42CE424A300899658 /* RepositoryRemoteDataSource.swift */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		C67C97FC2CE4253400899658 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				C67C98062CE4281400899658 /* BookmarkRepository.swift */,
+				C68F7AFB2CE2FB1700364D51 /* RepositoryRepository.swift */,
+				C67C98022CE427DC00899658 /* TopicRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		C67C97FD2CE4257800899658 /* RepositoryInterface */ = {
+			isa = PBXGroup;
+			children = (
+				C67C980A2CE4282C00899658 /* BookmarkRepositoryInterface.swift */,
+				C6835D362CE06A7900CCF57C /* RepositoryRepositoryInterface.swift */,
+				C67C980E2CE4291200899658 /* TopicRepositoryInterface.swift */,
+			);
+			path = RepositoryInterface;
+			sourceTree = "<group>";
+		};
 		C68F7AF12CE2F96800364D51 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				C68F7AF22CE2F97200364D51 /* FetchRepositoriesUseCase.swift */,
+				C6B40CEF2CE32DBA006BB8A7 /* BookmarkUseCase.swift */,
 				C68F7AF62CE2F98200364D51 /* FetchImageUseCase.swift */,
+				C68F7AF22CE2F97200364D51 /* FetchRepositoriesUseCase.swift */,
+				C67C97FE2CE4274E00899658 /* FetchTopicSuggestionsUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -601,16 +716,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C67C980F2CE4291300899658 /* TopicRepositoryInterface.swift in Sources */,
+				C6BFEF2E2CE326CE008304B3 /* EnhancedSearchRemoteDataSource.swift in Sources */,
+				C6B40CFE2CE32F51006BB8A7 /* BookmarkView.swift in Sources */,
 				C68F7B032CE2FC5800364D51 /* ImageFetchable.swift in Sources */,
 				C6835D2F2CE0660500CCF57C /* RepositoryListViewModel.swift in Sources */,
-				C6835D372CE06A7900CCF57C /* RepositoryFetchable.swift in Sources */,
+				C6835D372CE06A7900CCF57C /* RepositoryRepositoryInterface.swift in Sources */,
 				C68F7AF02CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */,
 				C6E53FC42CDF5E49001E078A /* Repository.swift in Sources */,
 				C65049822CE0B51A00507163 /* AppError.swift in Sources */,
 				C650497F2CE0B2AD00507163 /* ServiceLocator.swift in Sources */,
+				C6B40D022CE333B3006BB8A7 /* DrawerMenu.swift in Sources */,
 				C6835D1D2CE03EE000CCF57C /* SearchService.swift in Sources */,
-				C68F7AFE2CE2FB1800364D51 /* RepositoryDataSource.swift in Sources */,
+				C68F7AFE2CE2FB1800364D51 /* RepositoryRepository.swift in Sources */,
 				C6835D2D2CE065E200CCF57C /* DetailView.swift in Sources */,
+				C67C980D2CE4282E00899658 /* BookmarkRepositoryInterface.swift in Sources */,
+				C6BFEF222CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */,
+				C67C98002CE4274F00899658 /* FetchTopicSuggestionsUseCase.swift in Sources */,
 				C68F7AF82CE2F98700364D51 /* FetchImageUseCase.swift in Sources */,
 				C6775E192CE1C78600252D97 /* SceneDelegate.swift in Sources */,
 				C69EBF342CE2FE9500D7B272 /* RepositoryViewData.swift in Sources */,
@@ -619,17 +741,24 @@
 				C650497D2CE0B29C00507163 /* DIContainer.swift in Sources */,
 				C6835D2B2CE0659E00CCF57C /* RepositoryRow.swift in Sources */,
 				C6835D272CE0508900CCF57C /* RepositoryManager.swift in Sources */,
+				C6B40CFA2CE32E05006BB8A7 /* BookmarkViewModel.swift in Sources */,
 				C65049742CE0A6C700507163 /* RepositoriesResponse.swift in Sources */,
+				C67C97F52CE424AD00899658 /* RepositoryRemoteDataSource.swift in Sources */,
 				C68F7AF52CE2F97900364D51 /* FetchRepositoriesUseCase.swift in Sources */,
 				C6835D212CE03FF200CCF57C /* ImageService.swift in Sources */,
 				C650498A2CE0B76500507163 /* KeyboardAvoider.swift in Sources */,
+				C6B40CF62CE32DEC006BB8A7 /* BookmarkRemoteDataSource.swift in Sources */,
 				C65049872CE0B74400507163 /* SearchBar.swift in Sources */,
+				C6B40CF02CE32DBB006BB8A7 /* BookmarkUseCase.swift in Sources */,
 				C65049842CE0B52000507163 /* NetworkError.swift in Sources */,
 				C650497A2CE0AFFC00507163 /* RepositoryError.swift in Sources */,
 				C6A236CB2CE23AF5009ADF49 /* UIConstants.swift in Sources */,
 				C6A236C72CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */,
 				C6A236CF2CE23F8F009ADF49 /* UITheme.swift in Sources */,
+				C6B40D062CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift in Sources */,
+				C67C98092CE4281500899658 /* BookmarkRepository.swift in Sources */,
 				C6835D312CE0662800CCF57C /* ImageLoader.swift in Sources */,
+				C67C98042CE427DD00899658 /* TopicRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,16 +766,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6B40CF42CE32DEC006BB8A7 /* BookmarkRemoteDataSource.swift in Sources */,
+				C67C98102CE4291300899658 /* TopicRepositoryInterface.swift in Sources */,
+				C67C97F72CE424AD00899658 /* RepositoryRemoteDataSource.swift in Sources */,
+				C6BFEF282CE32360008304B3 /* RepositoryRowTests.swift in Sources */,
 				C68F7B012CE2FC5800364D51 /* ImageFetchable.swift in Sources */,
-				C64030B72CE0CFCE0026BE3D /* RepositoryFetchable.swift in Sources */,
+				C64030B72CE0CFCE0026BE3D /* RepositoryRepositoryInterface.swift in Sources */,
 				C61A4EF52CE0D4A4004F3E27 /* Repository+Stub.swift in Sources */,
 				C64030B82CE0CFCE0026BE3D /* NetworkError.swift in Sources */,
+				C67C980C2CE4282E00899658 /* BookmarkRepositoryInterface.swift in Sources */,
 				C61A4EF32CE0D490004F3E27 /* StubSearchService.swift in Sources */,
 				C64030B92CE0CFCE0026BE3D /* Repository.swift in Sources */,
+				C6BFEF2C2CE326CE008304B3 /* EnhancedSearchRemoteDataSource.swift in Sources */,
 				C68F7AF42CE2F97900364D51 /* FetchRepositoriesUseCase.swift in Sources */,
+				C6B40D202CE33EA0006BB8A7 /* ContentViewTests.swift in Sources */,
 				C64030BA2CE0CFCE0026BE3D /* RepositoryError.swift in Sources */,
+				C6B40D012CE333B3006BB8A7 /* DrawerMenu.swift in Sources */,
 				C64030BB2CE0CFCE0026BE3D /* ImageLoader.swift in Sources */,
+				C6BFEF262CE3233F008304B3 /* RepositoryBadgeViewTests.swift in Sources */,
 				C6A236CC2CE23AF5009ADF49 /* UIConstants.swift in Sources */,
+				C6BFEF232CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */,
 				C64030BC2CE0CFCE0026BE3D /* SearchBar.swift in Sources */,
 				C64030E02CE0D1860026BE3D /* ImageLoaderTests.swift in Sources */,
 				C64030E22CE0D19D0026BE3D /* RepositoryManagerTests.swift in Sources */,
@@ -659,23 +798,32 @@
 				C61A4EF72CE1993B004F3E27 /* AppErrorTests.swift in Sources */,
 				C64030BF2CE0CFCE0026BE3D /* DIContainer.swift in Sources */,
 				C64030C02CE0CFCE0026BE3D /* DetailView.swift in Sources */,
+				C6BFEF322CE32AFB008304B3 /* MockFetchRepositoriesUseCase.swift in Sources */,
 				C64030C12CE0CFCE0026BE3D /* RepositoriesResponse.swift in Sources */,
+				C6B40CFC2CE32F51006BB8A7 /* BookmarkView.swift in Sources */,
 				C61A4EEF2CE0D467004F3E27 /* StubRepositoryManager.swift in Sources */,
 				C69EBF322CE2FE9500D7B272 /* RepositoryViewData.swift in Sources */,
 				C64030C22CE0CFCE0026BE3D /* RepositoryListViewModel.swift in Sources */,
 				C64030C32CE0CFCE0026BE3D /* AppError.swift in Sources */,
+				C6B40D052CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift in Sources */,
 				C64030C42CE0CFCE0026BE3D /* RepositoryRow.swift in Sources */,
 				C64030C52CE0CFCE0026BE3D /* KeyboardAvoider.swift in Sources */,
 				C61A4EF92CE19951004F3E27 /* NetworkErrorTests.swift in Sources */,
+				C67C98082CE4281500899658 /* BookmarkRepository.swift in Sources */,
+				C6B40CF82CE32E05006BB8A7 /* BookmarkViewModel.swift in Sources */,
 				C64030C62CE0CFCE0026BE3D /* ServiceLocator.swift in Sources */,
 				C64030C72CE0CFCE0026BE3D /* RepositoryManager.swift in Sources */,
 				C64030C82CE0CFCE0026BE3D /* SearchService.swift in Sources */,
+				C6BFEF302CE32AE0008304B3 /* MockEnhancedSearchService.swift in Sources */,
 				C6A236C62CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */,
 				C68F7AF72CE2F98700364D51 /* FetchImageUseCase.swift in Sources */,
+				C6B40CF12CE32DBB006BB8A7 /* BookmarkUseCase.swift in Sources */,
 				C64030E42CE0D1B20026BE3D /* SearchServiceTests.swift in Sources */,
+				C67C97FF2CE4274F00899658 /* FetchTopicSuggestionsUseCase.swift in Sources */,
 				C64030C92CE0CFCE0026BE3D /* ContentView.swift in Sources */,
 				BFD945F6244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift in Sources */,
-				C68F7AFD2CE2FB1800364D51 /* RepositoryDataSource.swift in Sources */,
+				C68F7AFD2CE2FB1800364D51 /* RepositoryRepository.swift in Sources */,
+				C67C98052CE427DD00899658 /* TopicRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,22 +831,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C67C97F62CE424AD00899658 /* RepositoryRemoteDataSource.swift in Sources */,
 				C64030CA2CE0CFCE0026BE3D /* AppError.swift in Sources */,
+				C6BFEF2A2CE3237E008304B3 /* RepositoryRowUITests.swift in Sources */,
 				C68FDD0C2CE1F41A00168F8C /* Repository+Stub.swift in Sources */,
+				C67C98112CE4291300899658 /* TopicRepositoryInterface.swift in Sources */,
 				C68FDD0D2CE1F41A00168F8C /* StubImageService.swift in Sources */,
-				C68F7AFC2CE2FB1800364D51 /* RepositoryDataSource.swift in Sources */,
+				C6B40D042CE33907006BB8A7 /* DismissKeyboardOnTapModifier.swift in Sources */,
+				C68F7AFC2CE2FB1800364D51 /* RepositoryRepository.swift in Sources */,
 				C68FDD0E2CE1F41A00168F8C /* StubRepositoryManager.swift in Sources */,
 				C68FDD0F2CE1F41A00168F8C /* StubSearchService.swift in Sources */,
+				C6BFEF242CE321AB008304B3 /* RepositoryBadgeView.swift in Sources */,
 				C6A236CA2CE23AF5009ADF49 /* UIConstants.swift in Sources */,
 				C64030CB2CE0CFCE0026BE3D /* DIContainer.swift in Sources */,
 				C64030CC2CE0CFCE0026BE3D /* (null) in Sources */,
+				C6BFEF2D2CE326CE008304B3 /* EnhancedSearchRemoteDataSource.swift in Sources */,
+				C6BFEF342CE32B1E008304B3 /* ContentViewUITests.swift in Sources */,
 				C69EBF332CE2FE9500D7B272 /* RepositoryViewData.swift in Sources */,
 				C68F7AF32CE2F97900364D51 /* FetchRepositoriesUseCase.swift in Sources */,
+				C6B40D002CE333B3006BB8A7 /* DrawerMenu.swift in Sources */,
 				C64030CD2CE0CFCE0026BE3D /* ImageLoader.swift in Sources */,
 				C64030CE2CE0CFCE0026BE3D /* RepositoryManager.swift in Sources */,
-				C64030CF2CE0CFCE0026BE3D /* RepositoryFetchable.swift in Sources */,
+				C64030CF2CE0CFCE0026BE3D /* RepositoryRepositoryInterface.swift in Sources */,
 				C64030D02CE0CFCE0026BE3D /* ContentView.swift in Sources */,
 				C64030D12CE0CFCE0026BE3D /* KeyboardAvoider.swift in Sources */,
+				C67C98072CE4281500899658 /* BookmarkRepository.swift in Sources */,
+				C67C98012CE4274F00899658 /* FetchTopicSuggestionsUseCase.swift in Sources */,
+				C67C980B2CE4282E00899658 /* BookmarkRepositoryInterface.swift in Sources */,
 				C68F7AF92CE2F98700364D51 /* FetchImageUseCase.swift in Sources */,
 				C68F7B022CE2FC5800364D51 /* ImageFetchable.swift in Sources */,
 				C64030D22CE0CFCE0026BE3D /* DetailView.swift in Sources */,
@@ -709,13 +868,18 @@
 				C64030D62CE0CFCE0026BE3D /* SearchService.swift in Sources */,
 				C64030D72CE0CFCE0026BE3D /* RepositoriesResponse.swift in Sources */,
 				C64030D82CE0CFCE0026BE3D /* ImageService.swift in Sources */,
+				C6B40CF52CE32DEC006BB8A7 /* BookmarkRemoteDataSource.swift in Sources */,
 				C64030D92CE0CFCE0026BE3D /* ServiceLocator.swift in Sources */,
 				C68F7AEF2CE2F1E200364D51 /* NavigationBarModifier.swift in Sources */,
 				C64030DA2CE0CFCE0026BE3D /* Repository.swift in Sources */,
 				C64030DB2CE0CFCE0026BE3D /* SearchBar.swift in Sources */,
 				C64030DC2CE0CFCE0026BE3D /* NetworkError.swift in Sources */,
+				C6B40CF92CE32E05006BB8A7 /* BookmarkViewModel.swift in Sources */,
 				C6A236C82CE23AE9009ADF49 /* LanguageIconProvider.swift in Sources */,
 				BFD94601244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift in Sources */,
+				C6B40CF22CE32DBB006BB8A7 /* BookmarkUseCase.swift in Sources */,
+				C6B40CFD2CE32F51006BB8A7 /* BookmarkView.swift in Sources */,
+				C67C98032CE427DD00899658 /* TopicRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

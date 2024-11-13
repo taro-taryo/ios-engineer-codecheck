@@ -1,8 +1,8 @@
 //
-//  AppError.swift
+//  FetchTopicSuggestionsUseCase.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/13.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,21 +20,18 @@
 
 import Foundation
 
-enum AppError: LocalizedError, Identifiable {
-    case network(NetworkError)
-    case unknown(String)
+protocol FetchTopicSuggestionsUseCaseProtocol {
+    func execute(query: String, completion: @escaping (Result<[String], Error>) -> Void)
+}
 
-    var id: String {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
+class FetchTopicSuggestionsUseCase: FetchTopicSuggestionsUseCaseProtocol {
+    private let repository: TopicRepositoryInterface
+
+    init(repository: TopicRepositoryInterface) {
+        self.repository = repository
     }
 
-    var errorDescription: String? {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
+    func execute(query: String, completion: @escaping (Result<[String], Error>) -> Void) {
+        repository.fetchTopicSuggestions(for: query, completion: completion)
     }
 }
