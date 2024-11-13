@@ -1,8 +1,8 @@
 //
-//  RepositoryFetchable.swift
+//  RepositoryDataSource.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,9 +20,16 @@
 
 import Foundation
 
-protocol RepositoryFetchable {
+class RepositoryDataSource: RepositoryFetchable {
+    private let searchService: RepositoryFetchable
+
+    init(searchService: RepositoryFetchable = SearchService()) {
+        self.searchService = searchService
+    }
+
     func fetchRepositories(
-        for searchWord: String,
-        completion: @escaping (Result<[Repository], Error>) -> Void
-    )
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+    ) {
+        searchService.fetchRepositories(for: searchWord, completion: completion)
+    }
 }

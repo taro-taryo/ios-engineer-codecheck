@@ -55,10 +55,7 @@ struct RepositoryBadgeView: View {
             }
             .padding(8)
             .background(Capsule().fill(color))
-            .overlay(
-                Capsule()
-                    .stroke(textColor.opacity(0.3), lineWidth: 1)
-            )
+            .overlay(Capsule().stroke(textColor.opacity(0.3), lineWidth: 1))
         }
     }
 }

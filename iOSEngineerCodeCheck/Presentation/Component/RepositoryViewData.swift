@@ -31,14 +31,8 @@ struct RepositoryViewData: Identifiable {
     let ownerAvatarURL: String?
 
     init(
-        id: UUID = UUID(),
-        name: String,
-        language: String,
-        stars: Int,
-        watchers: Int,
-        forks: Int,
-        openIssues: Int,
-        ownerAvatarURL: String? = nil
+        id: UUID = UUID(), name: String, language: String, stars: Int, watchers: Int, forks: Int,
+        openIssues: Int, ownerAvatarURL: String? = nil
     ) {
         self.id = id
         self.name = name

@@ -4,7 +4,13 @@
     "%lld" : {
 
     },
+    "Bookmark removed." : {
+
+    },
     "Bookmarks" : {
+
+    },
+    "Error" : {
 
     },
     "error_invalid_url" : {
@@ -47,6 +53,21 @@
     "No bookmarks available." : {
 
     },
+    "No repositories found" : {
+
+    },
+    "OK" : {
+
+    },
+    "Related Topics" : {
+
+    },
+    "Search Results" : {
+
+    },
+    "Tag Suggestions" : {
+
+    },
     "ui_alert_error_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -70,6 +91,7 @@
       }
     },
     "ui_delete_book_mark_toast" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -135,6 +157,7 @@
       }
     },
     "ui_related_topics_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -179,6 +202,7 @@
       }
     },
     "ui_tag_suggestions_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -21,7 +21,7 @@ import Foundation
 
 @testable import iOSEngineerCodeCheck
 
-class StubRepositoryManager: RepositoryFetchable {
+class StubRepositoryManager: RepositoryRepositoryInterface {
     var result: Result<[Repository], Error>?
     var shouldReturnEmptyResult = false
     var shouldReturnError = false
