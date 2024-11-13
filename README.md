@@ -19,8 +19,6 @@
 
 このアプリはGitHubのリポジトリを検索するためのものです。本仕様の一部はオリジナルのリポジトリ（[株式会社ゆめみの課題リポジトリ](https://github.com/yumemi-inc/ios-engineer-codecheck)）から引用しています。
 
-![動作イメージ](README_Images/app.gif)
-
 ### 動作
 
 1. キーワードを入力してリポジトリを検索
@@ -41,3 +39,11 @@
 - XCode: Version 16.1 (16B40)
 - 開発言語: Swift 5
 - Minimum Deployments: iOS 17.2
+
+## 生成AIの利用について
+
+このプロジェクトは **生成AIを積極的に使用しています。**
+コードを生成AIに渡すときにトークンを節約するため、 [ディレクトリ内のコードのインデントを削除して、１つのプレーンテキストファイルに纏めるツール](https://github.com/taro-taryo/ios-engineer-codecheck/tree/tools/project-source-compression/tools/project_source_compression) を作成しました。
+
+[対話的なプログラマー](https://github.com/taro-taryo/ios-engineer-codecheck/blob/tools/ai-prompts/tools/ai-prompts/%E5%AF%BE%E8%A9%B1%E7%9A%84%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9E%E3%83%BC) を作成して、時間を大きく節約しました。
+
