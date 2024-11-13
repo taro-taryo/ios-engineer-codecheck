@@ -27,10 +27,8 @@ enum NetworkError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .invalidURL:
-            return String(localized: "error_invalid_url")
-        case .noData:
-            return String(localized: "error_no_data_received")
+        case .invalidURL: return String(localized: "error_invalid_url")
+        case .noData: return String(localized: "error_no_data_received")
         case .requestFailed(let error):
             return String(
                 format: String(localized: "error_request_failed"), error.localizedDescription)

@@ -1,8 +1,8 @@
 //
-//  SearchService.swift
+//  EnhancedSearchRemoteDataSource.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,16 +20,21 @@
 
 import Foundation
 
-class SearchService: RepositoryRepositoryInterface {
-    func fetchRepositories(
-        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+protocol EnhancedSearchRemoteDataSourceProtocol {
+    func fetchTopicSuggestions(
+        for query: String, completion: @escaping (Result<[String], Error>) -> Void)
+}
+
+class EnhancedSearchRemoteDataSource: EnhancedSearchRemoteDataSourceProtocol {
+    func fetchTopicSuggestions(
+        for query: String, completion: @escaping (Result<[String], Error>) -> Void
     ) {
-        guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            completion(.failure(AppError.network(.invalidURL)))
+        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            completion(.success([]))
             return
         }
 
-        let urlString = "https://api.github.com/search/repositories?q=\(searchWord)"
+        let urlString = "https://api.github.com/search/topics?q=\(query)&per_page=10"
         guard
             let encodedURLString = urlString.addingPercentEncoding(
                 withAllowedCharacters: .urlQueryAllowed),
@@ -39,7 +44,10 @@ class SearchService: RepositoryRepositoryInterface {
             return
         }
 
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        var request = URLRequest(url: url)
+        request.addValue("application/vnd.github.mercy-preview+json", forHTTPHeaderField: "Accept")
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(AppError.network(.requestFailed(error))))
                 return
@@ -49,12 +57,20 @@ class SearchService: RepositoryRepositoryInterface {
                 return
             }
             do {
-                let decodedResponse = try JSONDecoder().decode(
-                    RepositoriesResponse.self, from: data)
-                completion(.success(decodedResponse.items))
+                let decodedResponse = try JSONDecoder().decode(TopicResponse.self, from: data)
+                let topics = decodedResponse.items.map { $0.name }
+                completion(.success(topics))
             } catch {
                 completion(.failure(AppError.unknown(error.localizedDescription)))
             }
         }.resume()
     }
+}
+
+struct TopicResponse: Codable {
+    let items: [Topic]
+}
+
+struct Topic: Codable {
+    let name: String
 }

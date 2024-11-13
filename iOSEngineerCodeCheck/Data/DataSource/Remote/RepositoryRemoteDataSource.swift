@@ -1,8 +1,8 @@
 //
-//  SearchService.swift
+//  RepositoryRemoteDataSource.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/13.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,12 @@
 
 import Foundation
 
-class SearchService: RepositoryRepositoryInterface {
+protocol RepositoryRemoteDataSourceProtocol {
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void)
+}
+
+class RepositoryRemoteDataSource: RepositoryRemoteDataSourceProtocol {
     func fetchRepositories(
         for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
