@@ -23,57 +23,76 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = DIContainer.shared.resolve(RepositoryListViewModel.self)
     @StateObject private var bookmarkViewModel = DIContainer.shared.resolve(BookmarkViewModel.self)
-
-    @State private var isDrawerOpen = false
     @State private var isBookmarkViewPresented = false
     @FocusState private var isSearchFieldFocused: Bool
+    @State private var isDetailViewPresented = false
+    @State private var selectedRepository: RepositoryViewData?
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                backgroundGradient.onTapGesture { isSearchFieldFocused = false }
-                mainContent
-                drawerMenu
-            }
-            .navigationBarItems(leading: menuButton)
-            .sheet(isPresented: $isBookmarkViewPresented) {
-                BookmarkView().environmentObject(bookmarkViewModel)
-            }
+        ZStack {
+            backgroundGradient
+                .onTapGesture { isSearchFieldFocused = false }
+            
+            mainContent
+                .padding(.top, 20)
+                .onAppear { activateInitialFocus() }
+                .alert(item: $viewModel.error, content: showAlert)
+                .sheet(isPresented: $isDetailViewPresented, onDismiss: dismissDetailView) {
+                    if let repository = selectedRepository {
+                        DetailView(repository: repository)
+                    }
+                }
+        }
+        .sheet(isPresented: $isBookmarkViewPresented) {
+            BookmarkView().environmentObject(bookmarkViewModel)
         }
         .environmentObject(bookmarkViewModel)
     }
-
+    
+    // MARK: Main Content for body
     private var mainContent: some View {
         VStack(spacing: 16) {
-            searchBar
+            searchBarWithBookmarkButton
             if !viewModel.tagSuggestions.isEmpty || !viewModel.relatedSuggestions.isEmpty {
                 suggestionsScrollView
             }
-            searchResultsView
-        }
-        .alert(item: $viewModel.error) { error in
-            Alert(
-                title: Text("Error"), message: Text(error.localizedDescription),
-                dismissButton: .default(Text("OK")))
-        }
-    }
-
-    private var drawerMenu: some View {
-        Group {
-            if isDrawerOpen {
-                DrawerMenu(
-                    isDrawerOpen: $isDrawerOpen, isBookmarkViewPresented: $isBookmarkViewPresented
-                )
-                .environmentObject(bookmarkViewModel)
-                .transition(.move(edge: .leading))
+            
+            if viewModel.repositories.isEmpty {
+                placeholderText
+            } else {
+                searchResultsView
             }
         }
     }
 
-    private var menuButton: some View {
-        Button(action: { withAnimation { isDrawerOpen.toggle() } }) {
-            Image(systemName: "line.horizontal.3").imageScale(.large).foregroundColor(.white)
+    private var searchBarWithBookmarkButton: some View {
+        HStack {
+            searchBar
+            bookmarkButton
         }
+        .padding(.horizontal)
+    }
+    
+    // MARK: UI Components -
+    private var searchBar: some View {
+        SearchBar(
+            text: $viewModel.searchText,
+            onTextChanged: handleTextChanged,
+            onSearchButtonClicked: executeSearch,
+            onCancel: resetSearch
+        )
+        .focused($isSearchFieldFocused)
+        .padding(.horizontal)
+        .padding(.top, 10)
+    }
+
+    private var bookmarkButton: some View {
+        Button(action: toggleBookmarkView) {
+            Image(systemName: "bookmark")
+                .imageScale(.large)
+                .foregroundColor(.blue)
+        }
+        .padding(.leading, 8)
     }
 
     private var backgroundGradient: some View {
@@ -85,101 +104,93 @@ struct ContentView: View {
         .ignoresSafeArea()
     }
 
-    private var searchBar: some View {
-        SearchBar(
-            text: $viewModel.searchText,
-            onTextChanged: { newText in
-                viewModel.searchText = newText
-                viewModel.updateTagSuggestions()
-            },
-            onSearchButtonClicked: {
-                viewModel.searchRepositories()
-            },
-            onCancel: { viewModel.searchText = "" }
-        )
-        .focused($isSearchFieldFocused)
-        .padding(.horizontal)
-        .padding(.top, 10)
+    private var placeholderText: some View {
+        Text(String(localized: "ui_search_placeholder"))
+            .foregroundColor(.gray)
+            .font(.headline)
+            .padding()
     }
-
+    
     private var suggestionsScrollView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if !viewModel.tagSuggestions.isEmpty {
-                Text("Tag Suggestions").font(.subheadline).foregroundColor(.white)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
-                        ForEach(viewModel.tagSuggestions, id: \.self) { suggestion in
-                            Button(action: {
-                                viewModel.searchText = suggestion
-                                isSearchFieldFocused = false
-                                viewModel.searchRepositories()
-                            }) {
-                                Text(suggestion)
-                                    .foregroundColor(.white)
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal, 12)
-                                    .background(Color.blue)
-                                    .cornerRadius(15)
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-            }
-
-            if !viewModel.relatedSuggestions.isEmpty {
-                Text("Related Topics").font(.subheadline).foregroundColor(.white)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
-                        ForEach(viewModel.relatedSuggestions, id: \.self) { suggestion in
-                            Button(action: {
-                                viewModel.searchText = suggestion
-                                isSearchFieldFocused = false
-                                viewModel.searchRepositories()
-                            }) {
-                                Text(suggestion)
-                                    .foregroundColor(.white)
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal, 12)
-                                    .background(Color.green)
-                                    .cornerRadius(15)
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-            }
+            suggestionSection(title: String(localized: "ui_search_tag_suggestions"), suggestions: viewModel.tagSuggestions, backgroundColor: .blue)
+            suggestionSection(title: String(localized: "ui_search_related_suggestions"), suggestions: viewModel.relatedSuggestions, backgroundColor: .green)
         }
         .padding(.top, 8)
     }
 
-    private var searchResultsView: some View {
+    private func suggestionSection(title: String, suggestions: [String], backgroundColor: Color) -> some View {
         VStack(alignment: .leading) {
-            Text("Search Results")
-                .font(.headline)
+            Text(title)
+                .font(.subheadline)
                 .foregroundColor(.white)
-                .padding(.leading)
-
-            if viewModel.repositories.isEmpty {
-                Text("No repositories found")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .padding()
-                    .transition(.opacity)
-            } else {
-                List(viewModel.repositories) { repository in
-                    NavigationLink(destination: DetailView(repository: repository)) {
-                        RepositoryRow(repository: repository)
-                            .environmentObject(bookmarkViewModel)
-                            .padding(.vertical, 5)
-                            .onTapGesture { isSearchFieldFocused = false }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(suggestions, id: \.self) { suggestion in
+                        SuggestionButton(text: suggestion, backgroundColor: backgroundColor, action: {
+                            viewModel.searchText = suggestion
+                            isSearchFieldFocused = false
+                            viewModel.searchRepositories()
+                        })
                     }
-                    .listRowBackground(Color.clear)
                 }
-                .listStyle(PlainListStyle())
-                .transition(.slide)
+                .padding(.horizontal)
             }
         }
-        .frame(maxWidth: .infinity)
+    }
+
+    private var searchResultsView: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 10) {
+                ForEach(viewModel.repositories) { repository in
+                    RepositoryRow(repository: repository)
+                        .environmentObject(bookmarkViewModel)
+                        .padding(.vertical, 5)
+                        .frame(maxWidth: 600)
+                        .onTapGesture { presentDetailView(for: repository) }
+                }
+            }
+            .padding(.horizontal)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    // MARK: Handlers -
+    
+    private func handleTextChanged(newText: String) {
+        viewModel.searchText = newText
+        viewModel.updateTagSuggestions()
+    }
+
+    private func executeSearch() {
+        viewModel.searchRepositories()
+        isSearchFieldFocused = false
+    }
+
+    private func resetSearch() {
+        viewModel.searchText = ""
+        isSearchFieldFocused = false
+    }
+
+    private func activateInitialFocus() {
+        isSearchFieldFocused = true
+    }
+    
+    private func presentDetailView(for repository: RepositoryViewData) {
+        isSearchFieldFocused = false
+        selectedRepository = repository
+        isDetailViewPresented = true
+    }
+
+    private func toggleBookmarkView() {
+        isBookmarkViewPresented.toggle()
+    }
+
+    private func showAlert(for error: AppError) -> Alert {
+        Alert(title: Text(String(localized: "ui_alert_error_title")), message: Text(error.localizedDescription), dismissButton: .default(Text(String(localized: "ui_alert_ok_button"))))
+    }
+
+    private func dismissDetailView() {
+        isSearchFieldFocused = false
     }
 }
