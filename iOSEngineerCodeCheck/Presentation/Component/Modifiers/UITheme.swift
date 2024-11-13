@@ -28,13 +28,16 @@ struct UITheme {
     static let textColor = Color.primary
     static let font = Font.system(size: 16, weight: .semibold, design: .rounded)
 
-    static func applyCardStyle() -> some ViewModifier {
-        return CardStyle()
+    static var gradientBackground: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.8)]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
     }
 
-    static func animatedButtonStyle() -> some ViewModifier {
-        return AnimatedButtonStyle()
-    }
+    static func applyCardStyle() -> some ViewModifier { return CardStyle() }
+    static func animatedButtonStyle() -> some ViewModifier { return AnimatedButtonStyle() }
 
     private struct CardStyle: ViewModifier {
         func body(content: Content) -> some View {

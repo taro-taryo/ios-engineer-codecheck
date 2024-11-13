@@ -1,8 +1,8 @@
 //
-//  AppError.swift
+//  RepositoryBadgeViewTests.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,23 +18,24 @@
 // limitations under the License.
 //
 
-import Foundation
+import SwiftUI
+import XCTest
 
-enum AppError: LocalizedError, Identifiable {
-    case network(NetworkError)
-    case unknown(String)
+@testable import iOSEngineerCodeCheck
 
-    var id: String {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
-    }
+class RepositoryBadgeViewTests: XCTestCase {
 
-    var errorDescription: String? {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
+    func testRepositoryBadgeViewDisplaysCorrectStarAndForkCount() {
+        // Arrange
+        let stars = 100
+        let forks = 50
+        let badgeView = RepositoryBadgeView(stars: stars, forks: forks)
+
+        // Act
+        let hostingController = UIHostingController(rootView: badgeView)
+
+        // Assert
+        XCTAssertEqual(badgeView.stars, stars, "Stars count should match the provided value.")
+        XCTAssertEqual(badgeView.forks, forks, "Forks count should match the provided value.")
     }
 }

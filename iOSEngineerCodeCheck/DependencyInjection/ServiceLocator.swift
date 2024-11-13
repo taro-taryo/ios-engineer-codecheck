@@ -22,18 +22,50 @@ import Foundation
 
 class ServiceLocator {
     static func configure(container: DIContainer = DIContainer.shared) {
+
+        // DataSource - Enhanced Search and Bookmark DataSources
         container.register(
-            FetchRepositoriesUseCase(repositoryFetchable: RepositoryDataSource())
+            EnhancedSearchRemoteDataSource() as EnhancedSearchRemoteDataSourceProtocol,
+            for: EnhancedSearchRemoteDataSourceProtocol.self)
+        container.register(
+            BookmarkRemoteDataSource() as BookmarkDataSourceProtocol,
+            for: BookmarkDataSourceProtocol.self)
+        container.register(
+            RepositoryRemoteDataSource() as RepositoryRemoteDataSourceProtocol,
+            for: RepositoryRemoteDataSourceProtocol.self)
+
+        // Repository - Encapsulating DataSources
+        container.register(
+            TopicRepository(
+                remoteDataSource: container.resolve(EnhancedSearchRemoteDataSourceProtocol.self))
+                as TopicRepositoryInterface, for: TopicRepositoryInterface.self)
+        container.register(
+            BookmarkRepository(remoteDataSource: container.resolve(BookmarkDataSourceProtocol.self))
+                as BookmarkRepositoryInterface, for: BookmarkRepositoryInterface.self)
+        container.register(
+            RepositoryRepository(
+                remoteDataSource: container.resolve(RepositoryRemoteDataSourceProtocol.self))
+                as RepositoryRepositoryInterface, for: RepositoryRepositoryInterface.self)
+
+        // UseCase - Business Logic Layer
+        container.register(
+            FetchRepositoriesUseCase(
+                repository: container.resolve(RepositoryRepositoryInterface.self))
                 as FetchRepositoriesUseCaseProtocol, for: FetchRepositoriesUseCaseProtocol.self)
+        container.register(
+            FetchTopicSuggestionsUseCase(
+                repository: container.resolve(TopicRepositoryInterface.self))
+                as FetchTopicSuggestionsUseCaseProtocol,
+            for: FetchTopicSuggestionsUseCaseProtocol.self)
+        container.register(
+            BookmarkUseCase(repository: container.resolve(BookmarkRepositoryInterface.self))
+                as BookmarkUseCaseProtocol, for: BookmarkUseCaseProtocol.self)
         container.register(
             FetchImageUseCase(imageFetchable: ImageService()) as FetchImageUseCaseProtocol,
             for: FetchImageUseCaseProtocol.self)
 
-        // RepositoryListViewModel の登録
-        container.register(
-            RepositoryListViewModel(
-                fetchRepositoriesUseCase: container.resolve(FetchRepositoriesUseCaseProtocol.self)),
-            for: RepositoryListViewModel.self
-        )
+        // ViewModel - Injecting UseCases
+        container.register(RepositoryListViewModel(), for: RepositoryListViewModel.self)
+        container.register(BookmarkViewModel(), for: BookmarkViewModel.self)
     }
 }

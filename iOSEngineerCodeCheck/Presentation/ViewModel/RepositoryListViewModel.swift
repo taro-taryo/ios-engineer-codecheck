@@ -25,8 +25,13 @@ class RepositoryListViewModel: ObservableObject {
     @Published var repositories: [RepositoryViewData] = []
     @Published var searchText: String = ""
     @Published var tagSuggestions: [String] = []
+    @Published var relatedSuggestions: [String] = []
     @Published var error: AppError?
+
     private let fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol
+    private let fetchTopicSuggestionsUseCase: FetchTopicSuggestionsUseCaseProtocol
+    private var cancellables = Set<AnyCancellable>()
+
     private let allTags = [
         "swift", "javascript", "python", "java", "ruby", "php", "c++", "c#", "go", "kotlin", "dart",
         "typescript", "html", "css", "shell", "rust", "scala", "julia", "r", "matlab",
@@ -34,39 +39,59 @@ class RepositoryListViewModel: ObservableObject {
 
     init(
         fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol = DIContainer.shared.resolve(
-            FetchRepositoriesUseCaseProtocol.self)
+            FetchRepositoriesUseCaseProtocol.self),
+        fetchTopicSuggestionsUseCase: FetchTopicSuggestionsUseCaseProtocol = DIContainer.shared
+            .resolve(FetchTopicSuggestionsUseCaseProtocol.self)
     ) {
         self.fetchRepositoriesUseCase = fetchRepositoriesUseCase
+        self.fetchTopicSuggestionsUseCase = fetchTopicSuggestionsUseCase
+        setupSearchTextObserver()
     }
 
-    func onSearchTextChanged(_ newText: String) {
-        searchText = newText
-        updateTagSuggestions(for: newText)
-        if !newText.isEmpty {
-            searchRepositories()
-        }
+    private func setupSearchTextObserver() {
+        $searchText
+            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] text in
+                guard let self = self else { return }
+                self.updateTagSuggestions()
+                if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    self.searchRepositories()
+                    self.fetchTopicSuggestions(for: text)
+                }
+            }
+            .store(in: &cancellables)
     }
 
-    func onSearchCancelled() {
-        searchText = ""
-        tagSuggestions = []
-    }
-
-    func onTagSuggestionSelected(_ tag: String) {
-        searchText = tag
-        searchRepositories()
-    }
-
-    private func updateTagSuggestions(for query: String) {
-        tagSuggestions = allTags.filter { $0.contains(query.lowercased()) }
+    func updateTagSuggestions() {
+        tagSuggestions = allTags.filter { $0.contains(searchText.lowercased()) }
     }
 
     func searchRepositories() {
+        guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+
         fetchRepositoriesUseCase.execute(searchWord: searchText) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let repositories):
                     self?.repositories = repositories.map { RepositoryViewData(repository: $0) }
+                case .failure(let error):
+                    if let appError = error as? AppError {
+                        self?.error = appError
+                    } else {
+                        self?.error = AppError.unknown(error.localizedDescription)
+                    }
+                }
+            }
+        }
+    }
+
+    private func fetchTopicSuggestions(for query: String) {
+        fetchTopicSuggestionsUseCase.execute(query: query) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let suggestions):
+                    self?.relatedSuggestions = suggestions
                 case .failure(let error):
                     if let appError = error as? AppError {
                         self?.error = appError

@@ -17,7 +17,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
 import Foundation
 
 protocol FetchRepositoriesUseCaseProtocol {
@@ -25,13 +24,13 @@ protocol FetchRepositoriesUseCaseProtocol {
 }
 
 class FetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol {
-    private let repositoryFetchable: RepositoryFetchable
+    private let repository: RepositoryRepositoryInterface
 
-    init(repositoryFetchable: RepositoryFetchable) {
-        self.repositoryFetchable = repositoryFetchable
+    init(repository: RepositoryRepositoryInterface) {
+        self.repository = repository
     }
 
     func execute(searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void) {
-        repositoryFetchable.fetchRepositories(for: searchWord, completion: completion)
+        repository.fetchRepositories(for: searchWord, completion: completion)
     }
 }

@@ -1,8 +1,8 @@
 //
-//  AppError.swift
+//  RepositoryDataSource.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,21 +20,16 @@
 
 import Foundation
 
-enum AppError: LocalizedError, Identifiable {
-    case network(NetworkError)
-    case unknown(String)
+class RepositoryRepository: RepositoryRepositoryInterface {
+    private let remoteDataSource: RepositoryRemoteDataSourceProtocol
 
-    var id: String {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
+    init(remoteDataSource: RepositoryRemoteDataSourceProtocol) {
+        self.remoteDataSource = remoteDataSource
     }
 
-    var errorDescription: String? {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
+    ) {
+        remoteDataSource.fetchRepositories(for: searchWord, completion: completion)
     }
 }

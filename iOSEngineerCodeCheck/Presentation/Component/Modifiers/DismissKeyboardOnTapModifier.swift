@@ -1,8 +1,8 @@
 //
-//  AppError.swift
+//  DismissKeyboardOnTapModifier.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/10.
+//  Created by taro-taryo on 2024/11/12.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,23 +18,24 @@
 // limitations under the License.
 //
 
-import Foundation
+import SwiftUI
 
-enum AppError: LocalizedError, Identifiable {
-    case network(NetworkError)
-    case unknown(String)
-
-    var id: String {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
+struct DismissKeyboardOnTapModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .background(
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        UIApplication.shared.sendAction(
+                            #selector(UIResponder.resignFirstResponder), to: nil, from: nil,
+                            for: nil)
+                    })
     }
+}
 
-    var errorDescription: String? {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
+extension View {
+    func dismissKeyboardOnTap() -> some View {
+        self.modifier(DismissKeyboardOnTapModifier())
     }
 }

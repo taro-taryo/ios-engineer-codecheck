@@ -22,46 +22,45 @@ import SwiftUI
 
 struct RepositoryRow: View {
     let repository: RepositoryViewData
+    @EnvironmentObject private var bookmarkViewModel: BookmarkViewModel
 
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(repository.name)
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                     .lineLimit(1)
 
                 HStack {
                     if let icon = LanguageIconProvider.icon(for: repository.language) {
-                        icon.resizable()
+                        icon
+                            .resizable()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.yellow)
+                            .foregroundColor(.orange)
                     }
                     Text(repository.language)
                         .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.secondary)
                 }
-            }
 
+                RepositoryBadgeView(stars: repository.stars, forks: repository.forks)
+            }
             Spacer()
-
-            VStack(alignment: .trailing) {
-                Label("\(repository.stars)", systemImage: "star.fill")
-                    .foregroundColor(.yellow)
-
-                Label("\(repository.forks)", systemImage: "tuningfork")
-                    .foregroundColor(.blue)
+            Button(action: { bookmarkViewModel.toggleBookmark(for: repository) }) {
+                Image(
+                    systemName: bookmarkViewModel.isBookmarked(repository: repository)
+                        ? "bookmark.fill" : "bookmark"
+                )
+                .foregroundColor(.blue)
+                .padding()
             }
+            .buttonStyle(PlainButtonStyle())
         }
         .padding()
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .topLeading,
-                endPoint: .bottomTrailing)
-        )
+        .background(Color(UIColor.systemGray6))
         .cornerRadius(15)
-        .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5)
-        .scaleEffect(1.05)
-        .animation(.spring())
+        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+        .contentShape(Rectangle())
     }
 }
