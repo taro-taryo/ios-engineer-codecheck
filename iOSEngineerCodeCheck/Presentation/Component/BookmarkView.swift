@@ -57,7 +57,7 @@ struct BookmarkView: View {
                 VStack {
                     Spacer()
                     HStack {
-                        Text("ui_delete_book_mark_toast")
+                        Text("Bookmark removed.")
                             .foregroundColor(.white)
                             .font(.system(size: 16, weight: .medium))
                             .padding(.horizontal, 16)
@@ -74,7 +74,7 @@ struct BookmarkView: View {
                 }
                 .padding(.bottom, 20)
                 .transition(.move(edge: .bottom))
-                .animation(.easeInOut)
+                .animation(.easeInOut, value: viewModel.showUndoToast)
             }
         }
     }

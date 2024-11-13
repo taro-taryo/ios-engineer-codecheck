@@ -27,7 +27,8 @@ class ImageLoader: ObservableObject {
 
     init(
         fetchImageUseCase: FetchImageUseCaseProtocol = DIContainer.shared.resolve(
-            FetchImageUseCaseProtocol.self), urlString: String? = nil
+            FetchImageUseCaseProtocol.self),
+        urlString: String? = nil
     ) {
         self.fetchImageUseCase = fetchImageUseCase
         if let urlString = urlString {

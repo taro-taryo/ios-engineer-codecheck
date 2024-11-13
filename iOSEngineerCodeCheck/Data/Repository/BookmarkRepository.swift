@@ -1,8 +1,8 @@
 //
-//  BookmarkDataSource.swift
+//  BookmarkRepository.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/12.
+//  Created by taro-taryo on 2024/11/13.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,29 +20,26 @@
 
 import Foundation
 
-protocol BookmarkDataSourceProtocol {
-    func addBookmark(_ repository: RepositoryViewData)
-    func removeBookmark(_ repository: RepositoryViewData)
-    func isBookmarked(_ repository: RepositoryViewData) -> Bool
-    func fetchBookmarks() -> [RepositoryViewData]
-}
+class BookmarkRepository: BookmarkRepositoryInterface {
+    private let remoteDataSource: BookmarkDataSourceProtocol
 
-class BookmarkDataSource: BookmarkDataSourceProtocol {
-    private var bookmarks: [RepositoryViewData] = []
+    init(remoteDataSource: BookmarkDataSourceProtocol) {
+        self.remoteDataSource = remoteDataSource
+    }
 
     func addBookmark(_ repository: RepositoryViewData) {
-        bookmarks.append(repository)
+        remoteDataSource.addBookmark(repository)
     }
 
     func removeBookmark(_ repository: RepositoryViewData) {
-        bookmarks.removeAll { $0.id == repository.id }
+        remoteDataSource.removeBookmark(repository.id)
     }
 
     func isBookmarked(_ repository: RepositoryViewData) -> Bool {
-        return bookmarks.contains(where: { $0.id == repository.id })
+        return remoteDataSource.isBookmarked(repository.id)
     }
 
     func fetchBookmarks() -> [RepositoryViewData] {
-        return bookmarks
+        return remoteDataSource.fetchBookmarks()
     }
 }

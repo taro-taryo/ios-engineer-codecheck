@@ -33,18 +33,15 @@ struct SearchBar: View {
                 .foregroundColor(isEditing ? .white : .gray)
                 .padding(.leading, 10)
 
-            TextField(
-                String(localized: "ui_search_placeholder"),
-                text: $text
-            )
-            .onChange(of: text) { newText in
-                onTextChanged(newText)
-            }
-            .padding(10)
-            .foregroundColor(.white)
-            .background(isEditing ? Color.blue.opacity(0.9) : Color.gray.opacity(0.5))
-            .cornerRadius(15)
-            .transition(.move(edge: .leading))
+            TextField(String(localized: "ui_search_placeholder"), text: $text)
+                .onChange(of: text) { newText in
+                    onTextChanged(newText)
+                }
+                .padding(10)
+                .foregroundColor(.white)
+                .background(isEditing ? Color.blue.opacity(0.9) : Color.gray.opacity(0.5))
+                .cornerRadius(15)
+                .transition(.move(edge: .leading))
 
             if isEditing {
                 Button(action: {

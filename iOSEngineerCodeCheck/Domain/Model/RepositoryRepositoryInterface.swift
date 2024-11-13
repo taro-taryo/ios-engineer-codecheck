@@ -1,5 +1,5 @@
 //
-//  AppError.swift
+//  RepositoryFetchable.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/10.
@@ -20,21 +20,7 @@
 
 import Foundation
 
-enum AppError: LocalizedError, Identifiable {
-    case network(NetworkError)
-    case unknown(String)
-
-    var id: String {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
-    }
-
-    var errorDescription: String? {
-        switch self {
-        case .network(let networkError): return networkError.localizedDescription
-        case .unknown(let message): return message
-        }
-    }
+protocol RepositoryRepositoryInterface {
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void)
 }

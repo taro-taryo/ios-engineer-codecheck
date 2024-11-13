@@ -25,10 +25,12 @@ class BookmarkViewModel: ObservableObject {
     @Published var bookmarks: [RepositoryViewData] = []
     @Published var showUndoToast = false
     private var deletedBookmark: RepositoryViewData?
+    private let bookmarkUseCase: BookmarkUseCaseProtocol
 
-    private let bookmarkUseCase: BookmarkRepositoryUseCaseProtocol
-
-    init(bookmarkUseCase: BookmarkRepositoryUseCaseProtocol) {
+    init(
+        bookmarkUseCase: BookmarkUseCaseProtocol = DIContainer.shared.resolve(
+            BookmarkUseCaseProtocol.self)
+    ) {
         self.bookmarkUseCase = bookmarkUseCase
         loadBookmarks()
     }
@@ -46,24 +48,22 @@ class BookmarkViewModel: ObservableObject {
     }
 
     func isBookmarked(repository: RepositoryViewData) -> Bool {
-        return bookmarkUseCase.isBookmarked(repository: repository)
+        return bookmarkUseCase.isBookmarked(repository)
     }
 
     private func addBookmark(_ repository: RepositoryViewData) {
-        bookmarkUseCase.toggleBookmark(repository: repository)
+        bookmarkUseCase.toggleBookmark(for: repository)
         loadBookmarks()
     }
 
     private func removeBookmark(_ repository: RepositoryViewData) {
         deletedBookmark = repository
-        bookmarkUseCase.toggleBookmark(repository: repository)
+        bookmarkUseCase.toggleBookmark(for: repository)
         loadBookmarks()
-
-        // トースト表示をトリガー
         showUndoToast = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.showUndoToast = false
-            self.deletedBookmark = nil  // 元に戻さない場合、削除情報をリセット
+            self.deletedBookmark = nil
         }
     }
 

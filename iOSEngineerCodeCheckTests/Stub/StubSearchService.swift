@@ -22,7 +22,7 @@ import Foundation
 
 @testable import iOSEngineerCodeCheck
 
-class StubSearchService: RepositoryFetchable {
+class StubSearchService: RepositoryRepositoryInterface {
     var result: Result<[Repository], Error>?
     var shouldReturnError = false
     var shouldReturnRequestFailedError = false

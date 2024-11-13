@@ -31,6 +31,7 @@ struct RepositoryRow: View {
                     .font(.headline)
                     .foregroundColor(.primary)
                     .lineLimit(1)
+
                 HStack {
                     if let icon = LanguageIconProvider.icon(for: repository.language) {
                         icon
@@ -42,14 +43,11 @@ struct RepositoryRow: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
+
                 RepositoryBadgeView(stars: repository.stars, forks: repository.forks)
             }
             Spacer()
-
-            // ブックマークボタン
-            Button(action: {
-                bookmarkViewModel.toggleBookmark(for: repository)
-            }) {
+            Button(action: { bookmarkViewModel.toggleBookmark(for: repository) }) {
                 Image(
                     systemName: bookmarkViewModel.isBookmarked(repository: repository)
                         ? "bookmark.fill" : "bookmark"
@@ -65,5 +63,4 @@ struct RepositoryRow: View {
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
         .contentShape(Rectangle())
     }
-
 }

@@ -25,25 +25,26 @@ class RepositoryListViewModel: ObservableObject {
     @Published var repositories: [RepositoryViewData] = []
     @Published var searchText: String = ""
     @Published var tagSuggestions: [String] = []
-    @Published var relatedSuggestions: [String] = []  // トピックベースの強化サジェスト
+    @Published var relatedSuggestions: [String] = []
     @Published var error: AppError?
 
     private let fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol
-    private let enhancedSearchService: EnhancedSearchServiceProtocol
+    private let fetchTopicSuggestionsUseCase: FetchTopicSuggestionsUseCaseProtocol
+    private var cancellables = Set<AnyCancellable>()
+
     private let allTags = [
         "swift", "javascript", "python", "java", "ruby", "php", "c++", "c#", "go", "kotlin", "dart",
         "typescript", "html", "css", "shell", "rust", "scala", "julia", "r", "matlab",
     ]
-    private var cancellables = Set<AnyCancellable>()
 
     init(
         fetchRepositoriesUseCase: FetchRepositoriesUseCaseProtocol = DIContainer.shared.resolve(
             FetchRepositoriesUseCaseProtocol.self),
-        enhancedSearchService: EnhancedSearchServiceProtocol = DIContainer.shared.resolve(
-            EnhancedSearchServiceProtocol.self)
+        fetchTopicSuggestionsUseCase: FetchTopicSuggestionsUseCaseProtocol = DIContainer.shared
+            .resolve(FetchTopicSuggestionsUseCaseProtocol.self)
     ) {
         self.fetchRepositoriesUseCase = fetchRepositoriesUseCase
-        self.enhancedSearchService = enhancedSearchService
+        self.fetchTopicSuggestionsUseCase = fetchTopicSuggestionsUseCase
         setupSearchTextObserver()
     }
 
@@ -52,22 +53,28 @@ class RepositoryListViewModel: ObservableObject {
             .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
             .removeDuplicates()
             .sink { [weak self] text in
-                self?.updateTagSuggestions(for: text)
-                self?.fetchRelatedSuggestions(for: text)
+                guard let self = self else { return }
+                self.updateTagSuggestions()
+                if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    self.searchRepositories()
+                    self.fetchTopicSuggestions(for: text)
+                }
             }
             .store(in: &cancellables)
     }
 
-    private func updateTagSuggestions(for query: String) {
-        tagSuggestions = allTags.filter { $0.contains(query.lowercased()) }
+    func updateTagSuggestions() {
+        tagSuggestions = allTags.filter { $0.contains(searchText.lowercased()) }
     }
 
-    private func fetchRelatedSuggestions(for query: String) {
-        enhancedSearchService.fetchTopicSuggestions(for: query) { [weak self] result in
+    func searchRepositories() {
+        guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+
+        fetchRepositoriesUseCase.execute(searchWord: searchText) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let suggestions):
-                    self?.relatedSuggestions = suggestions
+                case .success(let repositories):
+                    self?.repositories = repositories.map { RepositoryViewData(repository: $0) }
                 case .failure(let error):
                     if let appError = error as? AppError {
                         self?.error = appError
@@ -79,30 +86,12 @@ class RepositoryListViewModel: ObservableObject {
         }
     }
 
-    func onSearchTextChanged(_ newText: String) {
-        searchText = newText
-        if !newText.isEmpty {
-            searchRepositories()
-        }
-    }
-
-    func onSearchCancelled() {
-        searchText = ""
-        tagSuggestions = []
-        relatedSuggestions = []
-    }
-
-    func onTagSuggestionSelected(_ tag: String) {
-        searchText = tag
-        searchRepositories()
-    }
-
-    func searchRepositories() {
-        fetchRepositoriesUseCase.execute(searchWord: searchText) { [weak self] result in
+    private func fetchTopicSuggestions(for query: String) {
+        fetchTopicSuggestionsUseCase.execute(query: query) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let repositories):
-                    self?.repositories = repositories.map { RepositoryViewData(repository: $0) }
+                case .success(let suggestions):
+                    self?.relatedSuggestions = suggestions
                 case .failure(let error):
                     if let appError = error as? AppError {
                         self?.error = appError

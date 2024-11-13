@@ -20,16 +20,15 @@
 
 import Foundation
 
-class RepositoryManager: RepositoryFetchable {
-    private let searchService: RepositoryFetchable
+class RepositoryManager: RepositoryRepositoryInterface {
+    private let searchService: RepositoryRepositoryInterface
 
-    init(searchService: RepositoryFetchable = SearchService()) {
+    init(searchService: RepositoryRepositoryInterface = SearchService()) {
         self.searchService = searchService
     }
 
     func fetchRepositories(
-        for searchWord: String,
-        completion: @escaping (Result<[Repository], Error>) -> Void
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
         guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             completion(.failure(AppError.network(.invalidURL)))

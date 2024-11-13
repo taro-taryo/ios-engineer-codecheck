@@ -1,8 +1,8 @@
 //
-//  EnhancedSearchService.swift
+//  RepositoryRemoteDataSource.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by taro-taryo on 2024/11/12.
+//  Created by taro-taryo on 2024/11/13.
 // Copyright © 2024 YUMEMI Inc. All rights reserved.
 // Copyright © 2024 taro-taryo. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,21 +20,21 @@
 
 import Foundation
 
-protocol EnhancedSearchServiceProtocol {
-    func fetchTopicSuggestions(
-        for query: String, completion: @escaping (Result<[String], Error>) -> Void)
+protocol RepositoryRemoteDataSourceProtocol {
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void)
 }
 
-class EnhancedSearchService: EnhancedSearchServiceProtocol {
-    func fetchTopicSuggestions(
-        for query: String, completion: @escaping (Result<[String], Error>) -> Void
+class RepositoryRemoteDataSource: RepositoryRemoteDataSourceProtocol {
+    func fetchRepositories(
+        for searchWord: String, completion: @escaping (Result<[Repository], Error>) -> Void
     ) {
-        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            completion(.success([]))
+        guard !searchWord.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            completion(.failure(AppError.network(.invalidURL)))
             return
         }
 
-        let urlString = "https://api.github.com/search/topics?q=\(query)&per_page=10"
+        let urlString = "https://api.github.com/search/repositories?q=\(searchWord)"
         guard
             let encodedURLString = urlString.addingPercentEncoding(
                 withAllowedCharacters: .urlQueryAllowed),
@@ -44,10 +44,7 @@ class EnhancedSearchService: EnhancedSearchServiceProtocol {
             return
         }
 
-        var request = URLRequest(url: url)
-        request.addValue("application/vnd.github.mercy-preview+json", forHTTPHeaderField: "Accept")
-
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(AppError.network(.requestFailed(error))))
                 return
@@ -57,20 +54,12 @@ class EnhancedSearchService: EnhancedSearchServiceProtocol {
                 return
             }
             do {
-                let decodedResponse = try JSONDecoder().decode(TopicResponse.self, from: data)
-                let topics = decodedResponse.items.map { $0.name }
-                completion(.success(topics))
+                let decodedResponse = try JSONDecoder().decode(
+                    RepositoriesResponse.self, from: data)
+                completion(.success(decodedResponse.items))
             } catch {
                 completion(.failure(AppError.unknown(error.localizedDescription)))
             }
         }.resume()
     }
-}
-
-struct TopicResponse: Codable {
-    let items: [Topic]
-}
-
-struct Topic: Codable {
-    let name: String
 }

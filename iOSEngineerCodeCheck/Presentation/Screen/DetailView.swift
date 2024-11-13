@@ -32,7 +32,7 @@ struct DetailView: View {
 
     var body: some View {
         ZStack {
-            backgroundGradient
+            UITheme.gradientBackground.ignoresSafeArea()
             ScrollView {
                 VStack(spacing: 20) {
                     repositoryImage
@@ -55,14 +55,6 @@ struct DetailView: View {
             }
         )
         .modifier(NavigationBarModifier(backgroundColor: .clear))
-    }
-
-    private var backgroundGradient: some View {
-        LinearGradient(
-            gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.purple.opacity(0.7)]),
-            startPoint: .top,
-            endPoint: .bottom
-        ).ignoresSafeArea()
     }
 
     private var repositoryImage: some View {

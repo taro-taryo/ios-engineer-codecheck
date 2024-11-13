@@ -1,5 +1,5 @@
 //
-//  BookmarkRepositoryUseCase.swift
+//  BookmarkUseCase.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by taro-taryo on 2024/11/12.
@@ -20,32 +20,33 @@
 
 import Foundation
 
-protocol BookmarkRepositoryUseCaseProtocol {
-    func toggleBookmark(repository: RepositoryViewData)
-    func isBookmarked(repository: RepositoryViewData) -> Bool
+protocol BookmarkUseCaseProtocol {
+    func toggleBookmark(for repository: RepositoryViewData)
+    func isBookmarked(_ repository: RepositoryViewData) -> Bool
     func fetchBookmarks() -> [RepositoryViewData]
 }
 
-class BookmarkRepositoryUseCase: BookmarkRepositoryUseCaseProtocol {
-    private let bookmarkDataSource: BookmarkDataSourceProtocol
+class BookmarkUseCase: BookmarkUseCaseProtocol {
+    private let repository: BookmarkRepositoryInterface
 
-    init(bookmarkDataSource: BookmarkDataSourceProtocol) {
-        self.bookmarkDataSource = bookmarkDataSource
+    init(repository: BookmarkRepositoryInterface) {
+        self.repository = repository
     }
 
-    func toggleBookmark(repository: RepositoryViewData) {
-        if isBookmarked(repository: repository) {
-            bookmarkDataSource.removeBookmark(repository)
+    func toggleBookmark(for repository: RepositoryViewData) {
+        if isBookmarked(repository) {
+            self.repository.removeBookmark(repository)
         } else {
-            bookmarkDataSource.addBookmark(repository)
+            self.repository.addBookmark(repository)
         }
     }
 
-    func isBookmarked(repository: RepositoryViewData) -> Bool {
-        return bookmarkDataSource.isBookmarked(repository)
+    func isBookmarked(_ repository: RepositoryViewData) -> Bool {
+        // BookmarkRepositoryInterfaceを通じてブックマーク状態を確認
+        return self.repository.isBookmarked(repository)
     }
 
     func fetchBookmarks() -> [RepositoryViewData] {
-        return bookmarkDataSource.fetchBookmarks()
+        return repository.fetchBookmarks()
     }
 }
