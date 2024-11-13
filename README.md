@@ -12,8 +12,8 @@
 - [課題-中級-アーキテクチャを適用](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-中級-アーキテクチャを適用)
 - [課題-中級-テストを追加](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-中級-テストを追加)
 - [課題-中級-プログラム構造をリファクタリング](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-中級-プログラム構造をリファクタリング)
-- [課題-ボーナス-新機能を追加](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-ボーナス-新機能を追加)
 - [課題-ボーナス-UIをブラッシュアップ](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-ボーナス-UIをブラッシュアップ)
+- [課題-ボーナス-新機能を追加](https://github.com/taro-taryo/ios-engineer-codecheck/releases/tag/課題-ボーナス-新機能を追加-v1.1)
 
 ## アプリ仕様
 
